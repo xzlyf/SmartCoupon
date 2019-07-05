@@ -5,10 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.Top100Activity">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/comm_info_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"/>
+        android:overScrollMode="never" />
+
+    <ImageView
+        android:id="@+id/loading_view"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
 </FrameLayout>

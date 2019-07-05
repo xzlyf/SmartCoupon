@@ -57,12 +57,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void showDialog(final String msg, String type) {
+    public void showDialog(final String msg, final String type) {
         handler.post(new Runnable() {
             @Override
             public void run() {
                 mDialog = new BaseDialog(mContext, R.style.base_dialog);
                 mDialog.create();
+                mDialog.setType(type);
                 mDialog.setMsg(msg);
                 mDialog.show();
             }

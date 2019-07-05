@@ -55,4 +55,8 @@ public class BaseDialog extends Dialog {
         msg = findViewById(R.id.dialog_base_msg);
         title.setText("提示");
     }
+
+    public void setType(String type) {
+
+    }
 }
