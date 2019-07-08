@@ -40,6 +40,7 @@ public class Top100Activity extends BaseActivity implements IView {
 
     @Override
     public void init_Data() {
+        startLoading();
         mPresenterTop100 = new Presenter_Top100(this);
         loading_view = findViewById(R.id.loading_view);
         init_recycle();
@@ -91,21 +92,23 @@ public class Top100Activity extends BaseActivity implements IView {
 
     @Override
     public void startLoading() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-            }
-        });
+//        handler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//            }
+//        });
+        showLoading();
 
     }
 
     @Override
     public void stopLoading() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-            }
-        });
+//        handler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//            }
+//        });
+        dismissLoading();
 
     }
 

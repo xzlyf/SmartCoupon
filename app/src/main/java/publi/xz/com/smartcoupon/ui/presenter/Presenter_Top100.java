@@ -24,7 +24,7 @@ public class Presenter_Top100 {
      * @param url
      */
     public void getTop100DataFromNet(String url){
-        view.startLoading();
+//        view.startLoading();
         model.getDataFromNet(url, new IModel.OnLoadCompleteListener() {
             @Override
             public void success(String data) {

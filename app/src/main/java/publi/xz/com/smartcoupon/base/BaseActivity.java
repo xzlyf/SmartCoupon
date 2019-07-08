@@ -1,5 +1,6 @@
 package publi.xz.com.smartcoupon.base;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -81,5 +82,29 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         });
     }
+    private ProgressDialog progressDialog;
+    public void showLoading(){
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog = new ProgressDialog(mContext);
+                progressDialog.setTitle("加载中");
+                progressDialog.setMessage("稍等片刻!");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+            }
+        });
 
+    }
+    public void dismissLoading(){
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (progressDialog !=null &&progressDialog.isShowing()){
+                    progressDialog.dismiss();
+                    progressDialog=null;
+                }
+            }
+        });
+    }
 }
