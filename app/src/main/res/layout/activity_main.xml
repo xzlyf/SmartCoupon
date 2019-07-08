@@ -7,6 +7,19 @@
     tools:context=".ui.MainActivity"
     tools:layout_editor_absoluteY="25dp">
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:id="@+id/activity_main_toolbar"
+            android:background="?attr/colorPrimary"
+            app:titleTextAppearance="@style/Toolbar.Title"
+            app:title="@string/app_name_zh"
+            >
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
     <Button
         android:id="@+id/test"
         android:layout_width="wrap_content"

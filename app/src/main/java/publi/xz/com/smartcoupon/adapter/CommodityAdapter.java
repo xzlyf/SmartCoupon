@@ -1,6 +1,7 @@
 package publi.xz.com.smartcoupon.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,6 +21,8 @@ import java.util.List;
 
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.entity.Popular;
+import publi.xz.com.smartcoupon.ui.DetailsActivity;
+import publi.xz.com.smartcoupon.ui.Top100Activity;
 
 public class CommodityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private  List<Popular.ResultBean> popular;
@@ -38,7 +41,7 @@ public class CommodityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
 //         Picasso 缓存目录就在 /data/data/<application package>/cache/picasso-cache/下边
         if (holder instanceof ViewHolder) {
             Picasso.get()
@@ -51,7 +54,15 @@ public class CommodityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ((ViewHolder) holder).org_Price.setText("原价：" + popular.get(position).getOrg_Price());
             ((ViewHolder) holder).price.setText("券后：" + popular.get(position).getPrice() + "");
             ((ViewHolder) holder).quan_price.setText("领" + popular.get(position).getQuan_price() + "元券");
-            Log.d("xzc", "onBindViewHolder:当前item: "+position);
+//            Log.d("xzc", "onBindViewHolder:当前item: "+position);
+            ((ViewHolder) holder).quan_price.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mContext.startActivity(
+                            new Intent(mContext, DetailsActivity.class)
+                                    .putExtra("id",popular.get(position).getID()));
+                }
+            });
         }
     }
 
