@@ -20,8 +20,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     public void init_Data() {
-        Toolbar toolbar = findViewById(R.id.activity_main_toolbar);
-        setSupportActionBar(toolbar);
         findID();
     }
 
