@@ -11,11 +11,12 @@ import android.widget.TextView;
 import java.util.List;
 
 import publi.xz.com.smartcoupon.R;
+import publi.xz.com.smartcoupon.entity.HotWord;
 
 public class HotWordAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private final List<String> list;
+    private final List<HotWord.DataBean> list;
     private Context context;
-    public HotWordAdapter(Context context, List<String> list){
+    public HotWordAdapter(Context context, List<HotWord.DataBean> list){
         this.list = list;
         this.context = context;
     }
@@ -28,7 +29,7 @@ public class HotWordAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((ViewHolder) holder).hotWord.setText(list.get(position));
+        ((ViewHolder) holder).hotWord.setText(list.get(position).getWord());
     }
 
     @Override

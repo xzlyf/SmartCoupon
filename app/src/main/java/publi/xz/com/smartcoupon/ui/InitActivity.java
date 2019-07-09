@@ -1,9 +1,17 @@
 package publi.xz.com.smartcoupon.ui;
 
+import android.app.slice.Slice;
+import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ProgressBar;
+
+import com.orhanobut.logger.Logger;
 
 import publi.xz.com.smartcoupon.R;
+import publi.xz.com.smartcoupon.constant.Local;
+import publi.xz.com.smartcoupon.ui.presenter.Presenter_Init;
 
 /**
  * 启动类
@@ -12,10 +20,53 @@ import publi.xz.com.smartcoupon.R;
  * 减轻调用Api
  */
 public class InitActivity extends AppCompatActivity {
-
+    private ProgressBar bar;
+    private Presenter_Init model;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init);
+        hideBar();
+        findID();
+        initData();
+        waitTime();
+    }
+
+    private void waitTime() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                    startActivity(new Intent(InitActivity.this,MainActivity.class));
+                    finish();
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * 初始化数据
+     */
+    private void initData() {
+        //获取今日热搜词
+        model.getDetailFromNet();
+        //获取用户网络信息
+        model.getUserIpFromNet();
+    }
+
+    private void findID() {
+        bar = findViewById(R.id.loading_init);
+        model = new Presenter_Init(this);
+    }
+
+    private void hideBar() {
+        ActionBar bar = getSupportActionBar();
+        if (bar!=null){
+            bar.hide();
+        }
     }
 }

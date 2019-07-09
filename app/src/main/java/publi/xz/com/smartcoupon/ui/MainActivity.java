@@ -23,7 +23,9 @@ import publi.xz.com.smartcoupon.utils.SignMD5Util;
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private Button test;
+    private Button hot_word_rank_btn;
     private Banner banner;
+    private Button setting_btn;
 
 
     @Override
@@ -47,9 +49,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void init_banner() {
-        List<String> img=new ArrayList<>();
-        img.add("https://s2.ax1x.com/2019/07/09/ZyGEHH.png");
-        img.add("https://s2.ax1x.com/2019/07/09/ZyGQv8.png");
+        List<String> img = new ArrayList<>();
+        img.add("https://s1.ax1x.com/2018/05/03/Ct1lr9.jpg");
+        img.add("https://s1.ax1x.com/2018/04/20/CK32R0.jpg");
         img.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic259ohaj30ci08c74r.jpg");
         img.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic2b16zuj30ci08cwf4.jpg");
         img.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic2e7vsaj30ci08cglz.jpg");
@@ -62,17 +64,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void findID() {
-        test = findViewById(R.id.test);
+        test = findViewById(R.id.pai_hang_bang_btn);
         test.setOnClickListener(this);
         banner = findViewById(R.id.banner);
+        hot_word_rank_btn = findViewById(R.id.hot_word_rank_btn);
+        hot_word_rank_btn.setOnClickListener(this);
+        setting_btn = findViewById( R.id.setting_btn);
+        setting_btn.setOnClickListener(this);
     }
 
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.test:
+            case R.id.pai_hang_bang_btn:
                 startActivity(new Intent(MainActivity.this, Top100Activity.class));
+                break;
+            case R.id.hot_word_rank_btn:
+                //热搜排行榜
+                break;
+            case R.id.setting_btn:
+                //设置
                 break;
         }
     }

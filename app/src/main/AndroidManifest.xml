@@ -12,17 +12,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.MainActivity"
-            android:theme="@style/AppNoTitle">
+            android:name=".ui.InitActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/full_screen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.Top100Activity" />
-        <activity android:name=".ui.DetailsActivity" />
-        <activity android:name=".ui.InitActivity"></activity>
+        <activity
+            android:name=".ui.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppNoTitle" />
+        <activity
+            android:name=".ui.Top100Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.DetailsActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>
