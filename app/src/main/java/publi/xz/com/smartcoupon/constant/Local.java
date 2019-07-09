@@ -5,6 +5,11 @@ public class Local {
     public static String TOPURL = "http://api.dataoke.com/index.php?r=Port/index&type=top100&appkey="+APIKEY+"&v=2";
     public static String DETAILS = "http://api.dataoke.com/index.php?r=port/index&appkey="+APIKEY+"&v=2&id=";
 
+
+    public static final String appSecret = "d7f84bb553a185d6e650c1f773aff2e0";
+    public static final String appKey = "5d2345f1cae2c";
+    public static final String host = "https://openapi.dataoke.com/api/goods/get-ranking-list";
+
     /**
      * 对话框标识
      */

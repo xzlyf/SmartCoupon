@@ -21,7 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.Top100Activity" />
-        <activity android:name=".ui.DetailsActivity"></activity>
+        <activity android:name=".ui.DetailsActivity" />
+        <activity android:name=".ui.InitActivity"></activity>
     </application>
 
 </manifest>

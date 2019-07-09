@@ -2,6 +2,7 @@ package publi.xz.com.smartcoupon.ui;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -11,10 +12,13 @@ import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.base.BaseActivity;
+import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.utils.GlideImageLoader;
+import publi.xz.com.smartcoupon.utils.SignMD5Util;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -33,7 +37,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         //设置banner轮播图
         init_banner();
 
-
+//        TreeMap<String,String> paraMap = new TreeMap<>();
+//        paraMap.put("appKey", "5d2345f1cae2c");
+//        paraMap.put("version","v1.0.1");
+//        paraMap.put("sign", SignMD5Util.getSignStr(paraMap,"13fec554229f608f816c2aa36c355559"));
+//
+//
+//        Log.d("xz", "init_Data: "+paraMap.get("sign"));
     }
 
     private void init_banner() {
@@ -47,7 +57,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 .setImageLoader(new GlideImageLoader())
                 .setDelayTime(3000)
                 .start();
-        
+
 
     }
 
