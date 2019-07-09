@@ -10,7 +10,10 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <include layout="@layout/custom_main_bar"/>
+
+        <publi.xz.com.smartcoupon.ui.custom.SearchBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </android.support.design.widget.AppBarLayout>
     <Button
         android:id="@+id/test"

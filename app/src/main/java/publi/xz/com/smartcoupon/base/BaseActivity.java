@@ -28,6 +28,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     };
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //公共属性
