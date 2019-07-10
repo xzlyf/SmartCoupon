@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
@@ -93,11 +94,12 @@ public class DetailsActivityV2 extends BaseActivity implements IView {
                     intent.setClassName(packageName, "com.taobao.browser.BrowserActivity");
                     startActivity(intent);
                 } else {
+
                     //跳转到浏览器优惠券界面
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
-
+                    Toast.makeText(DetailsActivityV2.this, "推荐使用淘宝App进行领券", Toast.LENGTH_SHORT).show();
                 }
             }
         });
