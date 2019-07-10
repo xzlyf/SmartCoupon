@@ -16,6 +16,11 @@ public class CacheInfo {
     public static int getPhotoCacheSize(Context context) {
         long filesize = 0;
         File file = new File(context.getCacheDir() + "/picasso-cache");
+        //刚安装应用会导致缓存文件夹没创建
+        if (!file.exists())
+        {
+            return 0;
+        }
         File[] files = file.listFiles();
         for (File f : files) {
             if (!f.isDirectory()) {
@@ -31,6 +36,11 @@ public class CacheInfo {
      */
     public static boolean cleanPhotoCache(Context context) {
         File file = new File(context.getCacheDir() + "/picasso-cache");
+        //刚安装应用会导致缓存文件夹没创建
+        if (!file.exists())
+        {
+            return true;
+        }
         File[] files = file.listFiles();
         for (File f : files
         ) {

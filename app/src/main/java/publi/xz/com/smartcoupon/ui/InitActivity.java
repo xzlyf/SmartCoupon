@@ -56,6 +56,8 @@ public class InitActivity extends AppCompatActivity {
         model.getDetailFromNet();
         //获取用户网络信息
         model.getUserIpFromNet();
+        //获取服务器时间
+        model.getServerTime();
     }
 
     private void findID() {

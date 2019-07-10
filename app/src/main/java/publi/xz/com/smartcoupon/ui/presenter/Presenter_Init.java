@@ -33,7 +33,6 @@ public class Presenter_Init {
 
     /**
      * 获取 热搜词数据
-     *
      */
     public void getDetailFromNet() {
         model.getDataFromNet(Local.HOT_WORD, new IModel.OnLoadCompleteListener() {
@@ -45,8 +44,8 @@ public class Presenter_Init {
                     obj = new JSONObject(data);
                     if (obj.getString("er_msg").equals("请求成功")) {
                         //保存json到本地
-                        SharedPreferencesUtil.saveJson(view,"HOT_WORD",data);
-                        Local.state.put("热搜词",true);
+                        SharedPreferencesUtil.saveJson(view, "HOT_WORD", data);
+                        Local.state.put("热搜词", true);
                     } else {
                         //失败处理
 
@@ -60,11 +59,12 @@ public class Presenter_Init {
             @Override
             public void failed(Exception e) {
 
-                Local.state.put("热搜词",false);
+                Local.state.put("热搜词", false);
 
             }
         });
     }
+
     /**
      * 获取用户网络位置 IP  服务商信息
      */
@@ -87,7 +87,7 @@ public class Presenter_Init {
                             Local.self.ip = info.getIp();
                             Local.self.isp = info.getIsp();
                             Local.self.province = info.getProvince();
-                            Local.state.put("用户信息",true);
+                            Local.state.put("用户信息", true);
 
                         }
 
@@ -102,10 +102,47 @@ public class Presenter_Init {
 
             @Override
             public void failed(Exception e) {
-                Local.state.put("用户信息",false);
+                Local.state.put("用户信息", false);
 
             }
         });
     }
 
+    /**
+     * 获取服务器时间
+     */
+    public void getServerTime() {
+        model.getDataFromNet(Local.GET_SERVER_TIME, new IModel.OnLoadCompleteListener() {
+            @Override
+            public void success(String data) {
+                JSONObject obj = null;
+
+                try {
+                    //    Logger.w("网络时间："+data);
+                    obj = new JSONObject(data);
+                    if (obj.getString("code").equals("1")) {
+                        JSONObject obj2 = obj.getJSONObject("data");
+                        if (obj2 != null) {
+
+                            Local.self.server_time = obj2.getLong("time");
+                            Local.state.put("服务器时间", true);
+
+                        }
+
+
+                    } else if (obj.getString("code").equals("0")) {
+
+                    }
+                } catch (JSONException e) {
+
+                }
+            }
+
+            @Override
+            public void failed(Exception e) {
+                Local.state.put("服务器时间", false);
+
+            }
+        });
+    }
 }

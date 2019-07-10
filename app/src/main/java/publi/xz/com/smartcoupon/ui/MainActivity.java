@@ -1,6 +1,7 @@
 package publi.xz.com.smartcoupon.ui;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.base.BaseActivity;
+import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.utils.GlideImageLoader;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -32,7 +34,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findID();
         //设置banner轮播图
         init_banner();
-
 //        TreeMap<String,String> paraMap = new TreeMap<>();
 //        paraMap.put("appKey", "5d24967e3c4d6");
 //        paraMap.put("version","v1.0.1");

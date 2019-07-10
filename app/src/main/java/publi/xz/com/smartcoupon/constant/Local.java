@@ -9,11 +9,9 @@ public class Local {
     public static String DETAILS = "http://api.dataoke.com/index.php?r=port/index&appkey="+APIKEY+"&v=2&id=";
 
     //Github大神做的免费api接口
-    public static String REQUEST_LINK = "https://www.mxnzp.com/";//api头地址
-    public static String REQUEST_IDENTIFY = "api/";//网址的标识
-    public static String REQUEST_GET_USER_IP = "ip/self";//api尾部
-    public static String BASE_URL = REQUEST_LINK + REQUEST_IDENTIFY;
-    public static String GET_USER_IP_URL = BASE_URL+ REQUEST_GET_USER_IP;
+    public static String BASE_URL = "https://www.mxnzp.com/api/";//api头地址
+    public static String GET_USER_IP_URL = BASE_URL+ "ip/self";//用户网络信息
+    public static String GET_SERVER_TIME=BASE_URL+"tools/system/time";//服务器时间
 
     /**
      * 大淘客api
@@ -42,7 +40,6 @@ public class Local {
         public static String province;//省份
         public static String city;//城市
         public static String isp;//网络服务商名称
-
-
+        public static long server_time;//服务器时间
     }
 }
