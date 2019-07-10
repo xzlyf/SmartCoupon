@@ -81,7 +81,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 //热搜排行榜
                 break;
             case R.id.setting_btn:
-                //设置
+                startActivity(new Intent(MainActivity.this, SettingActivity.class));
                 break;
             case R.id.baoyou9_9:
                 startActivity(new Intent(MainActivity.this,Baoyou9_9Activity.class));
