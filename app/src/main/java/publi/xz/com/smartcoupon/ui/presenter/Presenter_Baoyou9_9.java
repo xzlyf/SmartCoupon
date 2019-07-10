@@ -1,6 +1,7 @@
 package publi.xz.com.smartcoupon.ui.presenter;
 
 import com.google.gson.Gson;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,7 +38,7 @@ public class Presenter_Baoyou9_9 {
         paraMap.put("sign", SignMD5Util.getSignStr(paraMap, Local.appSecret));
 
         String url = SplicString.SplicUrl(Local.BAOYOU9_, paraMap);
-
+//        Logger.w(url);
         model.getDataFromNet(url, new IModel.OnLoadCompleteListener() {
             @Override
             public void success(String data) {

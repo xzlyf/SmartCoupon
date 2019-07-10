@@ -1,8 +1,9 @@
 package publi.xz.com.smartcoupon.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Baoyou9_9 {
+public class Baoyou9_9 implements Serializable {
 
     private long time;
     private int code;
@@ -41,7 +42,7 @@ public class Baoyou9_9 {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
 
         private int totalNum;
         private String pageId;
@@ -71,7 +72,7 @@ public class Baoyou9_9 {
             this.list = list;
         }
 
-        public static class ListBean {
+        public static class ListBean implements Serializable{
 
             private int id;
             private String goodsId;

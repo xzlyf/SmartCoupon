@@ -39,6 +39,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         //公共属性
         mContext = this;
         Logger.addLogAdapter(new AndroidLogAdapter());
+
         //公共方法
         setContentView(getLayoutResource());
         init_Data();

@@ -1,6 +1,7 @@
 package publi.xz.com.smartcoupon.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.entity.Baoyou9_9;
+import publi.xz.com.smartcoupon.ui.DetailsActivityV2;
 
 public class Baoyou9_9Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Baoyou9_9 baoyou;
@@ -30,7 +32,7 @@ public class Baoyou9_9Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         Picasso
                 .get()
                 .load(baoyou.getData().getList().get(position).getMainPic())
@@ -44,7 +46,11 @@ public class Baoyou9_9Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         ((ViewHolder) holder).quan_price.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //传输自定义对象类型
+                context.startActivity(
+                        new Intent(context, DetailsActivityV2.class)
+                                .putExtra("BaoyouData",baoyou)
+                                .putExtra("position",position));
             }
         });
     }

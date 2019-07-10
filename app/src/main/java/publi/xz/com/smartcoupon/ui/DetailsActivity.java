@@ -18,6 +18,9 @@ import publi.xz.com.smartcoupon.entity.Detail;
 import publi.xz.com.smartcoupon.ui.presenter.Presenter_Details;
 import publi.xz.com.smartcoupon.ui.view.IView;
 
+/**
+ * 商品详情图
+ */
 public class DetailsActivity extends BaseActivity implements IView{
     private String id;
     private Presenter_Details presenter;

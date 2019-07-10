@@ -3,6 +3,9 @@ package publi.xz.com.smartcoupon.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+/**
+ * SP工具类
+ */
 public class SharedPreferencesUtil {
 
     public static void saveJson(Context context, String key,String data){

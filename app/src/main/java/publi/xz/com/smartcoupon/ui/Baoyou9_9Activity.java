@@ -33,6 +33,7 @@ public class Baoyou9_9Activity extends BaseActivity implements IView {
         startLoading();
         findID();
         init_recycler();
+        //可以加载很多的
         presenter.get9_9tehui("100", "1", "1");
     }
 
