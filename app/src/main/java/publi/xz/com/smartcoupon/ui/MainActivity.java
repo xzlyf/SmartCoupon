@@ -1,24 +1,17 @@
 package publi.xz.com.smartcoupon.ui;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
 
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.base.BaseActivity;
-import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.utils.GlideImageLoader;
-import publi.xz.com.smartcoupon.utils.SignMD5Util;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -26,6 +19,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button hot_word_rank_btn;
     private Banner banner;
     private Button setting_btn;
+    private Button baoyou9_9;
 
 
     @Override
@@ -40,11 +34,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         init_banner();
 
 //        TreeMap<String,String> paraMap = new TreeMap<>();
-//        paraMap.put("appKey", "5d2345f1cae2c");
+//        paraMap.put("appKey", "5d24967e3c4d6");
 //        paraMap.put("version","v1.0.1");
-//        paraMap.put("sign", SignMD5Util.getSignStr(paraMap,"13fec554229f608f816c2aa36c355559"));
-//
-//
+//        paraMap.put("pageSize","100");
+//        paraMap.put("pageId","1");
+//        paraMap.put("cid","1");
+//        paraMap.put("sign", SignMD5Util.getSignStr(paraMap,"e25f590cc656794c86f7da47ea1ba545"));
 //        Log.d("xz", "init_Data: "+paraMap.get("sign"));
     }
 
@@ -70,7 +65,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         hot_word_rank_btn = findViewById(R.id.hot_word_rank_btn);
         hot_word_rank_btn.setOnClickListener(this);
         setting_btn = findViewById( R.id.setting_btn);
+        baoyou9_9 = findViewById( R.id.baoyou9_9);
         setting_btn.setOnClickListener(this);
+        baoyou9_9.setOnClickListener(this);
     }
 
 
@@ -85,6 +82,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.setting_btn:
                 //设置
+                break;
+            case R.id.baoyou9_9:
+                startActivity(new Intent(MainActivity.this,Baoyou9_9Activity.class));
                 break;
         }
     }

@@ -15,12 +15,18 @@ public class Local {
     public static String BASE_URL = REQUEST_LINK + REQUEST_IDENTIFY;
     public static String GET_USER_IP_URL = BASE_URL+ REQUEST_GET_USER_IP;
 
+    /**
+     * 大淘客api
+     */
+    public static final String appSecret = "e25f590cc656794c86f7da47ea1ba545";
+    public static final String appKey = "5d24967e3c4d6";
+    public static final String appversion = "v1.0.1";
 
-    public static final String appSecret = "d7f84bb553a185d6e650c1f773aff2e0";
-    public static final String appKey = "5d2345f1cae2c";
-    public static final String host = "https://openapi.dataoke.com/api/goods/get-ranking-list";
+    public static final String BAOYOU9_= "https://openapi.dataoke.com/api/goods/nine/op-goods-list";
 
-    //轻淘客apikey
+    /**
+     * 轻淘客apikey
+     */
     public static final String QT_APIKEY = "ElJPZlgE";
     //热搜词api
     public static final String HOT_WORD = "http://openapi.qingtaoke.com/hot?app_key="+QT_APIKEY+"&v=1.0&t=1";

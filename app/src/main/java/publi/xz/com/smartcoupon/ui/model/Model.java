@@ -2,8 +2,10 @@ package publi.xz.com.smartcoupon.ui.model;
 
 import java.io.IOException;
 
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Model implements IModel {
@@ -30,4 +32,6 @@ public class Model implements IModel {
             }
         }).start();
     }
+
+
 }

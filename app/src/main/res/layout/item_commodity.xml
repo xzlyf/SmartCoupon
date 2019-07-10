@@ -17,7 +17,7 @@
             android:layout_height="110dp"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
-            android:background="#f9b9b9" />
+            android:background="#fff" />
 
         <RelativeLayout
             android:layout_width="match_parent"

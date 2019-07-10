@@ -15,6 +15,7 @@ import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
 import publi.xz.com.smartcoupon.R;
+import publi.xz.com.smartcoupon.entity.Baoyou9_9;
 
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -112,4 +113,5 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         });
     }
+
 }

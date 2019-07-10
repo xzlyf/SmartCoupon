@@ -33,7 +33,6 @@ public class Presenter_Top100 {
 //                    Logger.w("top100人气榜数据"+data);
                     obj = new JSONObject(data);
                     Gson gson = new Gson();
-//                    Popular popular = gson.fromJson(obj.toString(),Popular.class);
                     view.setCommInfo(gson.fromJson(obj.toString(),Popular.class));
                 } catch (JSONException e) {
                     e.printStackTrace();

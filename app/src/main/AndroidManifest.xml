@@ -14,7 +14,7 @@
         <activity
             android:name=".ui.InitActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/full_screen" >
+            android:theme="@style/full_screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,7 +31,7 @@
         <activity
             android:name=".ui.DetailsActivity"
             android:screenOrientation="portrait" />
-
+        <activity android:name=".ui.Baoyou9_9Activity" />
     </application>
 
 </manifest>
