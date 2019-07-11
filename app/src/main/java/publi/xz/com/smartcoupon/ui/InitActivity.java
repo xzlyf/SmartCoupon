@@ -64,6 +64,10 @@ public class InitActivity extends AppCompatActivity {
         model.getDetailFromNet();
         //获取用户网络信息
         model.getUserIpFromNet();
+        //获取更新信息
+        model.checkUpdate();
+        //获取本地软件信息;
+        model.getLocalInfo();
 
     }
 

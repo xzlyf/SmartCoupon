@@ -54,15 +54,20 @@ public abstract class BaseActivity extends AppCompatActivity {
     private BaseDialog mDialog;
 
     //常用方法
-    public void mToast(String text) {
-        if (!TextUtils.isEmpty(text)) {
-            if (mToast == null) {
-                mToast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
-            } else {
-                mToast.setText(text);
+    public void mToast(final String text) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (!TextUtils.isEmpty(text)) {
+                    if (mToast == null) {
+                        mToast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+                    } else {
+                        mToast.setText(text);
+                    }
+                    mToast.show();
+                }
             }
-            mToast.show();
-        }
+        });
     }
 
     /**

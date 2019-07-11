@@ -6,6 +6,7 @@ import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.BaseKeyListener;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,7 +49,10 @@ public class SearchBar extends LinearLayout implements View.OnClickListener {
         findID();
         init_recycler();
 
+        listeners();
+    }
 
+    private void listeners() {
     }
 
 

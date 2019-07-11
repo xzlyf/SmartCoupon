@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Local {
+    public static  final String UPDATE_SERVER = "http://www.xzlyf.club/SmartCoupon/update.json";
     private static final String APIKEY = "b68d26601f";
     public static String TOPURL = "http://api.dataoke.com/index.php?r=Port/index&type=top100&appkey="+APIKEY+"&v=2";
     public static String DETAILS = "http://api.dataoke.com/index.php?r=port/index&appkey="+APIKEY+"&v=2&id=";
@@ -39,11 +40,24 @@ public class Local {
 
     //初始化返回的状态
     public static Map<String,Boolean> state = new LinkedHashMap<>();
+
+    /**
+     * 用户信息
+     */
     public static class self{
         public static String ip;//访问者的ip地址
         public static String province;//省份
         public static String city;//城市
         public static String isp;//网络服务商名称
         public static long server_time;//服务器时间
+    }
+
+    /**
+     * 本地软件信息
+     */
+    public static class LocalInfo{
+        public static int versionCode;// 例子:1 数值
+        public static String versionName;// 例子:v1.0.1 字符串
+        public static int systemVersion;//安卓版本
     }
 }

@@ -56,7 +56,8 @@
                     android:hint="先领券后购物"
                     android:maxLength="64"
                     android:maxLines="1"
-                    android:textColor="@color/secondary_text" />
+                    android:textColor="@color/secondary_text"
+                    android:singleLine="true"/>
 
                 <ImageView
                     android:id="@+id/search_delete"

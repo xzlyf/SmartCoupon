@@ -2,6 +2,10 @@ package publi.xz.com.smartcoupon.ui.presenter;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -15,6 +19,7 @@ import java.util.Random;
 import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.entity.Detail;
 import publi.xz.com.smartcoupon.entity.HotWord;
+import publi.xz.com.smartcoupon.entity.Update;
 import publi.xz.com.smartcoupon.entity.UserNetInfo;
 import publi.xz.com.smartcoupon.ui.DetailsActivity;
 import publi.xz.com.smartcoupon.ui.InitActivity;
@@ -30,6 +35,7 @@ public class Presenter_Init {
         this.view = view;
         model = new Model();
     }
+    public Presenter_Init(){};
 
     /**
      * 获取 热搜词数据
@@ -143,5 +149,56 @@ public class Presenter_Init {
 
             }
         });
+    }
+    /**
+     * 检查更新
+     */
+    public void checkUpdate() {
+        new Model().getDataFromNet(Local.UPDATE_SERVER, new IModel.OnLoadCompleteListener() {
+            @Override
+            public void success(String data) {
+                JSONObject obj = null;
+
+                try {
+//                    Logger.d("更新数据"+data);
+                    obj = new JSONObject(data);
+                    if (obj.getInt("value")==1){
+                        JSONObject obj2 = obj.getJSONObject("data");
+                        //保存json到本地
+                        SharedPreferencesUtil.saveJson(view, "UPDATE_DATA", obj2.toString());
+                        Local.state.put("更新信息", true);
+                    }else{
+                        //服务器问题
+                        Local.state.put("更新信息", false);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    //解析问题
+                    Local.state.put("更新信息", false);
+                }
+            }
+
+            @Override
+            public void failed(Exception e) {
+                //连接问题
+                Local.state.put("更新信息", false);
+            }
+        });
+    }
+
+    /**
+     * 获取本地信息
+     */
+    public void getLocalInfo() {
+        try {
+
+            PackageManager manager = view.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(view.getPackageName(),0);
+            Local.LocalInfo.versionCode = info.versionCode;
+            Local.LocalInfo.versionName = info.versionName;
+            Local.LocalInfo.systemVersion = Build.VERSION.SDK_INT;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
