@@ -3,10 +3,10 @@ package publi.xz.com.smartcoupon.entity;
 import java.io.Serializable;
 import java.util.List;
 
-public class Baoyou9_9 implements Serializable {
+public class Baoyou9_9  {
 
     private long time;
-    private int code;
+    private String code;
     private String msg;
     private DataBean data;
 
@@ -18,11 +18,11 @@ public class Baoyou9_9 implements Serializable {
         this.time = time;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -42,17 +42,17 @@ public class Baoyou9_9 implements Serializable {
         this.data = data;
     }
 
-    public static class DataBean implements Serializable {
+    public static class DataBean  {
 
-        private int totalNum;
+        private String totalNum;
         private String pageId;
         private List<ListBean> list;
 
-        public int getTotalNum() {
+        public String getTotalNum() {
             return totalNum;
         }
 
-        public void setTotalNum(int totalNum) {
+        public void setTotalNum(String totalNum) {
             this.totalNum = totalNum;
         }
 
@@ -72,49 +72,49 @@ public class Baoyou9_9 implements Serializable {
             this.list = list;
         }
 
-        public static class ListBean implements Serializable{
+        public static class ListBean {
 
-            private int id;
+            private String id;
             private String goodsId;
             private String title;
             private String dtitle;
             private double originalPrice;
             private double actualPrice;
-            private int shopType;
-            private int goldSellers;
-            private int monthSales;
-            private int twoHoursSales;
-            private int dailySales;
-            private int commissionType;
+            private String shopType;
+            private String goldSellers;
+            private String monthSales;
+            private String twoHoursSales;
+            private String dailySales;
+            private String commissionType;
             private String desc;
-            private int couponReceiveNum;
+            private String couponReceiveNum;
             private String couponLink;
             private String couponEndTime;
             private String couponStartTime;
-            private int couponPrice;
+            private String couponPrice;
             private String couponConditions;
-            private int activityType;
+            private String activityType;
             private String createTime;
             private String mainPic;
             private String marketingMainPic;
             private String sellerId;
-            private int cid;
+            private String cid;
             private double discounts;
             private double commissionRate;
-            private int couponTotalNum;
-            private int haitao;
+            private String couponTotalNum;
+            private String haitao;
             private String activityStartTime;
             private String activityEndTime;
             private String shopName;
-            private int shopLevel;
+            private String shopLevel;
             private double descScore;
-            private int brand;
+            private String brand;
             private String brandId;
             private String brandName;
-            private int hotPush;
+            private String hotPush;
             private String teamName;
             private String itemLink;
-            private int tchaoshi;
+            private String tchaoshi;
             private String detailPics;
             private double dsrScore;
             private double dsrPercent;
@@ -122,13 +122,13 @@ public class Baoyou9_9 implements Serializable {
             private double shipPercent;
             private double serviceScore;
             private double servicePercent;
-            private int tbcid;
+            private String tbcid;
 
-            public int getId() {
+            public String getId() {
                 return id;
             }
 
-            public void setId(int id) {
+            public void setId(String id) {
                 this.id = id;
             }
 
@@ -172,51 +172,51 @@ public class Baoyou9_9 implements Serializable {
                 this.actualPrice = actualPrice;
             }
 
-            public int getShopType() {
+            public String getShopType() {
                 return shopType;
             }
 
-            public void setShopType(int shopType) {
+            public void setShopType(String shopType) {
                 this.shopType = shopType;
             }
 
-            public int getGoldSellers() {
+            public String getGoldSellers() {
                 return goldSellers;
             }
 
-            public void setGoldSellers(int goldSellers) {
+            public void setGoldSellers(String goldSellers) {
                 this.goldSellers = goldSellers;
             }
 
-            public int getMonthSales() {
+            public String getMonthSales() {
                 return monthSales;
             }
 
-            public void setMonthSales(int monthSales) {
+            public void setMonthSales(String monthSales) {
                 this.monthSales = monthSales;
             }
 
-            public int getTwoHoursSales() {
+            public String getTwoHoursSales() {
                 return twoHoursSales;
             }
 
-            public void setTwoHoursSales(int twoHoursSales) {
+            public void setTwoHoursSales(String twoHoursSales) {
                 this.twoHoursSales = twoHoursSales;
             }
 
-            public int getDailySales() {
+            public String getDailySales() {
                 return dailySales;
             }
 
-            public void setDailySales(int dailySales) {
+            public void setDailySales(String dailySales) {
                 this.dailySales = dailySales;
             }
 
-            public int getCommissionType() {
+            public String getCommissionType() {
                 return commissionType;
             }
 
-            public void setCommissionType(int commissionType) {
+            public void setCommissionType(String commissionType) {
                 this.commissionType = commissionType;
             }
 
@@ -228,11 +228,11 @@ public class Baoyou9_9 implements Serializable {
                 this.desc = desc;
             }
 
-            public int getCouponReceiveNum() {
+            public String getCouponReceiveNum() {
                 return couponReceiveNum;
             }
 
-            public void setCouponReceiveNum(int couponReceiveNum) {
+            public void setCouponReceiveNum(String couponReceiveNum) {
                 this.couponReceiveNum = couponReceiveNum;
             }
 
@@ -260,11 +260,11 @@ public class Baoyou9_9 implements Serializable {
                 this.couponStartTime = couponStartTime;
             }
 
-            public int getCouponPrice() {
+            public String getCouponPrice() {
                 return couponPrice;
             }
 
-            public void setCouponPrice(int couponPrice) {
+            public void setCouponPrice(String couponPrice) {
                 this.couponPrice = couponPrice;
             }
 
@@ -276,11 +276,11 @@ public class Baoyou9_9 implements Serializable {
                 this.couponConditions = couponConditions;
             }
 
-            public int getActivityType() {
+            public String getActivityType() {
                 return activityType;
             }
 
-            public void setActivityType(int activityType) {
+            public void setActivityType(String activityType) {
                 this.activityType = activityType;
             }
 
@@ -316,11 +316,11 @@ public class Baoyou9_9 implements Serializable {
                 this.sellerId = sellerId;
             }
 
-            public int getCid() {
+            public String getCid() {
                 return cid;
             }
 
-            public void setCid(int cid) {
+            public void setCid(String cid) {
                 this.cid = cid;
             }
 
@@ -340,19 +340,19 @@ public class Baoyou9_9 implements Serializable {
                 this.commissionRate = commissionRate;
             }
 
-            public int getCouponTotalNum() {
+            public String getCouponTotalNum() {
                 return couponTotalNum;
             }
 
-            public void setCouponTotalNum(int couponTotalNum) {
+            public void setCouponTotalNum(String couponTotalNum) {
                 this.couponTotalNum = couponTotalNum;
             }
 
-            public int getHaitao() {
+            public String getHaitao() {
                 return haitao;
             }
 
-            public void setHaitao(int haitao) {
+            public void setHaitao(String haitao) {
                 this.haitao = haitao;
             }
 
@@ -380,11 +380,11 @@ public class Baoyou9_9 implements Serializable {
                 this.shopName = shopName;
             }
 
-            public int getShopLevel() {
+            public String getShopLevel() {
                 return shopLevel;
             }
 
-            public void setShopLevel(int shopLevel) {
+            public void setShopLevel(String shopLevel) {
                 this.shopLevel = shopLevel;
             }
 
@@ -396,11 +396,11 @@ public class Baoyou9_9 implements Serializable {
                 this.descScore = descScore;
             }
 
-            public int getBrand() {
+            public String getBrand() {
                 return brand;
             }
 
-            public void setBrand(int brand) {
+            public void setBrand(String brand) {
                 this.brand = brand;
             }
 
@@ -420,11 +420,11 @@ public class Baoyou9_9 implements Serializable {
                 this.brandName = brandName;
             }
 
-            public int getHotPush() {
+            public String getHotPush() {
                 return hotPush;
             }
 
-            public void setHotPush(int hotPush) {
+            public void setHotPush(String hotPush) {
                 this.hotPush = hotPush;
             }
 
@@ -444,11 +444,11 @@ public class Baoyou9_9 implements Serializable {
                 this.itemLink = itemLink;
             }
 
-            public int getTchaoshi() {
+            public String getTchaoshi() {
                 return tchaoshi;
             }
 
-            public void setTchaoshi(int tchaoshi) {
+            public void setTchaoshi(String tchaoshi) {
                 this.tchaoshi = tchaoshi;
             }
 
@@ -508,11 +508,11 @@ public class Baoyou9_9 implements Serializable {
                 this.servicePercent = servicePercent;
             }
 
-            public int getTbcid() {
+            public String getTbcid() {
                 return tbcid;
             }
 
-            public void setTbcid(int tbcid) {
+            public void setTbcid(String tbcid) {
                 this.tbcid = tbcid;
             }
         }

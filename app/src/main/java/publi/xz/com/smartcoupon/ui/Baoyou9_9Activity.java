@@ -11,6 +11,7 @@ import publi.xz.com.smartcoupon.base.BaseActivity;
 import publi.xz.com.smartcoupon.entity.Baoyou9_9;
 import publi.xz.com.smartcoupon.ui.presenter.Presenter_Baoyou9_9;
 import publi.xz.com.smartcoupon.ui.view.IView;
+import publi.xz.com.smartcoupon.utils.SpacesItemDecorationVertical;
 
 public class Baoyou9_9Activity extends BaseActivity implements IView {
     private Presenter_Baoyou9_9 presenter;
@@ -45,6 +46,8 @@ public class Baoyou9_9Activity extends BaseActivity implements IView {
     private void findID() {
         presenter = new Presenter_Baoyou9_9(this);
         recycler = findViewById(R.id.baoyou_recycler_view);
+        recycler.addItemDecoration(new SpacesItemDecorationVertical(8));//设置item的间距
+
     }
 
     @Override

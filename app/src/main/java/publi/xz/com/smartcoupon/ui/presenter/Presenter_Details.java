@@ -8,6 +8,7 @@ import com.orhanobut.logger.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.entity.Detail;
 import publi.xz.com.smartcoupon.entity.Popular;
 import publi.xz.com.smartcoupon.ui.DetailsActivity;
@@ -42,12 +43,16 @@ public class Presenter_Details {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     view.stopLoading();
+                    view.showDialog("服务器异常，请稍后重试！", Local.DIALOG_W);
+
                 }
             }
 
             @Override
             public void failed(Exception e) {
                 view.stopLoading();
+                view.showDialog("请求失败，请稍后重试！",Local.DIALOG_W);
+
             }
         });
     }

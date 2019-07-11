@@ -21,6 +21,7 @@ public class Local {
     public static final String appversion = "v1.0.1";
 
     public static final String BAOYOU9_= "https://openapi.dataoke.com/api/goods/nine/op-goods-list";
+    public static final String sousuo= "https://openapi.dataoke.com/api/goods/list-super-goods";
 
     /**
      * 轻淘客apikey

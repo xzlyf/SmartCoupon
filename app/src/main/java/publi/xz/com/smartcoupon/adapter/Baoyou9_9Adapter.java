@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.entity.Baoyou9_9;
+import publi.xz.com.smartcoupon.entity.DetailV2;
 import publi.xz.com.smartcoupon.ui.DetailsActivityV2;
 
 public class Baoyou9_9Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -46,11 +47,22 @@ public class Baoyou9_9Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         ((ViewHolder) holder).quan_price.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //转载数据到实体类
+                DetailV2 detail = new DetailV2();
+                detail.setActualPrice(baoyou.getData().getList().get(position).getActualPrice()+"");
+                detail.setCouponEndTime(baoyou.getData().getList().get(position).getCouponEndTime());
+                detail.setCouponPrice(baoyou.getData().getList().get(position).getCouponPrice()+"");
+                detail.setDesc(baoyou.getData().getList().get(position).getDesc());
+                detail.setDtitle(baoyou.getData().getList().get(position).getDtitle());
+                detail.setHotPush(baoyou.getData().getList().get(position).getHotPush()+"");
+                detail.setMainPic(baoyou.getData().getList().get(position).getMainPic());
+                detail.setMarketingMainPic(baoyou.getData().getList().get(position).getMarketingMainPic());
+                detail.setMonthSales(baoyou.getData().getList().get(position).getMonthSales()+"");
+                detail.setOriginalPrice(baoyou.getData().getList().get(position).getOriginalPrice()+"");
+                detail.setShopType(baoyou.getData().getList().get(position).getShopType()+"");
+                detail.setCouponLink(baoyou.getData().getList().get(position).getCouponLink());
                 //传输自定义对象类型
-                context.startActivity(
-                        new Intent(context, DetailsActivityV2.class)
-                                .putExtra("BaoyouData",baoyou)
-                                .putExtra("position",position));
+                context.startActivity(new Intent(context,DetailsActivityV2.class).putExtra("DetailV2",detail));
             }
         });
     }

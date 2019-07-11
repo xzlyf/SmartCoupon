@@ -1,7 +1,8 @@
 package publi.xz.com.smartcoupon.ui;
 
 import android.content.Intent;
-import android.util.Log;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
@@ -12,12 +13,11 @@ import java.util.List;
 
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.base.BaseActivity;
-import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.utils.GlideImageLoader;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
-    private Button test;
+    private Button renqiRank;
     private Button hot_word_rank_btn;
     private Banner banner;
     private Button setting_btn;
@@ -34,15 +34,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findID();
         //设置banner轮播图
         init_banner();
-//        TreeMap<String,String> paraMap = new TreeMap<>();
-//        paraMap.put("appKey", "5d24967e3c4d6");
-//        paraMap.put("version","v1.0.1");
-//        paraMap.put("pageSize","100");
-//        paraMap.put("pageId","1");
-//        paraMap.put("cid","1");
-//        paraMap.put("sign", SignMD5Util.getSignStr(paraMap,"e25f590cc656794c86f7da47ea1ba545"));
-//        Log.d("xz", "init_Data: "+paraMap.get("sign"));
     }
+
 
     private void init_banner() {
         List<String> img = new ArrayList<>();
@@ -60,8 +53,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void findID() {
-        test = findViewById(R.id.pai_hang_bang_btn);
-        test.setOnClickListener(this);
+        renqiRank = findViewById(R.id.pai_hang_bang_btn);
+        renqiRank.setOnClickListener(this);
         banner = findViewById(R.id.banner);
         hot_word_rank_btn = findViewById(R.id.hot_word_rank_btn);
         hot_word_rank_btn.setOnClickListener(this);

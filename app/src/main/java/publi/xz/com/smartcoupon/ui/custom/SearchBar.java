@@ -1,12 +1,11 @@
 package publi.xz.com.smartcoupon.ui.custom;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -15,16 +14,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.orhanobut.logger.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.adapter.HotWordAdapter;
 import publi.xz.com.smartcoupon.entity.HotWord;
+import publi.xz.com.smartcoupon.ui.SearchActivity;
 import publi.xz.com.smartcoupon.utils.SharedPreferencesUtil;
-import publi.xz.com.smartcoupon.utils.SpacesItemDecoration;
+import publi.xz.com.smartcoupon.utils.SpacesItemDecorationHorizontal;
 
 public class SearchBar extends LinearLayout implements View.OnClickListener {
     private Context context;
@@ -67,7 +65,7 @@ public class SearchBar extends LinearLayout implements View.OnClickListener {
         //横向布局
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.addItemDecoration(new SpacesItemDecoration(15));
+        recyclerView.addItemDecoration(new SpacesItemDecorationHorizontal(15));
         recyclerView.setAdapter(adapter);
     }
 
@@ -84,6 +82,7 @@ public class SearchBar extends LinearLayout implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.search_btn:
+                context.startActivity(new Intent(context, SearchActivity.class).putExtra("ant",search_input.getText().toString().trim()));
                 break;
             case R.id.search_delete:
                 search_input.setText("");

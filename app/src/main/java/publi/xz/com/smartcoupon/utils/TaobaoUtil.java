@@ -29,7 +29,7 @@ public class TaobaoUtil {
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
-            Toast.makeText(context, "推荐使用淘宝App进行领券", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "推荐使用淘宝App进行领券", Toast.LENGTH_LONG).show();
         }
     }
 }

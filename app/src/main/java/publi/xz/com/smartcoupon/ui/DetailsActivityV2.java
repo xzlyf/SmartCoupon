@@ -1,40 +1,28 @@
 package publi.xz.com.smartcoupon.ui;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Build;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
-import java.util.logging.Logger;
-
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.base.BaseActivity;
-import publi.xz.com.smartcoupon.entity.Baoyou9_9;
+import publi.xz.com.smartcoupon.entity.DetailV2;
 import publi.xz.com.smartcoupon.ui.view.IView;
 
-import static publi.xz.com.smartcoupon.utils.CheckPackage.checkPackage;
 import static publi.xz.com.smartcoupon.utils.TaobaoUtil.jump2TaobaoQuan;
 import static publi.xz.com.smartcoupon.utils.TransparentBarUtil.makeStatusBarTransparent;
 
 /**
  * 商品详情图2.0
+ * 兼容更多adapter的接入
  */
 
 public class DetailsActivityV2 extends BaseActivity implements IView {
-    private Baoyou9_9 baoyouData;
-    private int position;
+    private DetailV2 detailV2;
 
     private ImageView mainPic;
     private TextView actualPrice;
@@ -58,34 +46,32 @@ public class DetailsActivityV2 extends BaseActivity implements IView {
     public void init_Data() {
         //设置透明状态栏
         makeStatusBarTransparent(this);
-        baoyouData = (Baoyou9_9) getIntent().getSerializableExtra("BaoyouData");
-        position = getIntent().getIntExtra("position", 1);
+        detailV2 = (DetailV2) getIntent().getSerializableExtra("DetailV2");
         findID();
         //加载主图
-        Picasso.get().load(baoyouData.getData().getList().get(position).getMainPic()).fit().into(mainPic);
+        Picasso.get().load(detailV2.getMainPic()).fit().into(mainPic);
         //加载营销主图
-//        Picasso.get().load(baoyouData.getData().getList().get(position).getMarketingMainPic()).into(marketingMainPic);
-        Glide.with(this).load(baoyouData.getData().getList().get(position).getMarketingMainPic()).into(marketingMainPic);
+        Glide.with(this).load(detailV2.getMarketingMainPic()).into(marketingMainPic);
         marketingMainPic.refreshDrawableState();//刷新试图状态
         //显示商家类型
-        if (baoyouData.getData().getList().get(position).getShopType() == 1) {
+        if (detailV2.getShopType().equals(1)) {
             Picasso.get().load(R.mipmap.tianmaologo).into(shopType);
         } else {
             Picasso.get().load(R.mipmap.taobaologo).into(shopType);
         }
-        actualPrice.setText(baoyouData.getData().getList().get(position).getActualPrice() + "￥");
-        originalPrice.setText(baoyouData.getData().getList().get(position).getOriginalPrice() + "￥");
-        dtitle.setText(baoyouData.getData().getList().get(position).getDtitle());
-        desc.setText(baoyouData.getData().getList().get(position).getDesc());
-        monthSales.setText("月销" + baoyouData.getData().getList().get(position).getMonthSales());
-        hotPush.setText("热度" + baoyouData.getData().getList().get(position).getHotPush());
-        couponEndTime.setText("结束时间" + baoyouData.getData().getList().get(position).getCouponEndTime());
-        couponPrice.setText("领" + baoyouData.getData().getList().get(position).getCouponPrice() + "元券");
+        actualPrice.setText(detailV2.getActualPrice() + "￥");
+        originalPrice.setText(detailV2.getOriginalPrice() + "￥");
+        dtitle.setText(detailV2.getDtitle());
+        desc.setText(detailV2.getDesc());
+        monthSales.setText("月销" + detailV2.getMonthSales());
+        hotPush.setText("热度" + detailV2.getHotPush());
+        couponEndTime.setText("结束时间" + detailV2.getCouponEndTime());
+        couponPrice.setText("领" + detailV2.getCouponPrice() + "元券");
         couponPrice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //跳转至淘宝领券界面
-                jump2TaobaoQuan(DetailsActivityV2.this,baoyouData.getData().getList().get(position).getCouponLink());
+                jump2TaobaoQuan(DetailsActivityV2.this, detailV2.getCouponLink());
 
             }
         });

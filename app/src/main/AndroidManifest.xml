@@ -38,7 +38,8 @@
             android:name=".ui.DetailsActivityV2"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".ui.SettingActivity" />
-
+        <activity android:name=".ui.SearchActivity"
+            android:theme="@style/AppNoTitle" />
     </application>
 
 </manifest>
