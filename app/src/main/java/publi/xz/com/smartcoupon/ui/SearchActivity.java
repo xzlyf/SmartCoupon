@@ -54,6 +54,8 @@ public class SearchActivity extends BaseActivity implements IView, View.OnClickL
         recycler.setLayoutManager(manager);
         recycler.addItemDecoration(new SpacesItemDecorationVertical(8));//设置item的间距
         presenter.getSearchData("0",default_ant,"0","0","total_sales");
+        adapter = new SearchAdapter(SearchActivity.this);
+
 
     }
 
@@ -97,6 +99,7 @@ public class SearchActivity extends BaseActivity implements IView, View.OnClickL
                 searchInput.setText("");
                 break;
             case R.id.search_btn:
+                presenter.getSearchData("0",searchInput.getText().toString().trim(),"0","0","total_sales");
                 break;
         }
     }
@@ -105,8 +108,9 @@ public class SearchActivity extends BaseActivity implements IView, View.OnClickL
         handler.post(new Runnable() {
             @Override
             public void run() {
-                adapter = new SearchAdapter(SearchActivity.this,fromJson);
+                adapter.refresh(fromJson);
                 recycler.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
                 stopLoading();
 
 

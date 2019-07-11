@@ -6,6 +6,7 @@
     app:cardElevation="0dp"
     app:cardBackgroundColor="@color/item_color"
     app:cardCornerRadius="8dp"
+
     >
 
     <TextView
@@ -17,7 +18,9 @@
         android:layout_marginTop="2dp"
         android:layout_marginBottom="2dp"
         android:textColor="@color/white"
+        android:background="@drawable/item_bg_selector"
         android:textSize="13sp"
+
         />
 
 </android.support.v7.widget.CardView>

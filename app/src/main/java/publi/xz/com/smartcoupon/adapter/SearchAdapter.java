@@ -28,12 +28,20 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private Context context;
     private Search search;
 
-    public SearchAdapter(Context mContext, Search mSearch) {
+    public SearchAdapter(Context mContext) {
         context = mContext;
-        search = mSearch;
+
 
     }
 
+    /**
+     * 给外部刷新数据
+     * @param mSearch
+     */
+    public void refresh(Search mSearch){
+        search = null;
+        search = mSearch;
+    }
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

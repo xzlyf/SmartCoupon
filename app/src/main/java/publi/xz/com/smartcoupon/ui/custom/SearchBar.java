@@ -2,6 +2,7 @@ package publi.xz.com.smartcoupon.ui.custom;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,9 +30,11 @@ public class SearchBar extends LinearLayout implements View.OnClickListener {
     private EditText search_input;
     private ImageView search_delete;
     private TextView search_btn;
+    private TextView title;
     private RecyclerView recyclerView;
     private HotWordAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
+    private Vibrator tor;//控制震动
 
     public SearchBar(Context context) {
         super(context);
@@ -44,6 +47,8 @@ public class SearchBar extends LinearLayout implements View.OnClickListener {
 
         findID();
         init_recycler();
+
+
     }
 
 
@@ -53,7 +58,7 @@ public class SearchBar extends LinearLayout implements View.OnClickListener {
     private void init_recycler() {
         //尝试读取本地json数据
         String jsonData = SharedPreferencesUtil.getJson(context, "HOT_WORD", "null");
-        if (jsonData.equals("null")){
+        if (jsonData.equals("null")) {
             recyclerView.setVisibility(View.GONE);
             return;
         }
@@ -76,16 +81,24 @@ public class SearchBar extends LinearLayout implements View.OnClickListener {
         search_btn.setOnClickListener(this);
         search_delete.setOnClickListener(this);
         recyclerView = findViewById(R.id.hot_work_recycler);
+        title = findViewById(R.id.title);
+        title.setOnClickListener(this);
+        tor = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.search_btn:
-                context.startActivity(new Intent(context, SearchActivity.class).putExtra("ant",search_input.getText().toString().trim()));
+                context.startActivity(new Intent(context, SearchActivity.class).putExtra("ant", search_input.getText().toString().trim()));
                 break;
             case R.id.search_delete:
                 search_input.setText("");
+                break;
+            case R.id.title:
+                //震动一下
+                tor.vibrate( new long[]{100,100,100,300},-1);
                 break;
         }
     }
