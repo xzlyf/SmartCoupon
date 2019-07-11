@@ -7,13 +7,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import publi.xz.com.smartcoupon.R;
-import publi.xz.com.smartcoupon.adapter.CommodityAdapter;
+import publi.xz.com.smartcoupon.adapter.Top100Adapter;
 import publi.xz.com.smartcoupon.base.BaseActivity;
 import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.entity.Popular;
@@ -25,7 +23,7 @@ public class Top100Activity extends BaseActivity implements IView {
     private Presenter_Top100 mPresenterTop100;
     private RecyclerView recycler;
     private ImageView loading_view;
-    private CommodityAdapter adapter;
+    private Top100Adapter adapter;
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -133,7 +131,7 @@ public class Top100Activity extends BaseActivity implements IView {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                adapter = new CommodityAdapter(lists.get(0), Top100Activity.this);
+                adapter = new Top100Adapter(lists.get(0), Top100Activity.this);
                 recycler.setAdapter(adapter);
             }
         });

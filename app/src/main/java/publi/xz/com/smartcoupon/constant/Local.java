@@ -31,7 +31,10 @@ public class Local {
     /**
      * 对话框标识
      */
-    public static String DIALOG_L = "L";
+    public static String DIALOG_L = "L";//加载
+    public static String DIALOG_W = "W";//警告
+    public static String DIALOG_E = "E";//错误
+    public static String DIALOG_M = "M";//普通消息
 
     //初始化返回的状态
     public static Map<String,Boolean> state = new LinkedHashMap<>();

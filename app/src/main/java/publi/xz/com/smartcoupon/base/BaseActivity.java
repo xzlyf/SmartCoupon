@@ -65,6 +65,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *
+     * @param msg 消息
+     * @param type 类型
+     */
     public void showDialog(final String msg, final String type) {
         handler.post(new Runnable() {
             @Override

@@ -10,4 +10,10 @@ public interface IModel {
 
         void failed(Exception e);
     }
+
+    //回调接口2.0
+    interface OnReady{
+        void finish();
+        void failed();
+    }
 }

@@ -49,15 +49,19 @@ public class Presenter_Baoyou9_9 {
                     if (obj.get("msg").equals("成功")){
                         Gson gson  = new Gson();
                         view.showRecycler(gson.fromJson(obj.toString(),Baoyou9_9.class));
+                    }else{
+                        view.showDialog("服务器异常，请稍后重试！",Local.DIALOG_W);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    view.showDialog("解析失败，请稍后重试！",Local.DIALOG_W);
                 }
             }
 
             @Override
             public void failed(Exception e) {
-
+                view.stopLoading();
+                view.showDialog("加载失败，请检查网络是否连接成功！",Local.DIALOG_E);
             }
         });
     }

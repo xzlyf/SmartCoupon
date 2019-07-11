@@ -126,7 +126,6 @@ public class Presenter_Init {
 
                             Local.self.server_time = obj2.getLong("time");
                             Local.state.put("服务器时间", true);
-
                         }
 
 

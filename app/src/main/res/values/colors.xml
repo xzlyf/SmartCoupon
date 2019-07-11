@@ -14,4 +14,9 @@
     <color name="red">#D32F2F</color>
     <color name="item_color">#FA7268</color>
 
+    <!--对话框标题背景颜色-->
+    <color name="dialog_w">#f1c40f</color>
+    <color name="dialog_e">#e74c3c</color>
+    <color name="dialog_t">#e67e22</color>
+    <color name="dialog_l">#2ecc71</color>
 </resources>

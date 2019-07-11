@@ -7,11 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 
+import com.google.gson.Gson;
+import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.constant.Local;
+import publi.xz.com.smartcoupon.entity.HotWord;
+import publi.xz.com.smartcoupon.ui.model.IModel;
 import publi.xz.com.smartcoupon.ui.presenter.Presenter_Init;
+import publi.xz.com.smartcoupon.utils.SharedPreferencesUtil;
 
 /**
  * 启动类
@@ -26,6 +31,7 @@ public class InitActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init);
+        Logger.addLogAdapter(new AndroidLogAdapter());
         hideBar();
         findID();
         initData();
@@ -52,12 +58,13 @@ public class InitActivity extends AppCompatActivity {
      * 初始化数据
      */
     private void initData() {
+        //获取服务器时间
+        model.getServerTime();
         //获取今日热搜词
         model.getDetailFromNet();
         //获取用户网络信息
         model.getUserIpFromNet();
-        //获取服务器时间
-        model.getServerTime();
+
     }
 
     private void findID() {

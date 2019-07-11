@@ -58,7 +58,13 @@ public class Baoyou9_9Activity extends BaseActivity implements IView {
     }
 
     @Override
-    public void sToast(String msg) {
+    public void sToast(final String msg) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                mToast(msg);
+            }
+        });
 
     }
 

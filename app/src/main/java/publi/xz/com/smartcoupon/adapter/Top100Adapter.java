@@ -24,11 +24,11 @@ import publi.xz.com.smartcoupon.entity.Popular;
 import publi.xz.com.smartcoupon.ui.DetailsActivity;
 import publi.xz.com.smartcoupon.ui.Top100Activity;
 
-public class CommodityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class Top100Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private  List<Popular.ResultBean> popular;
     private final Context mContext;
 
-    public CommodityAdapter(List<Popular.ResultBean> popular, Context context) {
+    public Top100Adapter(List<Popular.ResultBean> popular, Context context) {
         this.popular = popular;
         this.mContext = context;
     }
@@ -54,7 +54,6 @@ public class CommodityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ((ViewHolder) holder).org_Price.setText("原价：" + popular.get(position).getOrg_Price());
             ((ViewHolder) holder).price.setText("券后：" + popular.get(position).getPrice() + "");
             ((ViewHolder) holder).quan_price.setText("领" + popular.get(position).getQuan_price() + "元券");
-//            Log.d("xzc", "onBindViewHolder:当前item: "+position);
             ((ViewHolder) holder).quan_price.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

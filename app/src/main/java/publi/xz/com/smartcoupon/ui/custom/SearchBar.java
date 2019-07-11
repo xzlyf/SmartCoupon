@@ -56,6 +56,7 @@ public class SearchBar extends LinearLayout implements View.OnClickListener {
         //尝试读取本地json数据
         String jsonData = SharedPreferencesUtil.getJson(context, "HOT_WORD", "null");
         if (jsonData.equals("null")){
+            recyclerView.setVisibility(View.GONE);
             return;
         }
         Gson gson = new Gson();

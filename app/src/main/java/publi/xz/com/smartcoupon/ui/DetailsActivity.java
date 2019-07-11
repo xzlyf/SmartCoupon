@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +18,8 @@ import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.entity.Detail;
 import publi.xz.com.smartcoupon.ui.presenter.Presenter_Details;
 import publi.xz.com.smartcoupon.ui.view.IView;
+
+import static publi.xz.com.smartcoupon.utils.TaobaoUtil.jump2TaobaoQuan;
 
 /**
  * 商品详情图
@@ -89,7 +92,13 @@ public class DetailsActivity extends BaseActivity implements IView{
                 Quan_condition.setText("单笔满"+detailData.getResult().getQuan_condition()+"元可用");
                 Quan_time.setText("结束时间"+detailData.getResult().getQuan_time());
                 Quan_price.setText("立即领取"+detailData.getResult().getQuan_price()+"元优惠券");
-
+                Quan_price.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //跳转至淘宝领券界面
+                        jump2TaobaoQuan(DetailsActivity.this,detailData.getResult().getQuan_link());
+                    }
+                });
                 stopLoading();
             }
         });

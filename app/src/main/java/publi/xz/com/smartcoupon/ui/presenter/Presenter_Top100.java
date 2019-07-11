@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.entity.Popular;
 import publi.xz.com.smartcoupon.ui.Top100Activity;
 import publi.xz.com.smartcoupon.ui.model.IModel;
@@ -37,14 +38,15 @@ public class Presenter_Top100 {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     view.stopLoading();
-                    view.sToast("数据解析失败失败");
+                    view.showDialog("解析失败，请稍后重试", Local.DIALOG_W);
                 }
             }
 
             @Override
             public void failed(Exception e) {
                 view.stopLoading();
-                view.sToast("请求失败");
+                view.showDialog("请求失败，请检查网络连接是否正常", Local.DIALOG_E);
+
             }
         });
     }
