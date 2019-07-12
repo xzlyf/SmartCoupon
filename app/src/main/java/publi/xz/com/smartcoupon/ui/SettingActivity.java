@@ -18,8 +18,10 @@ import java.io.File;
 
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.base.BaseActivity;
+import publi.xz.com.smartcoupon.base.BaseDialog;
 import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.entity.Update;
+import publi.xz.com.smartcoupon.ui.custom.UpdateDialog;
 import publi.xz.com.smartcoupon.ui.model.IModel;
 import publi.xz.com.smartcoupon.ui.model.Model;
 import publi.xz.com.smartcoupon.ui.view.IView;
@@ -82,13 +84,24 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private void check() {
 
         if (update.getCode()>Local.LocalInfo.versionCode){
-            sToast("需要更新!");
 
+            showUpdateDialog();
         }else{
             sToast("已是最新版啦!");
         }
     }
 
+    private UpdateDialog dialog;
+
+    private void showUpdateDialog(){
+        dialog = new UpdateDialog(SettingActivity.this, R.style.update_dialog);
+        dialog.create();
+        dialog.show();
+
+    }
+    private void dismissUpdateDialog(){
+
+    }
 
     @Override
     public void startLoading() {
