@@ -17,8 +17,10 @@
         <item name="android:backgroundDimEnabled">true</item><!--模糊-->
     </style>
     <!--更新对话框样式-->
-    <style name="update_dialog" parent="Theme.Dialog">
-        <item name="android:windowIsTranslucent">true</item>
+    <style name="update_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+        <item name="android:windowBackground">@color/white</item><!--背景透明-->
+
     </style>
     <!-- NOTitle -->
     <style name="AppNoTitle" parent="Theme.AppCompat.Light.NoActionBar">

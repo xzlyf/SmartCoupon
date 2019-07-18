@@ -43,7 +43,7 @@ public class Baoyou9_9Activity extends BaseActivity implements IView {
     }
 
 
-    private void findID() {
+    public void findID() {
         presenter = new Presenter_Baoyou9_9(this);
         recycler = findViewById(R.id.baoyou_recycler_view);
         recycler.addItemDecoration(new SpacesItemDecorationVertical(8));//设置item的间距

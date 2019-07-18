@@ -93,7 +93,7 @@ public class DetailsActivityV2 extends BaseActivity implements IView {
         marketingMainPic = null;
     }
 
-    private void findID() {
+    public void findID() {
         mainPic = findViewById(R.id.mainPic);
         actualPrice = findViewById(R.id.actualPrice);
         originalPrice = findViewById(R.id.originalPrice);

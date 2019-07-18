@@ -1,11 +1,12 @@
 package publi.xz.com.smartcoupon.ui;
 
 import android.content.Intent;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.content.IntentFilter;
 import android.view.View;
 import android.widget.Button;
 
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -31,10 +32,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void init_Data() {
-        findID();
+        Logger.addLogAdapter(new AndroidLogAdapter());
+
         //设置banner轮播图
         init_banner();
     }
+
 
 
     private void init_banner() {
@@ -52,14 +55,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
-    private void findID() {
+    @Override
+    public void findID() {
         renqiRank = findViewById(R.id.pai_hang_bang_btn);
         renqiRank.setOnClickListener(this);
         banner = findViewById(R.id.banner);
         hot_word_rank_btn = findViewById(R.id.hot_word_rank_btn);
         hot_word_rank_btn.setOnClickListener(this);
-        setting_btn = findViewById( R.id.setting_btn);
-        baoyou9_9 = findViewById( R.id.baoyou9_9);
+        setting_btn = findViewById(R.id.setting_btn);
+        baoyou9_9 = findViewById(R.id.baoyou9_9);
         setting_btn.setOnClickListener(this);
         baoyou9_9.setOnClickListener(this);
     }
@@ -78,7 +82,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(new Intent(MainActivity.this, SettingActivity.class));
                 break;
             case R.id.baoyou9_9:
-                startActivity(new Intent(MainActivity.this,Baoyou9_9Activity.class));
+                startActivity(new Intent(MainActivity.this, Baoyou9_9Activity.class));
                 break;
         }
     }

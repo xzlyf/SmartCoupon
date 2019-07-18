@@ -1,29 +1,16 @@
 package publi.xz.com.smartcoupon.ui;
 
-import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.orhanobut.logger.Logger;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
 
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.base.BaseActivity;
-import publi.xz.com.smartcoupon.base.BaseDialog;
 import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.entity.Update;
 import publi.xz.com.smartcoupon.ui.custom.UpdateDialog;
-import publi.xz.com.smartcoupon.ui.model.IModel;
-import publi.xz.com.smartcoupon.ui.model.Model;
 import publi.xz.com.smartcoupon.ui.view.IView;
 import publi.xz.com.smartcoupon.utils.SharedPreferencesUtil;
 
@@ -60,7 +47,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     }
 
-    private void findID() {
+    public void findID() {
         cleanCache = findViewById(R.id.clean_cache);
         checkUpdate = findViewById(R.id.check_update);
         checkUpdate.setOnClickListener(this);
@@ -84,8 +71,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private void check() {
 
         if (update.getCode()>Local.LocalInfo.versionCode){
-
-            showUpdateDialog();
+            if (Local.LocalInfo.isshowed){
+                dialog.show();
+            }else{
+                showUpdateDialog();
+            }
         }else{
             sToast("已是最新版啦!");
         }
@@ -96,10 +86,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private void showUpdateDialog(){
         dialog = new UpdateDialog(SettingActivity.this, R.style.update_dialog);
         dialog.create();
+        dialog.setMsg(update.getMsg());
+        dialog.setVersionName(update.getName());
+        dialog.setDownloadLink(update.getLink());
         dialog.show();
-
-    }
-    private void dismissUpdateDialog(){
+        Local.LocalInfo.isshowed= true;
 
     }
 

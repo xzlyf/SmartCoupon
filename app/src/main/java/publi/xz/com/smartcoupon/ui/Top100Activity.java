@@ -37,6 +37,11 @@ public class Top100Activity extends BaseActivity implements IView {
     }
 
     @Override
+    public void findID() {
+
+    }
+
+    @Override
     public void init_Data() {
         startLoading();
         setTitle("人气榜");

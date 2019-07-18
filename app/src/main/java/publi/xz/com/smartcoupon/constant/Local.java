@@ -59,5 +59,6 @@ public class Local {
         public static int versionCode;// 例子:1 数值
         public static String versionName;// 例子:v1.0.1 字符串
         public static int systemVersion;//安卓版本
+        public static boolean isshowed = false;//一个对话框是否显示过的标识
     }
 }

@@ -1,12 +1,17 @@
 package publi.xz.com.smartcoupon.base;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -38,14 +43,44 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //公共属性
         mContext = this;
-        Logger.addLogAdapter(new AndroidLogAdapter());
 
         //公共方法
         setContentView(getLayoutResource());
-        init_Data();
+        findID();
+        getPermission();
+    }
+
+    private void getPermission() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            } else {
+                init_Data();
+            }
+        } else {
+            init_Data();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1) {
+            for (int i = 0; i < permissions.length; i++) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "" + "权限" + permissions[i] + "申请成功", Toast.LENGTH_SHORT).show();
+                    init_Data();
+                } else {
+                    Toast.makeText(this, "" + "权限" + permissions[i] + "申请失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 
     public abstract int getLayoutResource();
+
+    public abstract void findID();
 
     public abstract void init_Data();
 
@@ -71,8 +106,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     *
-     * @param msg 消息
+     * @param msg  消息
      * @param type 类型
      */
     public void showDialog(final String msg, final String type) {
@@ -99,8 +133,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         });
     }
+
     private ProgressDialog progressDialog;
-    public void showLoading(){
+
+    public void showLoading() {
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -113,13 +149,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
 
     }
-    public void dismissLoading(){
+
+    public void dismissLoading() {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                if (progressDialog !=null &&progressDialog.isShowing()){
+                if (progressDialog != null && progressDialog.isShowing()) {
                     progressDialog.dismiss();
-                    progressDialog=null;
+                    progressDialog = null;
                 }
             }
         });

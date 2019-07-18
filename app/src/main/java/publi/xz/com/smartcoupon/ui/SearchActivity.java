@@ -31,7 +31,7 @@ public class SearchActivity extends BaseActivity implements IView, View.OnClickL
     private Presenter_Search presenter;
     private SearchAdapter adapter;
 
-    Handler handler = new Handler(){
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -46,20 +46,38 @@ public class SearchActivity extends BaseActivity implements IView, View.OnClickL
     @Override
     public void init_Data() {
         findID();
-        init_Recycler();
+        //获取传入的关键词
+        default_ant = getIntent().getStringExtra("ant");
+        if (!default_ant.equals("")){
+            searchInput.setText(default_ant);
+            init_Recycler();
+
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        default_ant=null;
+        searchBack=null;
+        searchInput=null;
+        searchDelete=null;
+        searchBtn=null;
+        recycler=null;
+        presenter=null;
+        adapter=null;
     }
 
     private void init_Recycler() {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recycler.setLayoutManager(manager);
         recycler.addItemDecoration(new SpacesItemDecorationVertical(8));//设置item的间距
-        presenter.getSearchData("0",default_ant,"0","0","total_sales");
         adapter = new SearchAdapter(SearchActivity.this);
-
+        presenter.getSearchData("0", default_ant, "0", "0", "total_sales");
 
     }
 
-    private void findID() {
+    public void findID() {
         recycler = findViewById(R.id.search_recycler);
         searchBack = findViewById(R.id.search_back);
         searchInput = findViewById(R.id.search_input);
@@ -68,8 +86,7 @@ public class SearchActivity extends BaseActivity implements IView, View.OnClickL
         searchBack.setOnClickListener(this);
         searchDelete.setOnClickListener(this);
         searchBtn.setOnClickListener(this);
-        default_ant = getIntent().getStringExtra("ant");
-        searchInput.setText(default_ant);
+
         presenter = new Presenter_Search(this);
     }
 
@@ -90,8 +107,7 @@ public class SearchActivity extends BaseActivity implements IView, View.OnClickL
 
     @Override
     public void onClick(View view) {
-        switch (view.getId())
-        {
+        switch (view.getId()) {
             case R.id.search_back:
                 finish();
                 break;
@@ -99,7 +115,7 @@ public class SearchActivity extends BaseActivity implements IView, View.OnClickL
                 searchInput.setText("");
                 break;
             case R.id.search_btn:
-                presenter.getSearchData("0",searchInput.getText().toString().trim(),"0","0","total_sales");
+                presenter.getSearchData("0", searchInput.getText().toString().trim(), "0", "0", "total_sales");
                 break;
         }
     }
@@ -112,7 +128,6 @@ public class SearchActivity extends BaseActivity implements IView, View.OnClickL
                 recycler.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
                 stopLoading();
-
 
 
             }

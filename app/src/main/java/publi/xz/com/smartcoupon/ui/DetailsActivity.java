@@ -51,7 +51,7 @@ public class DetailsActivity extends BaseActivity implements IView{
         presenter.getDetailFromNet(Local.DETAILS+id);
     }
 
-    private void findID() {
+    public void findID() {
         pic = findViewById(R.id.detail_pic);
         detail_short_title = findViewById(R.id.detail_short_title);
         detail_title = findViewById(R.id.detail_title);

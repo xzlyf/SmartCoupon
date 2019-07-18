@@ -35,6 +35,9 @@ public class Presenter_Search {
      * @param sort 排序字段      排序字段信息 销量（total_sales） 价格（price），排序_des（降序），排序_asc（升序）
      */
     public void getSearchData(String type,String keyWords, String tmall, String haitao,String sort) {
+        if (keyWords.equals("") ){
+            return;
+        }
         view.showLoading();
         TreeMap<String, String> paraMap = new TreeMap<>();
         paraMap.put("appKey", Local.appKey);
