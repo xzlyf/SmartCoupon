@@ -31,7 +31,7 @@ public class Presenter_Main {
 
 
     private String default_pageSize = "50";//每页数据50条
-    private String default_pageId = "1";//起始页
+    private int default_pageId = 1;//起始页
     /**
      * 获取
      */
@@ -40,7 +40,7 @@ public class Presenter_Main {
         paraMap.put("appKey", Local.appKey);
         paraMap.put("version", Local.appversion);
         paraMap.put("pageSize", default_pageSize);
-        paraMap.put("pageId", default_pageId);
+        paraMap.put("pageId", default_pageId+"");
         paraMap.put("cid", "1");
         paraMap.put("sign", SignMD5Util.getSignStr(paraMap, Local.appSecret));
 
@@ -50,6 +50,7 @@ public class Presenter_Main {
         model.getDataFromNet(url, new IModel.OnLoadCompleteListener() {
             @Override
             public void success(String data) {
+                default_pageId++;//默认页加1
                 JSONObject obj = null;
                 try {
 //                    Logger.w("主页商品列表"+data);

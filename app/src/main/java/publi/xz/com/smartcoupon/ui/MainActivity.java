@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +28,7 @@ import publi.xz.com.smartcoupon.ui.view.IView;
 import publi.xz.com.smartcoupon.utils.GlideImageLoader;
 import publi.xz.com.smartcoupon.utils.SpacesItemDecorationVertical;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener , IView {
+public class MainActivity extends BaseActivity implements View.OnClickListener, IView {
 
     private Button renqiRank;
     private Button hot_word_rank_btn;
@@ -37,12 +38,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
     private Presenter_Main presenter;
     private RecyclerView cainixihuan_recycler;
     private MainAdapter adapter;
-    Handler handler = new Handler(){
+    private NestedScrollView scroller;
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
         }
     };
+
     @Override
     public int getLayoutResource() {
         return R.layout.activity_main;
@@ -66,6 +69,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
         adapter = new MainAdapter(this);
         cainixihuan_recycler.setAdapter(adapter);
         presenter.getGoodsFromNet();
+        //滑倒底部检测
+
+
+        scroller = findViewById(R.id.nestedScroll);
+        if (scroller != null) {
+            scroller.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                    if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                        Log.d("xz", "onScrollChange: D");
+                        presenter.getGoodsFromNet();
+
+                    }
+                }
+            });
+        }
+
     }
 
 
@@ -133,12 +154,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener ,
         mToast(msg);
     }
 
-    public void showData(final MainCNXH fromJson) {
-        MainCNXH.DataBean list;
+    private MainCNXH.DataBean totalList = new MainCNXH.DataBean();
+
+    public void showData(MainCNXH fromJson) {
+        totalList.addList(fromJson.getData().getList());
+        //追加数据
         handler.post(new Runnable() {
             @Override
             public void run() {
-                adapter.refresh(fromJson.getData());
+//                adapter.refresh(fromJson.getData());
+                adapter.refresh(totalList);
             }
         });
     }

@@ -1,5 +1,6 @@
 package publi.xz.com.smartcoupon.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainCNXH {
@@ -46,7 +47,10 @@ public class MainCNXH {
 
         private String totalNum;
         private String pageId;
-        private List<ListBean> list;
+        private List<ListBean> list = new ArrayList<>();
+        public void addList(List<ListBean> data){
+            list.addAll(data);
+        }
 
         public String getTotalNum() {
             return totalNum;
