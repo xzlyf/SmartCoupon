@@ -17,85 +17,94 @@
             android:layout_height="wrap_content" />
     </android.support.design.widget.AppBarLayout>
 
-    <com.youth.banner.Banner
-        android:id="@+id/banner"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:elevation="5dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+            <com.youth.banner.Banner
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
 
-            <Button
-                android:id="@+id/pai_hang_bang_btn"
-                style="@style/home_btn"
-                android:layout_width="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_weight="1"
-                android:text="人气榜" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:elevation="5dp"
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/hot_word_rank_btn"
-                style="@style/home_btn"
-                android:layout_width="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_weight="1"
-                android:text="排行榜" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/setting_btn"
-                style="@style/home_btn"
-                android:layout_width="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_weight="1"
-                android:text="设置" />
+                    <Button
+                        android:id="@+id/pai_hang_bang_btn"
+                        style="@style/home_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_weight="1"
+                        android:text="人气榜" />
 
+                    <Button
+                        android:id="@+id/hot_word_rank_btn"
+                        style="@style/home_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_weight="1"
+                        android:text="排行榜" />
+
+                    <Button
+                        android:id="@+id/setting_btn"
+                        style="@style/home_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_weight="1"
+                        android:text="设置" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/baoyou9_9"
+                        style="@style/home_btn"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="9.9包邮" />
+
+                    <Button
+                        style="@style/home_btn"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="分类" />
+
+                    <Button
+                        style="@style/home_btn"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="猜你喜欢" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="❤猜你喜欢" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/cainixihuan_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/baoyou9_9"
-                style="@style/home_btn"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="9.9包邮" />
-
-            <Button
-                style="@style/home_btn"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="分类" />
-
-            <Button
-                style="@style/home_btn"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="猜你喜欢" />
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="❤猜你喜欢"
-        android:layout_margin="10dp"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/cainixihuan_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

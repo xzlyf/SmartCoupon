@@ -2,6 +2,12 @@ package publi.xz.com.smartcoupon.ui;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -13,18 +19,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import publi.xz.com.smartcoupon.R;
+import publi.xz.com.smartcoupon.adapter.MainAdapter;
 import publi.xz.com.smartcoupon.base.BaseActivity;
+import publi.xz.com.smartcoupon.entity.MainCNXH;
+import publi.xz.com.smartcoupon.ui.presenter.Presenter_Main;
+import publi.xz.com.smartcoupon.ui.view.IView;
 import publi.xz.com.smartcoupon.utils.GlideImageLoader;
+import publi.xz.com.smartcoupon.utils.SpacesItemDecorationVertical;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener , IView {
 
     private Button renqiRank;
     private Button hot_word_rank_btn;
     private Banner banner;
     private Button setting_btn;
     private Button baoyou9_9;
-
-
+    private Presenter_Main presenter;
+    private RecyclerView cainixihuan_recycler;
+    private MainAdapter adapter;
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    };
     @Override
     public int getLayoutResource() {
         return R.layout.activity_main;
@@ -36,8 +54,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         //设置banner轮播图
         init_banner();
+
+        init_recycler();
     }
 
+    private void init_recycler() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        cainixihuan_recycler.setLayoutManager(linearLayoutManager);
+        cainixihuan_recycler.addItemDecoration(new SpacesItemDecorationVertical(8));//设置item的间距
+
+        adapter = new MainAdapter(this);
+        cainixihuan_recycler.setAdapter(adapter);
+        presenter.getGoodsFromNet();
+    }
 
 
     private void init_banner() {
@@ -66,6 +95,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         baoyou9_9 = findViewById(R.id.baoyou9_9);
         setting_btn.setOnClickListener(this);
         baoyou9_9.setOnClickListener(this);
+        presenter = new Presenter_Main(this);
+        cainixihuan_recycler = findViewById(R.id.cainixihuan_recycler);
     }
 
 
@@ -85,5 +116,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(new Intent(MainActivity.this, Baoyou9_9Activity.class));
                 break;
         }
+    }
+
+    @Override
+    public void startLoading() {
+        showLoading();
+    }
+
+    @Override
+    public void stopLoading() {
+        dismissLoading();
+    }
+
+    @Override
+    public void sToast(String msg) {
+        mToast(msg);
+    }
+
+    public void showData(final MainCNXH fromJson) {
+        MainCNXH.DataBean list;
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                adapter.refresh(fromJson.getData());
+            }
+        });
     }
 }
