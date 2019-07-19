@@ -190,7 +190,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(new Intent(MainActivity.this, Top100Activity.class));
                 break;
             case R.id.hot_word_rank_btn:
-                //热搜排行榜
+                startActivity(new Intent(MainActivity.this, HotWordActivity.class));
+
                 break;
             case R.id.btn_3:
                 break;

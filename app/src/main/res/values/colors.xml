@@ -19,4 +19,10 @@
     <color name="dialog_e">#e74c3c</color>
     <color name="dialog_t">#e67e22</color>
     <color name="dialog_l">#2ecc71</color>
+
+    <!--果冻色-->
+    <color name="jelly1">#BFF0CD</color>
+    <color name="jelly2">#F5D892</color>
+    <color name="jelly3">#EDC8E4</color>
+    <color name="jelly4">#C9ECF8</color>
 </resources>
