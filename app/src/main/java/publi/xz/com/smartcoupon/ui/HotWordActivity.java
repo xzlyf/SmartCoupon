@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.adapter.HotRankAdapter;
 import publi.xz.com.smartcoupon.base.BaseActivity;
+import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.entity.HotWord;
 import publi.xz.com.smartcoupon.utils.SharedPreferencesUtil;
 import publi.xz.com.smartcoupon.utils.SpacesItemDecorationVH;
@@ -40,6 +41,7 @@ public class HotWordActivity extends BaseActivity {
         //尝试读取本地数据
         String jsonData = SharedPreferencesUtil.getJson(this, "HOT_WORD", "null");
         if (jsonData.equals("null")) {
+            showDialog("网络不稳定，请稍后重试", Local.DIALOG_E);
             return;
         }
         Gson gson = new Gson();

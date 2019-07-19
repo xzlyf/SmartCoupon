@@ -151,7 +151,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private void init_banner() {
         List<String> img = new ArrayList<>();
-        img.add("https://s1.ax1x.com/2018/05/03/Ct1lr9.jpg");
+        img.add("https://s1.ax1x.com/2018/02/14/9YJtQP.jpg");
         img.add("https://s1.ax1x.com/2018/04/20/CK32R0.jpg");
         img.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic259ohaj30ci08c74r.jpg");
         img.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic2b16zuj30ci08cwf4.jpg");
