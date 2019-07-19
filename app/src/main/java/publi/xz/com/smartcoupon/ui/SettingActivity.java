@@ -17,7 +17,7 @@ import publi.xz.com.smartcoupon.utils.SharedPreferencesUtil;
 import static publi.xz.com.smartcoupon.utils.CacheInfo.cleanPhotoCache;
 import static publi.xz.com.smartcoupon.utils.CacheInfo.getPhotoCacheSize;
 
-public class SettingActivity extends BaseActivity implements View.OnClickListener , IView {
+public class SettingActivity extends BaseActivity implements View.OnClickListener {
     private Button cleanCache;
     private Button checkUpdate;
     private Update update;
@@ -32,6 +32,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     public void init_Data() {
         findID();
         init();
+    }
+
+    @Override
+    public void showData(Object object) {
+
     }
 
     private void init() {
@@ -94,18 +99,4 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     }
 
-    @Override
-    public void startLoading() {
-        showLoading();
-    }
-
-    @Override
-    public void stopLoading() {
-        dismissLoading();
-    }
-
-    @Override
-    public void sToast(String msg) {
-        mToast(msg);
-    }
 }

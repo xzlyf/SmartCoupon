@@ -19,12 +19,17 @@ import android.widget.Toast;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
+import java.net.Proxy;
+
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.entity.Baoyou9_9;
+import publi.xz.com.smartcoupon.ui.presenter.Presenter;
+import publi.xz.com.smartcoupon.ui.view.IView;
 
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements IView{
     private Context mContext;
+    public Presenter presenter;
 
     Handler handler = new Handler() {
         @Override
@@ -38,6 +43,25 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+
+    @Override
+    public void startLoading() {
+        showLoading();
+    }
+
+    @Override
+    public void stopLoading() {
+        dismissLoading();
+    }
+
+    @Override
+    public void sToast(String msg) {
+        mToast(msg);
+    }
+
+
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,18 +72,28 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutResource());
         findID();
         getPermission();
+
+
     }
 
+    private void init() {
+        presenter = new Presenter(this);
+        init_Data();
+    }
+
+    /**
+     * 获取权限
+     */
     private void getPermission() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
             } else {
-                init_Data();
+                init();
             }
         } else {
-            init_Data();
+            init();
         }
     }
 
@@ -70,7 +104,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             for (int i = 0; i < permissions.length; i++) {
                 if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(this, "" + "权限" + permissions[i] + "申请成功", Toast.LENGTH_SHORT).show();
-                    init_Data();
+                    init();
                 } else {
                     Toast.makeText(this, "" + "权限" + permissions[i] + "申请失败", Toast.LENGTH_SHORT).show();
                 }
@@ -83,6 +117,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     public abstract void findID();
 
     public abstract void init_Data();
+
+    /**
+     * 用户请求返回数据
+     * @param object
+     */
+    public abstract void showData(Object object);
+
 
     //常用方法
     Toast mToast;

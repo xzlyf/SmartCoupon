@@ -15,12 +15,10 @@ import publi.xz.com.smartcoupon.adapter.Top100Adapter;
 import publi.xz.com.smartcoupon.base.BaseActivity;
 import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.entity.Popular;
-import publi.xz.com.smartcoupon.ui.presenter.Presenter_Top100;
 import publi.xz.com.smartcoupon.ui.view.IView;
 import publi.xz.com.smartcoupon.utils.CommonUtil;
 
-public class Top100Activity extends BaseActivity implements IView {
-    private Presenter_Top100 mPresenterTop100;
+public class Top100Activity extends BaseActivity  {
     private RecyclerView recycler;
     private ImageView loading_view;
     private Top100Adapter adapter;
@@ -45,11 +43,36 @@ public class Top100Activity extends BaseActivity implements IView {
     public void init_Data() {
         startLoading();
         setTitle("人气榜");
-        mPresenterTop100 = new Presenter_Top100(this);
         loading_view = findViewById(R.id.loading_view);
         init_recycle();
         //请求数据
-        mPresenterTop100.getTop100DataFromNet(Local.TOPURL);
+        presenter.getTop100DataFromNet(Local.TOPURL);
+    }
+
+    private List<List<Popular.ResultBean>> lists;
+    private List<Popular.ResultBean> total = new ArrayList<>();
+    private int list_size;
+    private int curr = 1;
+
+    @Override
+    public void showData(Object object) {
+        if (object instanceof Popular) {
+            //强转，把集合拆分成长度为10的小集合
+            lists = CommonUtil.groupList(((Popular) object).getResult());
+            total.addAll(lists.get(0));
+            list_size = lists.size();
+
+            stopLoading();
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    adapter = new Top100Adapter(lists.get(0), Top100Activity.this);
+                    recycler.setAdapter(adapter);
+                }
+            });
+        } else {
+            sToast("致命错误");
+        }
     }
 
     private boolean isLoadingMore = false;
@@ -82,7 +105,7 @@ public class Top100Activity extends BaseActivity implements IView {
                 //如果两个条件都满足则说明是真正的滑动到了底部
                 if (lastChildBottom == recyclerBottom && lastPosition == recyclerView.getLayoutManager().getItemCount() - 1) {
 
-                    if (curr<list_size){
+                    if (curr < list_size) {
                         total.addAll(lists.get(curr));
                         adapter.refresh(total);
                         curr++;
@@ -94,51 +117,6 @@ public class Top100Activity extends BaseActivity implements IView {
         });
     }
 
-    @Override
-    public void startLoading() {
-        showLoading();
 
-    }
 
-    @Override
-    public void stopLoading() {
-        dismissLoading();
-
-    }
-
-    @Override
-    public void sToast(final String msg) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                mToast(msg);
-            }
-        });
-    }
-
-    private List<List<Popular.ResultBean>> lists;
-    private List<Popular.ResultBean> total = new ArrayList<>();
-    private int list_size;
-    private int curr = 1;
-
-    /**
-     * 显示商品信息
-     *
-     * @param commInfo
-     */
-    public void setCommInfo(final Popular commInfo) {
-        //强转，把集合拆分成长度为10的小集合
-        lists = CommonUtil.groupList(commInfo.getResult());
-        total.addAll(lists.get(0));
-        list_size = lists.size();
-
-        stopLoading();
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                adapter = new Top100Adapter(lists.get(0), Top100Activity.this);
-                recycler.setAdapter(adapter);
-            }
-        });
-    }
 }

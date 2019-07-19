@@ -78,6 +78,11 @@ public class DetailsActivityV2 extends BaseActivity implements IView {
     }
 
     @Override
+    public void showData(Object object) {
+
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         mainPic = null;
@@ -107,18 +112,4 @@ public class DetailsActivityV2 extends BaseActivity implements IView {
         marketingMainPic = findViewById(R.id.marketingMainPic);
     }
 
-    @Override
-    public void startLoading() {
-
-    }
-
-    @Override
-    public void stopLoading() {
-
-    }
-
-    @Override
-    public void sToast(String msg) {
-
-    }
 }

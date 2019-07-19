@@ -2,8 +2,6 @@ package publi.xz.com.smartcoupon.ui;
 
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,20 +13,15 @@ import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.adapter.SearchAdapter;
 import publi.xz.com.smartcoupon.base.BaseActivity;
 import publi.xz.com.smartcoupon.entity.Search;
-import publi.xz.com.smartcoupon.ui.presenter.Presenter_Search;
-import publi.xz.com.smartcoupon.ui.view.IView;
 import publi.xz.com.smartcoupon.utils.SpacesItemDecorationVertical;
 
-import static publi.xz.com.smartcoupon.utils.TransparentBarUtil.makeStatusBarTransparent;
-
-public class SearchActivity extends BaseActivity implements IView, View.OnClickListener {
+public class SearchActivity extends BaseActivity implements View.OnClickListener {
     private String default_ant;
     private ImageView searchBack;
     private EditText searchInput;
     private ImageView searchDelete;
     private TextView searchBtn;
     private RecyclerView recycler;
-    private Presenter_Search presenter;
     private SearchAdapter adapter;
 
     Handler handler = new Handler() {
@@ -48,7 +41,7 @@ public class SearchActivity extends BaseActivity implements IView, View.OnClickL
         findID();
         //获取传入的关键词
         default_ant = getIntent().getStringExtra("ant");
-        if (!default_ant.equals("")){
+        if (!default_ant.equals("")) {
             searchInput.setText(default_ant);
             init_Recycler();
 
@@ -56,16 +49,34 @@ public class SearchActivity extends BaseActivity implements IView, View.OnClickL
     }
 
     @Override
+    public void showData(final Object object) {
+        if (object instanceof Search) {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    adapter.refresh(((Search) object));
+                    recycler.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    stopLoading();
+
+
+                }
+            });
+        }else{
+            sToast("致命错误");
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        default_ant=null;
-        searchBack=null;
-        searchInput=null;
-        searchDelete=null;
-        searchBtn=null;
-        recycler=null;
-        presenter=null;
-        adapter=null;
+        default_ant = null;
+        searchBack = null;
+        searchInput = null;
+        searchDelete = null;
+        searchBtn = null;
+        recycler = null;
+        adapter = null;
     }
 
     private void init_Recycler() {
@@ -87,23 +98,8 @@ public class SearchActivity extends BaseActivity implements IView, View.OnClickL
         searchDelete.setOnClickListener(this);
         searchBtn.setOnClickListener(this);
 
-        presenter = new Presenter_Search(this);
     }
 
-    @Override
-    public void startLoading() {
-        showLoading();
-    }
-
-    @Override
-    public void stopLoading() {
-        dismissLoading();
-    }
-
-    @Override
-    public void sToast(String msg) {
-
-    }
 
     @Override
     public void onClick(View view) {
@@ -120,17 +116,4 @@ public class SearchActivity extends BaseActivity implements IView, View.OnClickL
         }
     }
 
-    public void showCommList(final Search fromJson) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                adapter.refresh(fromJson);
-                recycler.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-                stopLoading();
-
-
-            }
-        });
-    }
 }
