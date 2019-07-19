@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,6 +40,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private RecyclerView cainixihuan_recycler;
     private MainAdapter adapter;
     private NestedScrollView scroller;
+    private FloatingActionButton backToTop;
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -65,10 +67,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         cainixihuan_recycler.setLayoutManager(linearLayoutManager);
         cainixihuan_recycler.addItemDecoration(new SpacesItemDecorationVertical(8));//设置item的间距
-
+        presenter.getGoodsFromNet();  //开始加载商品列表数据
         adapter = new MainAdapter(this);
         cainixihuan_recycler.setAdapter(adapter);
-        presenter.getGoodsFromNet();
         //滑倒底部检测
 
 
@@ -78,7 +79,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 @Override
                 public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
 
+                    if (scrollY!=0){
+                        //不在顶部
+                        backToTop.setVisibility(View.VISIBLE);
+                    }else{
+                        backToTop.setVisibility(View.INVISIBLE);
+                    }
                     if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                        //在底部
                         Log.d("xz", "onScrollChange: D");
                         presenter.getGoodsFromNet();
 
@@ -118,6 +126,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         baoyou9_9.setOnClickListener(this);
         presenter = new Presenter_Main(this);
         cainixihuan_recycler = findViewById(R.id.cainixihuan_recycler);
+        backToTop = findViewById(R.id.to_top);
+        backToTop.setVisibility(View.INVISIBLE);
+        backToTop.setOnClickListener(this);
     }
 
 
@@ -135,6 +146,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             case R.id.baoyou9_9:
                 startActivity(new Intent(MainActivity.this, Baoyou9_9Activity.class));
+                break;
+            case R.id.to_top:
+                scroller.setScrollY(0);
                 break;
         }
     }
@@ -156,7 +170,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     private MainCNXH.DataBean totalList = new MainCNXH.DataBean();
 
+
     public void showData(MainCNXH fromJson) {
+        //追加数据
         totalList.addList(fromJson.getData().getList());
         //追加数据
         handler.post(new Runnable() {

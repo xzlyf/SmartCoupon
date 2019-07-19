@@ -76,7 +76,7 @@ public class MainCNXH {
             this.list = list;
         }
 
-        public static class ListBean {
+        public static class ListBean  {
 
             private String id;
             private String goodsId;

@@ -1,6 +1,7 @@
 package publi.xz.com.smartcoupon.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,7 +15,9 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import publi.xz.com.smartcoupon.R;
+import publi.xz.com.smartcoupon.entity.DetailV2;
 import publi.xz.com.smartcoupon.entity.MainCNXH;
+import publi.xz.com.smartcoupon.ui.DetailsActivityV2;
 
 public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
     private Context context;
@@ -33,7 +36,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         Picasso
                 .get()
                 .load(cnxh.getList().get(position).getMainPic())
@@ -48,6 +51,21 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
             @Override
             public void onClick(View view) {
                 //传输自定义对象类型
+                DetailV2 detail = new DetailV2();
+                detail.setActualPrice((cnxh.getList().get(position).getActualPrice()+""));
+                detail.setCouponEndTime(cnxh.getList().get(position).getCouponEndTime());
+                detail.setCouponPrice(cnxh.getList().get(position).getCouponPrice()+"");
+                detail.setDesc(cnxh.getList().get(position).getDesc());
+                detail.setDtitle(cnxh.getList().get(position).getDtitle());
+                detail.setHotPush(cnxh.getList().get(position).getHotPush()+"");
+                detail.setMainPic(cnxh.getList().get(position).getMainPic());
+                detail.setMarketingMainPic(cnxh.getList().get(position).getMarketingMainPic());
+                detail.setMonthSales(cnxh.getList().get(position).getMonthSales()+"");
+                detail.setOriginalPrice(cnxh.getList().get(position).getOriginalPrice()+"");
+                detail.setShopType(cnxh.getList().get(position).getShopType()+"");
+                detail.setCouponLink(cnxh.getList().get(position).getCouponLink());
+                //传输自定义对象类型
+                context.startActivity(new Intent(context, DetailsActivityV2.class).putExtra("DetailV2",detail));
             }
         });
     }
@@ -61,6 +79,11 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
 
     public void refresh(MainCNXH.DataBean fromJson) {
         cnxh = fromJson;
+        notifyDataSetChanged();
+    }
+
+    public void cleanList() {
+        cnxh.getList().clear();
         notifyDataSetChanged();
     }
 
