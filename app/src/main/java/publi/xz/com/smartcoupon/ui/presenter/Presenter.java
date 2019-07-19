@@ -18,6 +18,7 @@ import publi.xz.com.smartcoupon.entity.Popular;
 import publi.xz.com.smartcoupon.entity.Search;
 import publi.xz.com.smartcoupon.ui.model.IModel;
 import publi.xz.com.smartcoupon.ui.model.Model;
+import publi.xz.com.smartcoupon.utils.SharedPreferencesUtil;
 import publi.xz.com.smartcoupon.utils.SignMD5Util;
 import publi.xz.com.smartcoupon.utils.SplicString;
 
@@ -31,9 +32,12 @@ public class Presenter {
     }
 
     /**
-     * 9.9包邮
+     * 9.9保佑
+     * cid
+     * 大淘客的一级分类id，如果需要传多个，以英文逗号相隔，如：”1,2,3”。
+     * 一级分类id请求详情：-1-精选，1 -居家百货，2 -美食，3 -服饰，4 -配饰，5 -美妆，6 -内衣，7 -母婴，8 -箱包，9 -数码配件，10 -文娱车品
      */
-    public void get9_9tehui(String pageSize, String pageId, String cid) {
+    public void get9_9tehui(String pageSize, String pageId, final String cid) {
         TreeMap<String, String> paraMap = new TreeMap<>();
         paraMap.put("appKey", Local.appKey);
         paraMap.put("version", Local.appversion);
@@ -85,7 +89,7 @@ public class Presenter {
         paraMap.put("version", Local.appversion);
         paraMap.put("pageSize", default_pageSize);
         paraMap.put("pageId", default_pageId+"");
-        paraMap.put("cid", "1");
+        paraMap.put("cid", "-1");
         paraMap.put("sign", SignMD5Util.getSignStr(paraMap, Local.appSecret));
 
         //拼接成最终url

@@ -21,8 +21,7 @@ import publi.xz.com.smartcoupon.ui.DetailsActivityV2;
 public class Baoyou9_9Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Baoyou9_9 baoyou;
     Context context;
-    public Baoyou9_9Adapter(Context context,Baoyou9_9 baoyou9_9){
-        this.baoyou = baoyou9_9;
+    public Baoyou9_9Adapter(Context context){
         this.context = context;
     }
     @NonNull
@@ -70,6 +69,10 @@ public class Baoyou9_9Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public int getItemCount() {
         return baoyou.getData().getList().size();
+    }
+    public void refresh(Baoyou9_9 baoyou9_9){
+        this.baoyou = baoyou9_9;
+
     }
     class ViewHolder extends  RecyclerView.ViewHolder{
         ImageView comm_pic;

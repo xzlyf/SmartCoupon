@@ -13,7 +13,11 @@ public class SharedPreferencesUtil {
                 Context.MODE_PRIVATE);
         sp.edit().putString(key, data).commit();
     }
-
+    public static void saveJson2Team(Context context, String key,String data){
+        SharedPreferences sp = context.getSharedPreferences("team_list",
+                Context.MODE_PRIVATE);
+        sp.edit().putString(key, data).commit();
+    }
     /**
      * 储存时间戳的工具类
      * @param context
@@ -28,6 +32,11 @@ public class SharedPreferencesUtil {
 
     public static String getJson(Context context, String key, String defValue){
         SharedPreferences sp = context.getSharedPreferences("init_data_list",
+                Context.MODE_PRIVATE);
+        return sp.getString(key,defValue);
+    }
+    public static String getJsonfromTemp(Context context, String key, String defValue){
+        SharedPreferences sp = context.getSharedPreferences("team_list",
                 Context.MODE_PRIVATE);
         return sp.getString(key,defValue);
     }

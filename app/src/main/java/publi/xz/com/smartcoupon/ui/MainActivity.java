@@ -101,11 +101,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
 
                     if (scrollY != 0) {
-                        //不在顶部
-                        backToTop.setVisibility(View.VISIBLE);
+                        if (scrollY>=500) {
 
+                            //不在顶部
+                            if (backToTop.getVisibility() != View.VISIBLE) {
+                                backToTop.startAnimation(bShowAction);
+                                backToTop.setVisibility(View.VISIBLE);
+                            }
+                        }
                     } else {
-                        backToTop.setVisibility(View.INVISIBLE);
+                        //在顶部
+                        if (backToTop.getVisibility()!=View.INVISIBLE){
+                            backToTop.startAnimation(bHiddenAction);
+                            backToTop.setVisibility(View.INVISIBLE);
+                        }
+
                     }
                     if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
                         //在底部
@@ -196,6 +206,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private TranslateAnimation mHiddenAction;
     private TranslateAnimation mShowAction;
+    private TranslateAnimation bShowAction;
+    private TranslateAnimation bHiddenAction;
 
     /**
      * 底部导航栏动画效果
@@ -213,6 +225,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
                 1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
         mShowAction.setDuration(500);
+        // 隐藏动画
+        bHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
+                0.0f, Animation.RELATIVE_TO_SELF, 2.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                0.0f);
+        bHiddenAction.setDuration(500);
+        //出现动画
+        bShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 2.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+        bShowAction.setDuration(500);
     }
 
 
