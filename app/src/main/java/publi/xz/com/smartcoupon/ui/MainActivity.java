@@ -9,6 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 
 import com.orhanobut.logger.AndroidLogAdapter;
@@ -21,21 +23,24 @@ import java.util.List;
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.adapter.MainAdapter;
 import publi.xz.com.smartcoupon.base.BaseActivity;
+import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.entity.MainCNXH;
+import publi.xz.com.smartcoupon.ui.custom.BottmNav;
 import publi.xz.com.smartcoupon.utils.GlideImageLoader;
 import publi.xz.com.smartcoupon.utils.SpacesItemDecorationVertical;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener{
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private Button renqiRank;
     private Button hot_word_rank_btn;
     private Banner banner;
-    private Button setting_btn;
+    private Button btn_3;
     private Button baoyou9_9;
     private RecyclerView cainixihuan_recycler;
     private MainAdapter adapter;
     private NestedScrollView scroller;
     private FloatingActionButton backToTop;
+    private BottmNav bottom_nav;
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -54,16 +59,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         //设置banner轮播图
         init_banner();
-
         init_recycler();
+        nav_admin();
     }
+
     private MainCNXH.DataBean totalList = new MainCNXH.DataBean();
 
     @Override
     public void showData(Object object) {
-        if (object instanceof MainCNXH){
+        if (object instanceof MainCNXH) {
             //追加数据
-            totalList.addList(((MainCNXH)object).getData().getList());
+            totalList.addList(((MainCNXH) object).getData().getList());
             //追加数据
             handler.post(new Runnable() {
                 @Override
@@ -72,7 +78,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     adapter.refresh(totalList);
                 }
             });
-        }else{
+        } else {
             sToast("致命错误");
         }
 
@@ -82,7 +88,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         cainixihuan_recycler.setLayoutManager(linearLayoutManager);
         cainixihuan_recycler.addItemDecoration(new SpacesItemDecorationVertical(8));//设置item的间距
-        presenter.getGoodsFromNet();
+        presenter.getGoodsFromNet();//开始获取数据
         adapter = new MainAdapter(this);
         cainixihuan_recycler.setAdapter(adapter);
         //滑倒底部检测
@@ -94,10 +100,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 @Override
                 public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
 
-                    if (scrollY!=0){
+                    if (scrollY != 0) {
                         //不在顶部
                         backToTop.setVisibility(View.VISIBLE);
-                    }else{
+
+                    } else {
                         backToTop.setVisibility(View.INVISIBLE);
                     }
                     if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
@@ -105,6 +112,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                         Log.d("xz", "onScrollChange: D");
                         presenter.getGoodsFromNet();
 
+                    }
+                    if (oldScrollY<scrollY){
+                        //向下滑-隐藏底部导航栏
+                        //先判断是否已经隐藏了
+                        if (bottom_nav.getVisibility()!=View.INVISIBLE){
+                            //当滚动条滚动位置大于500才开始隐藏动画，这样不用随便一拉就隐藏了
+                            if (scrollY>=500) {
+                                bottom_nav.startAnimation(mHiddenAction);
+                                bottom_nav.setVisibility(View.INVISIBLE);
+                            }
+                        }
+
+                    }else if (oldScrollY>scrollY){
+                        //向上划-显示导航栏
+                        if (bottom_nav.getVisibility()!=View.VISIBLE){
+                            bottom_nav.startAnimation(mShowAction);
+                            bottom_nav.setVisibility(View.VISIBLE);
+
+                        }
                     }
                 }
             });
@@ -135,14 +161,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         banner = findViewById(R.id.banner);
         hot_word_rank_btn = findViewById(R.id.hot_word_rank_btn);
         hot_word_rank_btn.setOnClickListener(this);
-        setting_btn = findViewById(R.id.setting_btn);
+        btn_3 = findViewById(R.id.btn_3);
         baoyou9_9 = findViewById(R.id.baoyou9_9);
-        setting_btn.setOnClickListener(this);
+        btn_3.setOnClickListener(this);
         baoyou9_9.setOnClickListener(this);
         cainixihuan_recycler = findViewById(R.id.cainixihuan_recycler);
         backToTop = findViewById(R.id.to_top);
         backToTop.setVisibility(View.INVISIBLE);
         backToTop.setOnClickListener(this);
+        bottom_nav = findViewById(R.id.bottom_nav);
     }
 
 
@@ -155,8 +182,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             case R.id.hot_word_rank_btn:
                 //热搜排行榜
                 break;
-            case R.id.setting_btn:
-                startActivity(new Intent(MainActivity.this, SettingActivity.class));
+            case R.id.btn_3:
                 break;
             case R.id.baoyou9_9:
                 startActivity(new Intent(MainActivity.this, Baoyou9_9Activity.class));
@@ -164,9 +190,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             case R.id.to_top:
                 scroller.setScrollY(0);
                 break;
+
         }
     }
 
+    private TranslateAnimation mHiddenAction;
+    private TranslateAnimation mShowAction;
+
+    /**
+     * 底部导航栏动画效果
+     */
+    private void nav_admin() {
+
+        // 隐藏动画
+        mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
+                0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                1.0f);
+        mHiddenAction.setDuration(500);
+        //出现动画
+        mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+        mShowAction.setDuration(500);
+    }
 
 
 }
