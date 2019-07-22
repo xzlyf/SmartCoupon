@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class Local {
     public static  final String UPDATE_SERVER = "http://www.xzlyf.club/SmartCoupon/update.json";
+    //大淘客推广中心 http://www.dataoke.com/pmc/api-manager.html
     private static final String APIKEY = "b68d26601f";
     public static String TOPURL = "http://api.dataoke.com/index.php?r=Port/index&type=top100&appkey="+APIKEY+"&v=2";
     public static String DETAILS = "http://api.dataoke.com/index.php?r=port/index&appkey="+APIKEY+"&v=2&id=";

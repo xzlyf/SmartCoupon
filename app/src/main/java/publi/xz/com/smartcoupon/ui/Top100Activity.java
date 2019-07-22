@@ -18,6 +18,9 @@ import publi.xz.com.smartcoupon.entity.Popular;
 import publi.xz.com.smartcoupon.ui.view.IView;
 import publi.xz.com.smartcoupon.utils.CommonUtil;
 
+/**
+ * 人气榜
+ */
 public class Top100Activity extends BaseActivity  {
     private RecyclerView recycler;
     private ImageView loading_view;

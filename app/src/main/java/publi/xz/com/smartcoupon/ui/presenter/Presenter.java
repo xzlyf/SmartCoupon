@@ -17,6 +17,7 @@ import java.util.TreeMap;
 import publi.xz.com.smartcoupon.base.BaseActivity;
 import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.entity.Baoyou9_9;
+import publi.xz.com.smartcoupon.entity.Detail;
 import publi.xz.com.smartcoupon.entity.MainCNXH;
 import publi.xz.com.smartcoupon.entity.PPBrand;
 import publi.xz.com.smartcoupon.entity.Popular;
@@ -137,9 +138,11 @@ public class Presenter {
             public void success(String data) {
                 JSONObject obj = null;
                 try {
-                    Logger.w("单品详情数据" + data);
+//                    Logger.w("单品详情数据" + data);
                     obj = new JSONObject(data);
                     Gson gson = new Gson();
+                    view.stopLoading();
+                    view.showData(gson.fromJson(obj.toString(),Detail.class));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
