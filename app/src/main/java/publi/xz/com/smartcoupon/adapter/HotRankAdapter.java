@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.entity.HotWord;
 
@@ -30,7 +32,10 @@ public class HotRankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolder){
-
+            ((ViewHolder) holder).rank.setText("第"+hotWord.getData().get(position).getRank()+"名");
+            ((ViewHolder) holder).changeNum.setText(hotWord.getData().get(position).getChange());
+            ((ViewHolder) holder).word.setText(hotWord.getData().get(position).getWord());
+            ((ViewHolder) holder).total.setText("搜索量："+hotWord.getData().get(position).getTotal());
         }
     }
 

@@ -3,7 +3,9 @@ package publi.xz.com.smartcoupon.ui;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.google.gson.Gson;
@@ -46,8 +48,8 @@ public class HotWordActivity extends BaseActivity {
         }
         Gson gson = new Gson();
         recyclerKey = findViewById(R.id.recycler_key);
-        recyclerKey.setLayoutManager(new GridLayoutManager(this,3));
-        recyclerKey.addItemDecoration(new SpacesItemDecorationVH(20));//设置item的间距
+        recyclerKey.setLayoutManager(new LinearLayoutManager(this));
+        recyclerKey.addItemDecoration(new SpacesItemDecorationVertical(20));//设置item的间距
 
         adapter=new HotRankAdapter(this,gson.fromJson(jsonData, HotWord.class));
         recyclerKey.setAdapter(adapter);
