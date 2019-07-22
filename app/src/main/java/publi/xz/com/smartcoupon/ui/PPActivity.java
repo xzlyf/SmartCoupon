@@ -11,12 +11,15 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 
+import com.orhanobut.logger.Logger;
+
 import java.util.List;
 
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.adapter.PPAdapter;
 import publi.xz.com.smartcoupon.base.BaseActivity;
 import publi.xz.com.smartcoupon.entity.PPBrand;
+import publi.xz.com.smartcoupon.utils.ItemOnclickListener;
 import publi.xz.com.smartcoupon.utils.SpacesItemDecorationVertical;
 
 /**
@@ -55,6 +58,13 @@ public class PPActivity extends BaseActivity {
         recyclerPp.setLayoutManager(new LinearLayoutManager(this));
         recyclerPp.addItemDecoration(new SpacesItemDecorationVertical(10));
         recyclerPp.setAdapter(adapter);
+        //item点击监听器
+        adapter.setOnclickListener(new ItemOnclickListener() {
+            @Override
+            public void OnClick(View view, int position) {
+                presenter.getPPBrand();
+            }
+        });
 
     }
 
