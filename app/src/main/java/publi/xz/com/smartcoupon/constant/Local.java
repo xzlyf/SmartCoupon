@@ -23,6 +23,7 @@ public class Local {
 
     public static final String BAOYOU9_= "https://openapi.dataoke.com/api/goods/nine/op-goods-list";
     public static final String sousuo= "https://openapi.dataoke.com/api/goods/list-super-goods";
+    public static final String PPBrand= "https://openapi.dataoke.com/api/tb-service/get-brand-list";
 
     /**
      * 轻淘客apikey

@@ -15,6 +15,11 @@ import publi.xz.com.smartcoupon.base.BaseActivity;
 import publi.xz.com.smartcoupon.entity.Search;
 import publi.xz.com.smartcoupon.utils.SpacesItemDecorationVertical;
 
+/**
+ * 搜索界面
+ *
+ * 接受intent传入的关键字 ant
+ */
 public class SearchActivity extends BaseActivity implements View.OnClickListener {
     private String default_ant;
     private ImageView searchBack;

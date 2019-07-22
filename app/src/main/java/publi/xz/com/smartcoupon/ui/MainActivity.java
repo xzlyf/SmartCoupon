@@ -92,8 +92,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         adapter = new MainAdapter(this);
         cainixihuan_recycler.setAdapter(adapter);
         //滑倒底部检测
-
-
         scroller = findViewById(R.id.nestedScroll);
         if (scroller != null) {
             scroller.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
@@ -191,9 +189,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.hot_word_rank_btn:
                 startActivity(new Intent(MainActivity.this, HotWordActivity.class));
-
                 break;
             case R.id.btn_3:
+                startActivity(new Intent(MainActivity.this,PPActivity.class));
                 break;
             case R.id.baoyou9_9:
                 startActivity(new Intent(MainActivity.this, Baoyou9_9Activity.class));

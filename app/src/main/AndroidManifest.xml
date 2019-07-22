@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.HotWordActivity"></activity>
+        <activity android:name=".ui.PPActivity"></activity>
+        <activity android:name=".ui.HotWordActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -1,19 +1,24 @@
 package publi.xz.com.smartcoupon.ui.presenter;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeMap;
 
 import publi.xz.com.smartcoupon.base.BaseActivity;
 import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.entity.Baoyou9_9;
 import publi.xz.com.smartcoupon.entity.MainCNXH;
+import publi.xz.com.smartcoupon.entity.PPBrand;
 import publi.xz.com.smartcoupon.entity.Popular;
 import publi.xz.com.smartcoupon.entity.Search;
 import publi.xz.com.smartcoupon.ui.model.IModel;
@@ -26,7 +31,7 @@ public class Presenter {
     private Model model;
     private BaseActivity view;
 
-    public Presenter(BaseActivity view){
+    public Presenter(BaseActivity view) {
         this.view = view;
         model = new Model();
     }
@@ -55,24 +60,24 @@ public class Presenter {
                 try {
 //                    Logger.w("9.9包邮数据"+data);
                     obj = new JSONObject(data);
-                    if (obj.get("msg").equals("成功")){
-                        Gson gson  = new Gson();
+                    if (obj.get("msg").equals("成功")) {
+                        Gson gson = new Gson();
                         view.showData(gson.fromJson(obj.toString(), Baoyou9_9.class));
-                    }else{
+                    } else {
                         view.stopLoading();
-                        view.showDialog("服务器异常，请稍后重试！",Local.DIALOG_W);
+                        view.showDialog("服务器异常，请稍后重试！", Local.DIALOG_W);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     view.stopLoading();
-                    view.showDialog("解析失败，请稍后重试！",Local.DIALOG_W);
+                    view.showDialog("解析失败，请稍后重试！", Local.DIALOG_W);
                 }
             }
 
             @Override
             public void failed(Exception e) {
                 view.stopLoading();
-                view.showDialog("加载失败，请检查网络是否连接成功！",Local.DIALOG_E);
+                view.showDialog("加载失败，请检查网络是否连接成功！", Local.DIALOG_E);
             }
         });
     }
@@ -83,12 +88,13 @@ public class Presenter {
      */
     private String default_pageSize = "50";//每页数据50条
     private int default_pageId = 1;//起始页
-    public void getGoodsFromNet(){
+
+    public void getGoodsFromNet() {
         TreeMap<String, String> paraMap = new TreeMap<>();
         paraMap.put("appKey", Local.appKey);
         paraMap.put("version", Local.appversion);
         paraMap.put("pageSize", default_pageSize);
-        paraMap.put("pageId", default_pageId+"");
+        paraMap.put("pageId", default_pageId + "");
         paraMap.put("cid", "-1");
         paraMap.put("sign", SignMD5Util.getSignStr(paraMap, Local.appSecret));
 
@@ -114,7 +120,7 @@ public class Presenter {
 
             @Override
             public void failed(Exception e) {
-                view.showDialog("请求失败，请稍后重试！",Local.DIALOG_W);
+                view.showDialog("请求失败，请稍后重试！", Local.DIALOG_W);
 
             }
         });
@@ -122,15 +128,16 @@ public class Presenter {
 
     /**
      * 获取商品详情
+     *
      * @param url
      */
-    public void getDetailFromNet(String url){
+    public void getDetailFromNet(String url) {
         model.getDataFromNet(url, new IModel.OnLoadCompleteListener() {
             @Override
             public void success(String data) {
                 JSONObject obj = null;
                 try {
-                    Logger.w("单品详情数据"+data);
+                    Logger.w("单品详情数据" + data);
                     obj = new JSONObject(data);
                     Gson gson = new Gson();
 
@@ -145,20 +152,21 @@ public class Presenter {
             @Override
             public void failed(Exception e) {
                 view.stopLoading();
-                view.showDialog("请求失败，请稍后重试！",Local.DIALOG_W);
+                view.showDialog("请求失败，请稍后重试！", Local.DIALOG_W);
 
             }
         });
     }
+
     /**
-     * @param type 搜索类型         0-综合结果，1-大淘客商品，2-联盟商品
+     * @param type     搜索类型         0-综合结果，1-大淘客商品，2-联盟商品
      * @param keyWords 关键词搜索
-     * @param tmall 是否天猫商品  	1-天猫商品，0-所有商品，不填默认为0
-     * @param haitao 是否海淘商品     1-海淘商品，0-所有商品，不填默认为0
-     * @param sort 排序字段      排序字段信息 销量（total_sales） 价格（price），排序_des（降序），排序_asc（升序）
+     * @param tmall    是否天猫商品  	1-天猫商品，0-所有商品，不填默认为0
+     * @param haitao   是否海淘商品     1-海淘商品，0-所有商品，不填默认为0
+     * @param sort     排序字段      排序字段信息 销量（total_sales） 价格（price），排序_des（降序），排序_asc（升序）
      */
-    public void getSearchData(String type,String keyWords, String tmall, String haitao,String sort) {
-        if (keyWords.equals("") ){
+    public void getSearchData(String type, String keyWords, String tmall, String haitao, String sort) {
+        if (keyWords.equals("")) {
             return;
         }
         view.showLoading();
@@ -181,17 +189,17 @@ public class Presenter {
                 try {
 //                    Logger.w("搜索数据"+data);
                     obj = new JSONObject(data);
-                    if (obj.get("msg").equals("成功")){
+                    if (obj.get("msg").equals("成功")) {
                         Gson gson = new Gson();
                         view.showData(gson.fromJson(obj.toString(), Search.class));
-                    }else{
+                    } else {
                         view.stopLoading();
-                        view.showDialog("服务器异常，请稍后重试！"+'\n'+obj.get("msg"),Local.DIALOG_W);
+                        view.showDialog("服务器异常，请稍后重试！" + '\n' + obj.get("msg"), Local.DIALOG_W);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     view.stopLoading();
-                    view.showDialog("解析异常，请稍后重试！",Local.DIALOG_W);
+                    view.showDialog("解析异常，请稍后重试！", Local.DIALOG_W);
 
                 }
             }
@@ -199,16 +207,18 @@ public class Presenter {
             @Override
             public void failed(Exception e) {
                 view.stopLoading();
-                view.showDialog("请求失败，请稍后重试！",Local.DIALOG_W);
+                view.showDialog("请求失败，请稍后重试！", Local.DIALOG_W);
 
             }
         });
     }
+
     /**
      * 获取人气榜
+     *
      * @param url
      */
-    public void getTop100DataFromNet(String url){
+    public void getTop100DataFromNet(String url) {
 //        view.startLoading();
         model.getDataFromNet(url, new IModel.OnLoadCompleteListener() {
             @Override
@@ -219,6 +229,54 @@ public class Presenter {
                     obj = new JSONObject(data);
                     Gson gson = new Gson();
                     view.showData(gson.fromJson(obj.toString(), Popular.class));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    view.stopLoading();
+                    view.showDialog("解析失败，请稍后重试", Local.DIALOG_W);
+                }
+            }
+
+            @Override
+            public void failed(Exception e) {
+                view.stopLoading();
+                view.showDialog("请求失败，请检查网络连接是否正常", Local.DIALOG_E);
+
+            }
+        });
+    }
+
+    /**
+     * 获取品牌库数据
+     */
+    private int DEFAULT_PAGE = 1;//默认页数
+    public void getPPBrand() {
+        view.showLoading();
+        TreeMap<String, String> paraMap = new TreeMap<>();
+        paraMap.put("appKey", Local.appKey);
+        paraMap.put("version", Local.appversion);
+        paraMap.put("pageNo", DEFAULT_PAGE+"");
+        paraMap.put("pageSize", "20");
+        paraMap.put("sign", SignMD5Util.getSignStr(paraMap, Local.appSecret));
+
+        String finalUrl = SplicString.SplicUrl(Local.PPBrand, paraMap);
+//        Log.d("xz", "品牌库FianlUrl："+finalUrl);
+        model.getDataFromNet(finalUrl, new IModel.OnLoadCompleteListener() {
+            @Override
+            public void success(String data) {
+                JSONObject obj = null;
+                try {
+//                    Logger.w("品牌库数据"+data);
+                    obj = new JSONObject(data);
+                    if (obj.getInt("code") == 0) {
+                        Gson gson = new Gson();
+                        PPBrand ppBrand = gson.fromJson(obj.toString(),PPBrand.class);
+                        view.showData(ppBrand);
+                        DEFAULT_PAGE++;//默认页数加1
+                        view.stopLoading();
+                    } else {
+                        view.stopLoading();
+                        view.showDialog("没有更多数据了", Local.DIALOG_M);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     view.stopLoading();

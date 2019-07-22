@@ -19,4 +19,20 @@ public class SplicString {
         baseUrl = baseUrl.substring(0,baseUrl.length()-1);
         return baseUrl;
     }
+
+    /**
+     * 切割指定字符
+     * @param text
+     * @param c 要切割的字符
+     * @return
+     */
+    public static String SplicString(String text,char c){
+        String str = "";
+        for (int i = 0;i<text.length();i++){
+            if (text.charAt(i)!=c){
+                str+=text.charAt(i);
+            }
+        }
+        return str;
+    }
 }

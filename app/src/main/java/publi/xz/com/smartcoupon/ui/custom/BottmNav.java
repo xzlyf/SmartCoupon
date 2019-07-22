@@ -52,6 +52,7 @@ public class BottmNav extends LinearLayout implements View.OnClickListener {
         drawable4.setBounds(0, 20, 75, 75);
         navMyself.setCompoundDrawables(null, drawable4, null, null);
 
+
     }
 
     private void findId() {
