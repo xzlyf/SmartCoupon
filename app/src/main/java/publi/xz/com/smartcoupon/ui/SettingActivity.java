@@ -1,7 +1,9 @@
 package publi.xz.com.smartcoupon.ui;
 
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -16,6 +18,7 @@ import publi.xz.com.smartcoupon.utils.SharedPreferencesUtil;
 
 import static publi.xz.com.smartcoupon.utils.CacheInfo.cleanPhotoCache;
 import static publi.xz.com.smartcoupon.utils.CacheInfo.getPhotoCacheSize;
+import static publi.xz.com.smartcoupon.utils.TransparentBarUtil.makeStatusBarTransparent;
 
 public class SettingActivity extends BaseActivity implements View.OnClickListener {
     private Button cleanCache;
@@ -30,13 +33,14 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void init_Data() {
-        findID();
+        //设置透明状态栏
+        makeStatusBarTransparent(this);
         init();
     }
 
+
     @Override
     public void showData(Object object) {
-
     }
 
     private void init() {
@@ -51,7 +55,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         update = gson.fromJson(data,Update.class);
 
     }
-
+    @Override
     public void findID() {
         cleanCache = findViewById(R.id.clean_cache);
         checkUpdate = findViewById(R.id.check_update);
