@@ -5,20 +5,17 @@ import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
-import com.google.gson.Gson;
-
 import publi.xz.com.smartcoupon.R;
-import publi.xz.com.smartcoupon.adapter.Baoyou9_9Adapter;
+import publi.xz.com.smartcoupon.adapter.BaoyouAdapter;
 import publi.xz.com.smartcoupon.base.BaseActivity;
 import publi.xz.com.smartcoupon.entity.Baoyou9_9;
-import publi.xz.com.smartcoupon.utils.SharedPreferencesUtil;
+import publi.xz.com.smartcoupon.utils.ItemOnclickListener;
 import publi.xz.com.smartcoupon.utils.SpacesItemDecorationVertical;
 
 public class Baoyou9_9Activity extends BaseActivity {
-    private Baoyou9_9Adapter adapter;
+    private BaoyouAdapter adapter;
     private RecyclerView recycler;
     private TabLayout tabs;
     private int cid = 1;
@@ -45,7 +42,7 @@ public class Baoyou9_9Activity extends BaseActivity {
         startLoading();
         findID();
         init_recycler();
-        presenter.get9_9tehui("10", "1", cid+"");
+        presenter.get9_9tehui("50",  cid);
         init_tabs();
 
     }
@@ -59,8 +56,8 @@ public class Baoyou9_9Activity extends BaseActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 cid = (tab.getPosition()+1);
                 //当前选中
-                presenter.get9_9tehui("10", "1", ""+cid);
-
+                presenter.get9_9tehui("50",  cid);
+                adapter.clean();
             }
 
             @Override
@@ -83,8 +80,7 @@ public class Baoyou9_9Activity extends BaseActivity {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    adapter.refresh((Baoyou9_9) object);
-                    recycler.setAdapter(adapter);
+                    adapter.refresh(((Baoyou9_9) object).getData());
                     stopLoading();
                 }
             });
@@ -94,37 +90,46 @@ public class Baoyou9_9Activity extends BaseActivity {
     }
 
     private void init_recycler() {
+        adapter = new BaoyouAdapter(this);
         recycler.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Baoyou9_9Adapter(Baoyou9_9Activity.this);
+        //判断是否滑倒底部
         //滑倒底部判断
-        recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//        recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//
+//            }
+//
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//
+//                //得到当前显示的最后一个item的view
+//                View lastChildView = recyclerView.getLayoutManager().getChildAt(recyclerView.getLayoutManager().getChildCount() - 1);
+//                //得到lastChildView的bottom坐标值
+//                int lastChildBottom = lastChildView.getBottom();
+//                //得到Recyclerview的底部坐标减去底部padding值，也就是显示内容最底部的坐标
+//                int recyclerBottom = recyclerView.getBottom() - recyclerView.getPaddingBottom();
+//                //通过这个lastChildView得到这个view当前的position值
+//                int lastPosition = recyclerView.getLayoutManager().getPosition(lastChildView);
+//
+//                //判断lastChildView的bottom值跟recyclerBottom
+//                //判断lastPosition是不是最后一个position
+//                //如果两个条件都满足则说明是真正的滑动到了底部
+//                if (lastChildBottom == recyclerBottom && lastPosition == recyclerView.getLayoutManager().getItemCount() - 1) {
+////                    presenter.get9_9tehui("10", "1", ""+cid);
+//
+//                }
+//            }
+//
+//        });
+        recycler.setAdapter(adapter);
+        adapter.setOnclickListener(new ItemOnclickListener() {
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-
+            public void OnClick(View view, int position) {
+                presenter.get9_9tehui("50",  cid);
             }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
-                //得到当前显示的最后一个item的view
-                View lastChildView = recyclerView.getLayoutManager().getChildAt(recyclerView.getLayoutManager().getChildCount() - 1);
-                //得到lastChildView的bottom坐标值
-                int lastChildBottom = lastChildView.getBottom();
-                //得到Recyclerview的底部坐标减去底部padding值，也就是显示内容最底部的坐标
-                int recyclerBottom = recyclerView.getBottom() - recyclerView.getPaddingBottom();
-                //通过这个lastChildView得到这个view当前的position值
-                int lastPosition = recyclerView.getLayoutManager().getPosition(lastChildView);
-
-                //判断lastChildView的bottom值跟recyclerBottom
-                //判断lastPosition是不是最后一个position
-                //如果两个条件都满足则说明是真正的滑动到了底部
-                if (lastChildBottom == recyclerBottom && lastPosition == recyclerView.getLayoutManager().getItemCount() - 1) {
-//                    presenter.get9_9tehui("10", "1", ""+cid);
-
-                }
-            }
-
         });
+
     }
 
 

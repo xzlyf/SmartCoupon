@@ -43,14 +43,21 @@ public class Presenter {
      * 大淘客的一级分类id，如果需要传多个，以英文逗号相隔，如：”1,2,3”。
      * 一级分类id请求详情：-1-精选，1 -居家百货，2 -美食，3 -服饰，4 -配饰，5 -美妆，6 -内衣，7 -母婴，8 -箱包，9 -数码配件，10 -文娱车品
      */
-    public void get9_9tehui(String pageSize, String pageId, final String cid) {
+    private int default_num;
+    private int last_cid = -2;//上一次的cid
+    public void get9_9tehui(String pageSize,  int cid) {
+        //如果这次的cid不同于上次，就把默认页数回到第一页
+        if (cid!=last_cid){
+            default_num = 1;
+        }
         TreeMap<String, String> paraMap = new TreeMap<>();
         paraMap.put("appKey", Local.appKey);
         paraMap.put("version", Local.appversion);
         paraMap.put("pageSize", pageSize);
-        paraMap.put("pageId", pageId);
-        paraMap.put("cid", cid);
+        paraMap.put("pageId", default_num + "");
+        paraMap.put("cid", cid + "");
         paraMap.put("sign", SignMD5Util.getSignStr(paraMap, Local.appSecret));
+        last_cid = cid;
 
         String url = SplicString.SplicUrl(Local.BAOYOU9_, paraMap);
 //        Logger.w("9.9包邮"+url);
@@ -62,6 +69,7 @@ public class Presenter {
 //                    Logger.w("9.9包邮数据"+data);
                     obj = new JSONObject(data);
                     if (obj.get("msg").equals("成功")) {
+                        default_num++;
                         Gson gson = new Gson();
                         view.showData(gson.fromJson(obj.toString(), Baoyou9_9.class));
                     } else {
@@ -142,7 +150,7 @@ public class Presenter {
                     obj = new JSONObject(data);
                     Gson gson = new Gson();
                     view.stopLoading();
-                    view.showData(gson.fromJson(obj.toString(),Detail.class));
+                    view.showData(gson.fromJson(obj.toString(), Detail.class));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -252,12 +260,13 @@ public class Presenter {
      * 获取品牌库数据
      */
     private int DEFAULT_PAGE = 1;//默认页数
+
     public void getPPBrand() {
         view.showLoading();
         TreeMap<String, String> paraMap = new TreeMap<>();
         paraMap.put("appKey", Local.appKey);
         paraMap.put("version", Local.appversion);
-        paraMap.put("pageNo", DEFAULT_PAGE+"");
+        paraMap.put("pageNo", DEFAULT_PAGE + "");
         paraMap.put("pageSize", "20");
         paraMap.put("sign", SignMD5Util.getSignStr(paraMap, Local.appSecret));
 
@@ -272,7 +281,7 @@ public class Presenter {
                     obj = new JSONObject(data);
                     if (obj.getInt("code") == 0) {
                         Gson gson = new Gson();
-                        PPBrand ppBrand = gson.fromJson(obj.toString(),PPBrand.class);
+                        PPBrand ppBrand = gson.fromJson(obj.toString(), PPBrand.class);
                         view.showData(ppBrand);
                         DEFAULT_PAGE++;//默认页数加1
                         view.stopLoading();

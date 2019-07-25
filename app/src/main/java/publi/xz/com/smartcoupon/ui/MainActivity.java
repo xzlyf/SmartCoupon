@@ -64,19 +64,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         nav_admin();
     }
 
-    private MainCNXH.DataBean totalList = new MainCNXH.DataBean();
+//    private MainCNXH.DataBean totalList = new MainCNXH.DataBean();
 
     @Override
-    public void showData(Object object) {
+    public void showData(final Object object) {
         if (object instanceof MainCNXH) {
             //追加数据
-            totalList.addList(((MainCNXH) object).getData().getList());
+//            totalList.addList(((MainCNXH) object).getData().getList());
             //追加数据
             handler.post(new Runnable() {
                 @Override
                 public void run() {
 //                adapter.refresh(fromJson.getData());
-                    adapter.refresh(totalList);
+                    adapter.refresh(((MainCNXH) object).getData());
                 }
             });
         } else {

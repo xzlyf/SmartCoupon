@@ -1,14 +1,15 @@
 package publi.xz.com.smartcoupon.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Baoyou9_9  {
 
-    private long time;
-    private String code;
-    private String msg;
-    private DataBean data;
+    public long time;
+    public String code;
+    public String msg;
+    public DataBean data ;
 
     public long getTime() {
         return time;
@@ -44,9 +45,9 @@ public class Baoyou9_9  {
 
     public static class DataBean  {
 
-        private String totalNum;
-        private String pageId;
-        private List<ListBean> list;
+        public String totalNum;
+        public String pageId;
+        public List<ListBean> list = new ArrayList<>();
 
         public String getTotalNum() {
             return totalNum;
@@ -74,55 +75,55 @@ public class Baoyou9_9  {
 
         public static class ListBean {
 
-            private String id;
-            private String goodsId;
-            private String title;
-            private String dtitle;
-            private double originalPrice;
-            private double actualPrice;
-            private String shopType;
-            private String goldSellers;
-            private String monthSales;
-            private String twoHoursSales;
-            private String dailySales;
-            private String commissionType;
-            private String desc;
-            private String couponReceiveNum;
-            private String couponLink;
-            private String couponEndTime;
-            private String couponStartTime;
-            private String couponPrice;
-            private String couponConditions;
-            private String activityType;
-            private String createTime;
-            private String mainPic;
-            private String marketingMainPic;
-            private String sellerId;
-            private String cid;
-            private double discounts;
-            private double commissionRate;
-            private String couponTotalNum;
-            private String haitao;
-            private String activityStartTime;
-            private String activityEndTime;
-            private String shopName;
-            private String shopLevel;
-            private double descScore;
-            private String brand;
-            private String brandId;
-            private String brandName;
-            private String hotPush;
-            private String teamName;
-            private String itemLink;
-            private String tchaoshi;
-            private String detailPics;
-            private double dsrScore;
-            private double dsrPercent;
-            private double shipScore;
-            private double shipPercent;
-            private double serviceScore;
-            private double servicePercent;
-            private String tbcid;
+            public String id;
+            public String goodsId;
+            public String title;
+            public String dtitle;
+            public double originalPrice;
+            public double actualPrice;
+            public String shopType;
+            public String goldSellers;
+            public String monthSales;
+            public String twoHoursSales;
+            public String dailySales;
+            public String commissionType;
+            public String desc;
+            public String couponReceiveNum;
+            public String couponLink;
+            public String couponEndTime;
+            public String couponStartTime;
+            public String couponPrice;
+            public String couponConditions;
+            public String activityType;
+            public String createTime;
+            public String mainPic;
+            public String marketingMainPic;
+            public String sellerId;
+            public String cid;
+            public double discounts;
+            public double commissionRate;
+            public String couponTotalNum;
+            public String haitao;
+            public String activityStartTime;
+            public String activityEndTime;
+            public String shopName;
+            public String shopLevel;
+            public double descScore;
+            public String brand;
+            public String brandId;
+            public String brandName;
+            public String hotPush;
+            public String teamName;
+            public String itemLink;
+            public String tchaoshi;
+            public String detailPics;
+            public double dsrScore;
+            public double dsrPercent;
+            public double shipScore;
+            public double shipPercent;
+            public double serviceScore;
+            public double servicePercent;
+            public String tbcid;
 
             public String getId() {
                 return id;

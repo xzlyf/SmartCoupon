@@ -2,10 +2,12 @@ package publi.xz.com.smartcoupon.ui.custom;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -43,6 +45,7 @@ public class BottmNav extends LinearLayout implements View.OnClickListener {
         drawable1.setBounds(0, 20, 75, 75);//第一0是距左边距离，第二20是距上边距离，75分别是长宽
         navDiscover.setCompoundDrawables(null, drawable1, null, null);//只放顶部
         Drawable drawable2 = getResources().getDrawable(R.drawable.nav_home);
+        drawable2.setTint(Color.parseColor("#FFF44336"));//设置一个Tint颜色
         drawable2.setBounds(0, 20, 75, 75);
         navHome.setCompoundDrawables(null, drawable2, null, null);
         Drawable drawable3 = getResources().getDrawable(R.drawable.nav_comm);
@@ -52,8 +55,8 @@ public class BottmNav extends LinearLayout implements View.OnClickListener {
         drawable4.setBounds(0, 20, 75, 75);
         navMyself.setCompoundDrawables(null, drawable4, null, null);
 
-
     }
+
 
     private void findId() {
         navDiscover = findViewById(R.id.nav_discover);
