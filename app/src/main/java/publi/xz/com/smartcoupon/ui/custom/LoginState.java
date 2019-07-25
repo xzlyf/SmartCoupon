@@ -13,27 +13,36 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import publi.xz.com.smartcoupon.R;
+import publi.xz.com.smartcoupon.utils.CustomOnclickListener;
+import publi.xz.com.smartcoupon.utils.ItemOnclickListener;
 import publi.xz.com.smartcoupon.utils.SharedPreferencesUtil;
 
 public class LoginState extends LinearLayout implements View.OnClickListener {
     private Context context;
     private FrameLayout layout1;
     private ImageView bannerView;
-    private TextView loginBtn;
     private RelativeLayout layout2;
     private ImageView headPhoto;
-    private TextView idManage;
     private ImageView backBtn;
-
+    private CustomOnclickListener onclickListener;
 
     public LoginState(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
         LayoutInflater.from(context).inflate(R.layout.custom_login_state, this);
         findID();
+        showState();
+
+
+        init_anim();
+    }
+
+    /**
+     * 显示哪个布局
+     */
+    public void showState() {
         layout1.setVisibility(GONE);
         layout2.setVisibility(GONE);
-//        SharedPreferencesUtil.saveState(context,"login",false);
-
         //读取登陆状态
         if (SharedPreferencesUtil.getState(context, "login", false)) {
             //已登录
@@ -43,23 +52,15 @@ public class LoginState extends LinearLayout implements View.OnClickListener {
             layout1.setVisibility(View.VISIBLE);
 
         }
-
-        this.context = context;
-
-        init_anim();
     }
 
     private void findID() {
         layout1 = findViewById(R.id.layout_1);
-        bannerView = findViewById(R.id.banner_view);
-        loginBtn = findViewById(R.id.login_btn);
         layout2 = findViewById(R.id.layout_2);
+        bannerView = findViewById(R.id.banner_view);
         headPhoto = findViewById(R.id.head_photo);
-        idManage = findViewById(R.id.id_manage);
         backBtn = findViewById(R.id.back_btn);
-        loginBtn.setOnClickListener(this);
         backBtn.setOnClickListener(this);
-        idManage.setOnClickListener(this);
         headPhoto.setOnClickListener(this);
     }
 
@@ -68,6 +69,7 @@ public class LoginState extends LinearLayout implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.login_btn:
+                onclickListener.onClick();
                 break;
             case R.id.back_btn:
 
@@ -75,13 +77,18 @@ public class LoginState extends LinearLayout implements View.OnClickListener {
                     ((Activity) context).finish();
                 }
                 break;
-            case R.id.id_manage:
-                break;
             case R.id.head_photo:
                 break;
         }
     }
 
+    /**
+     * 给外部调用
+     * @param listener
+     */
+    public void setOnclickListener(CustomOnclickListener listener){
+        onclickListener = listener;
+    }
 
     private ScaleAnimation showAnim;
     private ScaleAnimation hideAnim;

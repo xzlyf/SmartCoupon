@@ -4,6 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Local {
+
+    public static final String tx_Appid = "101734081";//QQ互联appid
+
     public static  final String UPDATE_SERVER = "http://www.xzlyf.club/SmartCoupon/update.json";
     //大淘客推广中心 http://www.dataoke.com/pmc/api-manager.html
     private static final String APIKEY = "b68d26601f";
