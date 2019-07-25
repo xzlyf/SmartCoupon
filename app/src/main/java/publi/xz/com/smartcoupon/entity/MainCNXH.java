@@ -47,7 +47,7 @@ public class MainCNXH {
 
         private String totalNum;
         private String pageId;
-        private List<ListBean> list = new ArrayList<>();
+        public List<ListBean> list = new ArrayList<>();
         public void addList(List<ListBean> data){
             list.addAll(data);
         }

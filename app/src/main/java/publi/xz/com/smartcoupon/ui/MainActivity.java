@@ -27,6 +27,7 @@ import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.entity.MainCNXH;
 import publi.xz.com.smartcoupon.ui.custom.BottmNav;
 import publi.xz.com.smartcoupon.utils.GlideImageLoader;
+import publi.xz.com.smartcoupon.utils.ItemOnclickListener;
 import publi.xz.com.smartcoupon.utils.SpacesItemDecorationVertical;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -117,8 +118,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     }
                     if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
                         //在底部
-                        Log.d("xz", "onScrollChange: D");
-                        presenter.getGoodsFromNet();
+//                        presenter.getGoodsFromNet();
 
                     }
                     if (oldScrollY<scrollY){
@@ -144,6 +144,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             });
         }
 
+        adapter.setOnclickListener(new ItemOnclickListener() {
+            @Override
+            public void OnClick(View view, int position) {
+                presenter.getGoodsFromNet();
+            }
+        });
     }
 
 

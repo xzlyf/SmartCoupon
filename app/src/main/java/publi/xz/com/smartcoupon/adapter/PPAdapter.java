@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.orhanobut.logger.Logger;
 import com.squareup.picasso.Picasso;
 
 import publi.xz.com.smartcoupon.R;
@@ -26,6 +25,7 @@ public class PPAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private PPBrand brand;
     private ItemOnclickListener onclickListener;
+
     public PPAdapter(Context context) {
         this.context = context;
         brand = new PPBrand();
@@ -76,9 +76,10 @@ public class PPAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     /**
      * 设置点击监听器，外部
+     *
      * @param listener
      */
-    public void setOnclickListener(ItemOnclickListener listener){
+    public void setOnclickListener(ItemOnclickListener listener) {
         this.onclickListener = listener;
     }
 
@@ -106,7 +107,7 @@ public class PPAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     /**
      * 脚布局
      */
-    class FootHolder extends RecyclerView.ViewHolder  {
+    class FootHolder extends RecyclerView.ViewHolder {
 
 
         public FootHolder(View itemView) {
@@ -115,7 +116,7 @@ public class PPAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onclickListener.OnClick(view,getAdapterPosition());
+                    onclickListener.OnClick(view, getAdapterPosition());
                 }
             });
         }
