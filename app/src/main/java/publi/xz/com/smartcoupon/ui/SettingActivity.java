@@ -44,17 +44,18 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void init() {
-        cleanCache.setText("清理缓存（"+getPhotoCacheSize(this)+"Mb）");
+        cleanCache.setText("清理缓存（" + getPhotoCacheSize(this) + "Mb）");
         //获取更新信息(已换成到本地
-        String data = SharedPreferencesUtil.getJson(this,"UPDATE_DATA","null");
-        if (data.equals("null")){
+        String data = SharedPreferencesUtil.getJson(this, "UPDATE_DATA", "null");
+        if (data.equals("null")) {
             //本地更新信息不存在将执行重新获取
             return;
         }
         Gson gson = new Gson();
-        update = gson.fromJson(data,Update.class);
+        update = gson.fromJson(data, Update.class);
 
     }
+
     @Override
     public void findID() {
         cleanCache = findViewById(R.id.clean_cache);
@@ -68,8 +69,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         switch (view.getId()) {
             case R.id.clean_cache:
                 cleanPhotoCache(this);
-                Toast.makeText(this,"清理完成",Toast.LENGTH_SHORT).show();
-                cleanCache.setText("清理缓存（"+getPhotoCacheSize(this)+"Mb）");
+                Toast.makeText(this, "清理完成", Toast.LENGTH_SHORT).show();
+                cleanCache.setText("清理缓存（" + getPhotoCacheSize(this) + "Mb）");
                 break;
             case R.id.check_update:
                 check();
@@ -78,28 +79,35 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void check() {
+        try {
 
-        if (update.getCode()>Local.LocalInfo.versionCode){
-            if (Local.LocalInfo.isshowed){
-                dialog.show();
-            }else{
-                showUpdateDialog();
+            if (update.getCode() > Local.LocalInfo.versionCode) {
+                if (Local.LocalInfo.isshowed) {
+                    dialog.show();
+                } else {
+                    showUpdateDialog();
+                }
+            } else {
+                sToast("已是最新版啦!");
             }
-        }else{
-            sToast("已是最新版啦!");
+
+        } catch (Exception e) {
+            sToast("更新异常");
+            return;
         }
+
     }
 
     private UpdateDialog dialog;
 
-    private void showUpdateDialog(){
+    private void showUpdateDialog() {
         dialog = new UpdateDialog(SettingActivity.this, R.style.update_dialog);
         dialog.create();
         dialog.setMsg(update.getMsg());
         dialog.setVersionName(update.getName());
         dialog.setDownloadLink(update.getLink());
         dialog.show();
-        Local.LocalInfo.isshowed= true;
+        Local.LocalInfo.isshowed = true;
 
     }
 

@@ -16,24 +16,23 @@
     <LinearLayout
         android:layout_below="@+id/login_state"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white">
 
         <Button
+            style="@style/setting_btn"
             android:id="@+id/clean_cache"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:text="清理缓存" />
 
         <Button
+            style="@style/setting_btn"
             android:id="@+id/check_update"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:text="检查更新" />
+        <Button
+            style="@style/setting_btn"
+            android:id="@+id/btn_1"
+            android:text="关于" />
     </LinearLayout>
 
 </RelativeLayout>

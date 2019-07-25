@@ -25,6 +25,7 @@ import publi.xz.com.smartcoupon.utils.SharedPreferencesUtil;
  * 减轻调用Api
  */
 public class InitActivity extends AppCompatActivity {
+    private int waitTime = 100;//等待时间
     private ProgressBar bar;
     private Presenter_Init model;
     @Override
@@ -34,8 +35,13 @@ public class InitActivity extends AppCompatActivity {
         Logger.addLogAdapter(new AndroidLogAdapter());
         hideBar();
         findID();
-        initData();
+//        initData();//测试关闭
         waitTime();
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 
     private void waitTime() {
@@ -43,7 +49,7 @@ public class InitActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(waitTime);
                     startActivity(new Intent(InitActivity.this,MainActivity.class));
                     finish();
 
