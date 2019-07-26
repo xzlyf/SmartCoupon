@@ -23,14 +23,8 @@ public class Baoyou9_9Activity extends BaseActivity {
     /**
      * 一级分类id请求详情：-1-精选，1 -居家百货，2 -美食，3 -服饰，4 -配饰，5 -美妆，6 -内衣，7 -母婴，8 -箱包，9 -数码配件，10 -文娱车品
      */
-    private String[] cids = { "居家百货", "美食", "服饰", "配饰", "美妆", "内衣", "母婴", "箱包", "数码配件", "文娱车品"};
+    private String[] cids = {"居家百货", "美食", "服饰", "配饰", "美妆", "内衣", "母婴", "箱包", "数码配件", "文娱车品"};
 
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-        }
-    };
 
     @Override
     public int getLayoutResource() {
@@ -39,10 +33,10 @@ public class Baoyou9_9Activity extends BaseActivity {
 
     @Override
     public void init_Data() {
-        startLoading();
+        showLoading();
         findID();
         init_recycler();
-        presenter.get9_9tehui("50",  cid);
+        presenter.get9_9tehui("50", cid);
         init_tabs();
 
     }
@@ -54,9 +48,9 @@ public class Baoyou9_9Activity extends BaseActivity {
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                cid = (tab.getPosition()+1);
+                cid = (tab.getPosition() + 1);
                 //当前选中
-                presenter.get9_9tehui("50",  cid);
+                presenter.get9_9tehui("50", cid);
                 adapter.clean();
             }
 
@@ -77,15 +71,10 @@ public class Baoyou9_9Activity extends BaseActivity {
     @Override
     public void showData(final Object object) {
         if (object instanceof Baoyou9_9) {
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    adapter.refresh(((Baoyou9_9) object).getData());
-                    stopLoading();
-                }
-            });
+            adapter.refresh(((Baoyou9_9) object).getData());
+            dismissLoading();
         } else {
-            sToast("致命错误");
+            mToast("致命错误");
         }
     }
 
@@ -126,7 +115,7 @@ public class Baoyou9_9Activity extends BaseActivity {
         adapter.setOnclickListener(new ItemOnclickListener() {
             @Override
             public void OnClick(View view, int position) {
-                presenter.get9_9tehui("50",  cid);
+                presenter.get9_9tehui("50", cid);
             }
         });
 

@@ -1,17 +1,10 @@
 package publi.xz.com.smartcoupon.ui.presenter;
 
-import android.app.Activity;
-import android.util.Log;
-
 import com.google.gson.Gson;
-import com.orhanobut.logger.Logger;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.TreeMap;
 
 import publi.xz.com.smartcoupon.base.BaseActivity;
@@ -24,7 +17,6 @@ import publi.xz.com.smartcoupon.entity.Popular;
 import publi.xz.com.smartcoupon.entity.Search;
 import publi.xz.com.smartcoupon.ui.model.IModel;
 import publi.xz.com.smartcoupon.ui.model.Model;
-import publi.xz.com.smartcoupon.utils.SharedPreferencesUtil;
 import publi.xz.com.smartcoupon.utils.SignMD5Util;
 import publi.xz.com.smartcoupon.utils.SplicString;
 
@@ -71,21 +63,21 @@ public class Presenter {
                     if (obj.get("msg").equals("成功")) {
                         default_num++;
                         Gson gson = new Gson();
-                        view.showData(gson.fromJson(obj.toString(), Baoyou9_9.class));
+                        view.backToUi(gson.fromJson(obj.toString(), Baoyou9_9.class));
                     } else {
-                        view.stopLoading();
+                        view.dismissLoading();
                         view.showDialog("服务器异常，请稍后重试！", Local.DIALOG_W);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    view.stopLoading();
+                    view.dismissLoading();
                     view.showDialog("解析失败，请稍后重试！", Local.DIALOG_W);
                 }
             }
 
             @Override
             public void failed(Exception e) {
-                view.stopLoading();
+                view.dismissLoading();
                 view.showDialog("加载失败，请检查网络是否连接成功！", Local.DIALOG_E);
             }
         });
@@ -119,7 +111,7 @@ public class Presenter {
 //                    Logger.w("主页商品列表"+data);
                     obj = new JSONObject(data);
                     Gson gson = new Gson();
-                    view.showData(gson.fromJson(obj.toString(), MainCNXH.class));
+                    view.backToUi(gson.fromJson(obj.toString(), MainCNXH.class));
                 } catch (JSONException e) {
                     e.printStackTrace();
                     view.showDialog("服务器异常，请稍后重试！", Local.DIALOG_W);
@@ -149,12 +141,12 @@ public class Presenter {
 //                    Logger.w("单品详情数据" + data);
                     obj = new JSONObject(data);
                     Gson gson = new Gson();
-                    view.stopLoading();
-                    view.showData(gson.fromJson(obj.toString(), Detail.class));
+                    view.dismissLoading();
+                    view.backToUi(gson.fromJson(obj.toString(), Detail.class));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    view.stopLoading();
+                    view.dismissLoading();
                     view.showDialog("服务器异常，请稍后重试！", Local.DIALOG_W);
 
                 }
@@ -162,7 +154,7 @@ public class Presenter {
 
             @Override
             public void failed(Exception e) {
-                view.stopLoading();
+                view.dismissLoading();
                 view.showDialog("请求失败，请稍后重试！", Local.DIALOG_W);
 
             }
@@ -202,14 +194,14 @@ public class Presenter {
                     obj = new JSONObject(data);
                     if (obj.get("msg").equals("成功")) {
                         Gson gson = new Gson();
-                        view.showData(gson.fromJson(obj.toString(), Search.class));
+                        view.backToUi(gson.fromJson(obj.toString(), Search.class));
                     } else {
-                        view.stopLoading();
+                        view.dismissLoading();
                         view.showDialog("服务器异常，请稍后重试！" + '\n' + obj.get("msg"), Local.DIALOG_W);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    view.stopLoading();
+                    view.dismissLoading();
                     view.showDialog("解析异常，请稍后重试！", Local.DIALOG_W);
 
                 }
@@ -217,7 +209,7 @@ public class Presenter {
 
             @Override
             public void failed(Exception e) {
-                view.stopLoading();
+                view.dismissLoading();
                 view.showDialog("请求失败，请稍后重试！", Local.DIALOG_W);
 
             }
@@ -230,7 +222,7 @@ public class Presenter {
      * @param url
      */
     public void getTop100DataFromNet(String url) {
-//        view.startLoading();
+//        view.showLoading();
         model.getDataFromNet(url, new IModel.OnLoadCompleteListener() {
             @Override
             public void success(String data) {
@@ -239,17 +231,17 @@ public class Presenter {
 //                    Logger.w("top100人气榜数据"+data);
                     obj = new JSONObject(data);
                     Gson gson = new Gson();
-                    view.showData(gson.fromJson(obj.toString(), Popular.class));
+                    view.backToUi(gson.fromJson(obj.toString(), Popular.class));
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    view.stopLoading();
+                    view.dismissLoading();
                     view.showDialog("解析失败，请稍后重试", Local.DIALOG_W);
                 }
             }
 
             @Override
             public void failed(Exception e) {
-                view.stopLoading();
+                view.dismissLoading();
                 view.showDialog("请求失败，请检查网络连接是否正常", Local.DIALOG_E);
 
             }
@@ -282,23 +274,23 @@ public class Presenter {
                     if (obj.getInt("code") == 0) {
                         Gson gson = new Gson();
                         PPBrand ppBrand = gson.fromJson(obj.toString(), PPBrand.class);
-                        view.showData(ppBrand);
+                        view.backToUi(ppBrand);
                         DEFAULT_PAGE++;//默认页数加1
-                        view.stopLoading();
+                        view.dismissLoading();
                     } else {
-                        view.stopLoading();
+                        view.dismissLoading();
                         view.showDialog("没有更多数据了", Local.DIALOG_M);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    view.stopLoading();
+                    view.dismissLoading();
                     view.showDialog("解析失败，请稍后重试", Local.DIALOG_W);
                 }
             }
 
             @Override
             public void failed(Exception e) {
-                view.stopLoading();
+                view.dismissLoading();
                 view.showDialog("请求失败，请检查网络连接是否正常", Local.DIALOG_E);
 
             }

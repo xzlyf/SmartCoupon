@@ -42,12 +42,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private NestedScrollView scroller;
     private FloatingActionButton backToTop;
     private BottmNav bottom_nav;
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-        }
-    };
 
     @Override
     public int getLayoutResource() {
@@ -64,23 +58,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         nav_admin();
     }
 
-//    private MainCNXH.DataBean totalList = new MainCNXH.DataBean();
 
     @Override
     public void showData(final Object object) {
         if (object instanceof MainCNXH) {
-            //追加数据
-//            totalList.addList(((MainCNXH) object).getData().getList());
-            //追加数据
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-//                adapter.refresh(fromJson.getData());
-                    adapter.refresh(((MainCNXH) object).getData());
-                }
-            });
+            adapter.refresh(((MainCNXH) object).getData());
         } else {
-            sToast("致命错误");
+            mToast("致命错误");
         }
 
     }
@@ -242,6 +226,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
         bShowAction.setDuration(500);
     }
-
 
 }

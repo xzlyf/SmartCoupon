@@ -1,13 +1,7 @@
 package publi.xz.com.smartcoupon.ui;
 
-import android.graphics.drawable.Drawable;
-import android.os.SystemClock;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,9 +28,6 @@ import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.entity.Update;
 import publi.xz.com.smartcoupon.ui.custom.LoginState;
 import publi.xz.com.smartcoupon.ui.custom.UpdateDialog;
-import publi.xz.com.smartcoupon.ui.view.IView;
-import publi.xz.com.smartcoupon.utils.CustomOnclickListener;
-import publi.xz.com.smartcoupon.utils.ItemOnclickListener;
 import publi.xz.com.smartcoupon.utils.SharedPreferencesUtil;
 
 import static publi.xz.com.smartcoupon.utils.CacheInfo.cleanPhotoCache;
@@ -127,7 +118,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 doCheckLogin();
                 break;
             case R.id.id_manage:
-                getUserInfo();
+//                getUserInfo();
+                logout();
                 break;
         }
     }
@@ -239,11 +231,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     showUpdateDialog();
                 }
             } else {
-                sToast("已是最新版啦!");
+                mToast("已是最新版啦!");
             }
 
         } catch (Exception e) {
-            sToast("更新异常");
+            mToast("更新异常");
             return;
         }
 
@@ -283,15 +275,15 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         @Override
         public void onComplete(Object response) {
             if (null == response) {
-                sToast("返回为空 登录失败");
+                mToast("返回为空 登录失败");
                 return;
             }
             JSONObject jsonResponse = (JSONObject) response;
             if (null != jsonResponse && jsonResponse.length() == 0) {
-                sToast("返回为空 登录失败");
+                mToast("返回为空 登录失败");
                 return;
             }
-            sToast("登录成功");
+            mToast("登录成功");
             // 有奖分享处理
             doComplete((JSONObject) response);
         }
@@ -302,12 +294,12 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
         @Override
         public void onError(UiError e) {
-            sToast("onError: " + e.errorDetail);
+            mToast("onError: " + e.errorDetail);
         }
 
         @Override
         public void onCancel() {
-            sToast("onCancel: ");
+            mToast("onCancel: ");
         }
     }
 

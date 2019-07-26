@@ -30,12 +30,6 @@ public class PPActivity extends BaseActivity {
     private PPAdapter adapter;
 
 
-    Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-        }
-    };
     @Override
     public int getLayoutResource() {
         return R.layout.activity_pp;
@@ -71,13 +65,7 @@ public class PPActivity extends BaseActivity {
     @Override
     public void showData(final Object object) {
         if (object instanceof PPBrand){
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    adapter.refresh((PPBrand) object);
-
-                }
-            });
+            adapter.refresh((PPBrand) object);
         }
 
     }

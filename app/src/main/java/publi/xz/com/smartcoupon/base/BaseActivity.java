@@ -18,25 +18,47 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.Logger;
-
-import java.net.Proxy;
-
 import publi.xz.com.smartcoupon.R;
-import publi.xz.com.smartcoupon.entity.Baoyou9_9;
 import publi.xz.com.smartcoupon.ui.presenter.Presenter;
-import publi.xz.com.smartcoupon.ui.view.IView;
 
 
-public abstract class BaseActivity extends AppCompatActivity implements IView{
+public abstract class BaseActivity extends AppCompatActivity  {
     private Context mContext;
     public Presenter presenter;
+    //标识
+    private final int dataCallback = 1002;
+    private final int toast_bs = 1003;
+    private final int show_d = 1004;
+    private final int hide_d = 1005;
+    private final int show_l = 1006;
+    private final int hide_l = 1007;
 
-    Handler handler = new Handler() {
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+            switch (msg.what) {
+                //showData()回调
+                case dataCallback:
+                    showData(msg.obj);
+                    break;
+                case toast_bs:
+                    mToast_handler(msg.obj.toString());
+                    break;
+                case show_d:
+                    String[] t = (String[]) msg.obj;
+                    show_d_handler(t[0], t[1]);
+                    break;
+                case hide_d:
+                    dismiss_d_handler();
+                    break;
+                case show_l:
+                    show_load_handler();
+                    break;
+                case hide_l:
+                    dismiss_l_handler();
+                    break;
+
+            }
         }
     };
 
@@ -46,23 +68,19 @@ public abstract class BaseActivity extends AppCompatActivity implements IView{
     }
 
 
-    @Override
-    public void startLoading() {
-        showLoading();
+
+    /**
+     * 异步线程调用
+     * 把数据回到主线
+     * 回到主线程封装
+     */
+    public void backToUi(Object object) {
+        //通过handler.obtainMessage()可以减少内存的使用
+        Message msg = handler.obtainMessage();
+        msg.what = dataCallback;
+        msg.obj = object;
+        handler.sendMessage(msg);
     }
-
-    @Override
-    public void stopLoading() {
-        dismissLoading();
-    }
-
-    @Override
-    public void sToast(String msg) {
-        mToast(msg);
-    }
-
-
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,16 +96,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IView{
 
     }
 
-    private void init() {
-        presenter = new Presenter(this);
-        init_Data();
-
-        //创建一个HomeUp按钮
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar!=null){
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-    }
 
     /**
      * 获取权限
@@ -105,9 +113,26 @@ public abstract class BaseActivity extends AppCompatActivity implements IView{
         }
     }
 
+    private void init() {
+        presenter = new Presenter(this);
+        init_Data();
+
+        //创建一个HomeUp按钮
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    /**
+     * homeUp按钮
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 break;
@@ -115,6 +140,13 @@ public abstract class BaseActivity extends AppCompatActivity implements IView{
         return true;
     }
 
+    /**
+     * 权限结果回调
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -136,89 +168,135 @@ public abstract class BaseActivity extends AppCompatActivity implements IView{
 
     public abstract void init_Data();
 
-    /**
-     * 用户请求返回数据
-     * @param object
-     */
     public abstract void showData(Object object);
 
 
     //常用方法
     Toast mToast;
     private BaseDialog mDialog;
+    private ProgressDialog progressDialog;
 
-    //常用方法
-    public void mToast(final String text) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (!TextUtils.isEmpty(text)) {
-                    if (mToast == null) {
-                        mToast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
-                    } else {
-                        mToast.setText(text);
-                    }
-                    mToast.show();
-                }
-            }
-        });
+    /**
+     * 子类调用
+     * 常用方法
+     *
+     * @param text
+     */
+    public void mToast(String text) {
+        Message msg = handler.obtainMessage();
+        msg.what = toast_bs;
+        msg.obj = text;
+        handler.sendMessage(msg);
     }
 
     /**
-     * @param msg  消息
+     * 子类调用
+     * 显示对话框
+     *
+     * @param text 消息
      * @param type 类型
      */
-    public void showDialog(final String msg, final String type) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                mDialog = new BaseDialog(mContext, R.style.base_dialog);
-                mDialog.create();
-                mDialog.setType(type);
-                mDialog.setMsg(msg);
-                mDialog.show();
-            }
-        });
+    public void showDialog(final String text, final String type) {
+        Message msg = handler.obtainMessage();
+        msg.what = show_d;
+        msg.obj = new String[]{text, type};
+        handler.sendMessage(msg);
     }
 
+    /**
+     * 子类调用
+     * 销毁对话框
+     */
     public void dismissDialog() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (mDialog != null && mDialog.isShowing()) {
-                    mDialog.dismiss();
-                    mDialog = null;
-                }
-            }
-        });
+        Message msg = handler.obtainMessage();
+        msg.what = hide_d;
+        handler.sendMessage(msg);
     }
 
-    private ProgressDialog progressDialog;
-
+    /**
+     * 子类调用
+     * 显示加载框
+     */
     public void showLoading() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                progressDialog = new ProgressDialog(mContext);
-                progressDialog.setTitle("加载中");
-                progressDialog.setMessage("稍等片刻!");
-                progressDialog.setCancelable(false);
-                progressDialog.show();
-            }
-        });
-
+        Message msg = handler.obtainMessage();
+        msg.what = show_l;
+        handler.sendMessage(msg);
     }
 
+    /**
+     * 子类调用
+     * 销毁加载框
+     */
     public void dismissLoading() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (progressDialog != null && progressDialog.isShowing()) {
-                    progressDialog.dismiss();
-                    progressDialog = null;
-                }
+        Message msg = handler.obtainMessage();
+        msg.what = hide_l;
+        handler.sendMessage(msg);
+    }
+
+    /**
+     * Handler执行
+     * 回到主线
+     *
+     * @param text
+     */
+    private void mToast_handler(String text) {
+        if (!TextUtils.isEmpty(text)) {
+            if (mToast == null) {
+                mToast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+            } else {
+                mToast.setText(text);
             }
-        });
+            mToast.show();
+        }
+    }
+
+    /**
+     * Handler执行
+     * 回到主线程
+     *
+     * @param msg
+     * @param type
+     */
+    private void show_d_handler(String msg, String type) {
+        mDialog = new BaseDialog(mContext, R.style.base_dialog);
+        mDialog.create();
+        mDialog.setType(type);
+        mDialog.setMsg(msg);
+        mDialog.show();
+    }
+
+    /**
+     * Handler执行
+     * 回到主线程
+     */
+    private void dismiss_d_handler() {
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+            mDialog = null;
+        }
+    }
+
+    /**
+     * Handle调用
+     * 显示加载框
+     */
+    private void show_load_handler() {
+        progressDialog = new ProgressDialog(mContext);
+        progressDialog.setTitle("加载中");
+        progressDialog.setMessage("稍等片刻!");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+    /**
+     * Handler调用
+     * 销毁加载框
+     */
+    private void dismiss_l_handler() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
     }
 
 }

@@ -29,12 +29,6 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private RecyclerView recycler;
     private SearchAdapter adapter;
 
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-        }
-    };
 
     @Override
     public int getLayoutResource() {
@@ -56,19 +50,12 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void showData(final Object object) {
         if (object instanceof Search) {
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    adapter.refresh(((Search) object));
-                    recycler.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                    stopLoading();
-
-
-                }
-            });
+            adapter.refresh(((Search) object));
+            recycler.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            dismissLoading();
         }else{
-            sToast("致命错误");
+            mToast("致命错误");
         }
     }
 

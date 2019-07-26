@@ -1,7 +1,5 @@
 package publi.xz.com.smartcoupon.ui;
 
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,7 +13,6 @@ import publi.xz.com.smartcoupon.adapter.Top100Adapter;
 import publi.xz.com.smartcoupon.base.BaseActivity;
 import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.entity.Popular;
-import publi.xz.com.smartcoupon.ui.view.IView;
 import publi.xz.com.smartcoupon.utils.CommonUtil;
 
 /**
@@ -25,12 +22,6 @@ public class Top100Activity extends BaseActivity  {
     private RecyclerView recycler;
     private ImageView loading_view;
     private Top100Adapter adapter;
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-        }
-    };
 
     @Override
     public int getLayoutResource() {
@@ -44,7 +35,7 @@ public class Top100Activity extends BaseActivity  {
 
     @Override
     public void init_Data() {
-        startLoading();
+        showLoading();
         setTitle("人气榜");
         loading_view = findViewById(R.id.loading_view);
         init_recycle();
@@ -65,16 +56,11 @@ public class Top100Activity extends BaseActivity  {
             total.addAll(lists.get(0));
             list_size = lists.size();
 
-            stopLoading();
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    adapter = new Top100Adapter(lists.get(0), Top100Activity.this);
-                    recycler.setAdapter(adapter);
-                }
-            });
+            dismissLoading();
+            adapter = new Top100Adapter(lists.get(0), Top100Activity.this);
+            recycler.setAdapter(adapter);
         } else {
-            sToast("致命错误");
+            mToast("致命错误");
         }
     }
 

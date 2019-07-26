@@ -11,7 +11,6 @@ import com.squareup.picasso.Picasso;
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.base.BaseActivity;
 import publi.xz.com.smartcoupon.entity.DetailV2;
-import publi.xz.com.smartcoupon.ui.view.IView;
 
 import static publi.xz.com.smartcoupon.utils.TaobaoUtil.jump2TaobaoQuan;
 import static publi.xz.com.smartcoupon.utils.TransparentBarUtil.makeStatusBarTransparent;
@@ -21,7 +20,7 @@ import static publi.xz.com.smartcoupon.utils.TransparentBarUtil.makeStatusBarTra
  * 兼容更多adapter的接入
  */
 
-public class DetailsActivityV2 extends BaseActivity implements IView {
+public class DetailsActivityV2 extends BaseActivity  {
     private DetailV2 detailV2;
 
     private ImageView mainPic;
