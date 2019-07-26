@@ -1,12 +1,18 @@
 package publi.xz.com.smartcoupon.ui;
 
+import android.graphics.Bitmap;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
+import com.tencent.connect.UserInfo;
 import com.tencent.connect.common.Constants;
 import com.tencent.open.utils.HttpUtils;
 import com.tencent.tauth.IRequestListener;
@@ -30,6 +36,7 @@ import publi.xz.com.smartcoupon.ui.custom.ChooseLoginDialog;
 import publi.xz.com.smartcoupon.ui.custom.LoginState;
 import publi.xz.com.smartcoupon.ui.custom.UpdateDialog;
 import publi.xz.com.smartcoupon.utils.CustomOnclickListener;
+import publi.xz.com.smartcoupon.utils.ImageUtil;
 import publi.xz.com.smartcoupon.utils.SharedPreferencesUtil;
 
 import static publi.xz.com.smartcoupon.utils.CacheInfo.cleanPhotoCache;
@@ -44,7 +51,32 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private TextView id_manage;
     private LoginState login_state;
     private Tencent tx;
+    private ImageView head_photo;
+    private TextView userName;
+    private UserInfo mInfo;
 
+
+    Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 0:
+                    JSONObject response = (JSONObject) msg.obj;
+                    try {
+                        userName.setText(response.getString("nickname"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 1:
+                    Bitmap bitmap = (Bitmap) msg.obj;
+                    head_photo.setImageBitmap(bitmap);
+                    break;
+            }
+        }
+
+    };
 
     @Override
     public int getLayoutResource() {
@@ -98,7 +130,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         checkUpdate = findViewById(R.id.check_update);
         login_btn = findViewById(R.id.login_btn);
         login_state = findViewById(R.id.login_state);
+        head_photo = findViewById(R.id.head_photo);
         id_manage = findViewById(R.id.id_manage);
+        userName = findViewById(R.id.user_name);
         checkUpdate.setOnClickListener(this);
         cleanCache.setOnClickListener(this);
         login_btn.setOnClickListener(this);
@@ -285,8 +319,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         protected void doComplete(JSONObject values) {
             //保存登陆状态
             SharedPreferencesUtil.saveState(SettingActivity.this, "login", true);
+            SharedPreferencesUtil.saveLoginJson(SettingActivity.this, "qq", values.toString());
             //重置显示布局
             login_state.showState();
+            updateUserInfo();
+
         }
     };
 
@@ -320,6 +357,56 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         @Override
         public void onCancel() {
             mToast("onCancel: ");
+        }
+    }
+
+    private void updateUserInfo() {
+        if (tx != null && tx.isSessionValid()) {
+            IUiListener listener = new IUiListener() {
+
+                @Override
+                public void onError(UiError e) {
+
+                }
+
+                @Override
+                public void onComplete(final Object response) {
+                    //保存至本地
+                    SharedPreferencesUtil.saveLoginJson(SettingActivity.this,"user_info",response.toString());
+                    Message msg = new Message();
+                    msg.obj = response;
+                    msg.what = 0;
+                    mHandler.sendMessage(msg);
+                    new Thread() {
+
+                        @Override
+                        public void run() {
+                            JSONObject json = (JSONObject) response;
+                            if (json.has("figureurl")) {
+                                Bitmap bitmap = null;
+                                try {
+                                    bitmap = ImageUtil.getbitmap(json.getString("figureurl_qq_2"));
+                                } catch (JSONException e) {
+
+                                }
+                                Message msg = new Message();
+                                msg.obj = bitmap;
+                                msg.what = 1;
+                                mHandler.sendMessage(msg);
+                            }
+                        }
+
+                    }.start();
+                }
+
+                @Override
+                public void onCancel() {
+
+                }
+            };
+            mInfo = new UserInfo(this, tx.getQQToken());
+            mInfo.getUserInfo(listener);
+
         }
     }
 

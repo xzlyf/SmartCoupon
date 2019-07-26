@@ -75,4 +75,27 @@ public class SharedPreferencesUtil {
                 Context.MODE_PRIVATE);
         return sp.getBoolean(key,defValue);
     }
+    /**
+     * 固定式存储
+     * @param context
+     * @param key
+     * @param data
+     */
+    public static void saveLoginJson(Context context, String key,String data){
+        SharedPreferences sp = context.getSharedPreferences("login",
+                Context.MODE_PRIVATE);
+        sp.edit().putString(key, data).apply();
+    }
+    /**
+     * 固定式读取
+     * @param context
+     * @param key
+     * @param defValue
+     * @return
+     */
+    public static String getLoginJson(Context context, String key, String defValue){
+        SharedPreferences sp = context.getSharedPreferences("login",
+                Context.MODE_PRIVATE);
+        return sp.getString(key,defValue);
+    }
 }

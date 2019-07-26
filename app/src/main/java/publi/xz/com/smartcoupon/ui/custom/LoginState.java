@@ -2,6 +2,7 @@ package publi.xz.com.smartcoupon.ui.custom;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import publi.xz.com.smartcoupon.R;
-import publi.xz.com.smartcoupon.utils.CustomOnclickListener;
-import publi.xz.com.smartcoupon.utils.ItemOnclickListener;
+import publi.xz.com.smartcoupon.utils.ImageUtil;
 import publi.xz.com.smartcoupon.utils.SharedPreferencesUtil;
 
 public class LoginState extends LinearLayout implements View.OnClickListener {
@@ -24,7 +27,7 @@ public class LoginState extends LinearLayout implements View.OnClickListener {
     private RelativeLayout layout2;
     private ImageView headPhoto;
     private ImageView backBtn;
-    private CustomOnclickListener onclickListener;
+    private TextView userName;
 
     public LoginState(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -32,8 +35,6 @@ public class LoginState extends LinearLayout implements View.OnClickListener {
         LayoutInflater.from(context).inflate(R.layout.custom_login_state, this);
         findID();
         showState();
-
-
         init_anim();
     }
 
@@ -47,11 +48,26 @@ public class LoginState extends LinearLayout implements View.OnClickListener {
         if (SharedPreferencesUtil.getState(context, "login", false)) {
             //已登录
             layout2.setVisibility(View.VISIBLE);
+//            String data = SharedPreferencesUtil.getLoginJson(context,"user_info","null");
+//            if (data.equals("null")){
+//                return;
+//            }
+//            JSONObject json = null;
+//            try {
+//                json = new JSONObject(data);
+//                headPhoto.setImageBitmap(ImageUtil.getbitmap(json.getString("figureurl_qq_2")));
+//                userName.setText(json.getString("nickname"));
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
         } else {
             //未登录
             layout1.setVisibility(View.VISIBLE);
 
         }
+
+
     }
 
     private void findID() {
@@ -60,6 +76,7 @@ public class LoginState extends LinearLayout implements View.OnClickListener {
         bannerView = findViewById(R.id.banner_view);
         headPhoto = findViewById(R.id.head_photo);
         backBtn = findViewById(R.id.back_btn);
+        userName = findViewById(R.id.user_name);
         backBtn.setOnClickListener(this);
         headPhoto.setOnClickListener(this);
     }
@@ -68,11 +85,7 @@ public class LoginState extends LinearLayout implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.login_btn:
-                onclickListener.onClick();
-                break;
             case R.id.back_btn:
-
                 if (context instanceof Activity) {
                     ((Activity) context).finish();
                 }
@@ -82,13 +95,6 @@ public class LoginState extends LinearLayout implements View.OnClickListener {
         }
     }
 
-    /**
-     * 给外部调用
-     * @param listener
-     */
-    public void setOnclickListener(CustomOnclickListener listener){
-        onclickListener = listener;
-    }
 
     private ScaleAnimation showAnim;
     private ScaleAnimation hideAnim;
