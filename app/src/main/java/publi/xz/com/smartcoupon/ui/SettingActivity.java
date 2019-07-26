@@ -26,8 +26,10 @@ import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.base.BaseActivity;
 import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.entity.Update;
+import publi.xz.com.smartcoupon.ui.custom.ChooseLoginDialog;
 import publi.xz.com.smartcoupon.ui.custom.LoginState;
 import publi.xz.com.smartcoupon.ui.custom.UpdateDialog;
+import publi.xz.com.smartcoupon.utils.CustomOnclickListener;
 import publi.xz.com.smartcoupon.utils.SharedPreferencesUtil;
 
 import static publi.xz.com.smartcoupon.utils.CacheInfo.cleanPhotoCache;
@@ -41,6 +43,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private TextView login_btn;
     private TextView id_manage;
     private LoginState login_state;
+    private Tencent tx;
 
 
     @Override
@@ -58,13 +61,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     }
 
-    private Tencent tx;
 
     /**
      * 初始化QQ接入
      */
     private void init_login() {
-        final String TAG = "xz_tx";
         tx = Tencent.createInstance(Local.tx_Appid, this);
 //        if (!tx.isSessionValid()) {
 //            tx.login(this, "all", loginListener, true);
@@ -127,8 +128,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     /**
      * 获取用户信息
      */
-    public void getUserInfo()
-    {
+    public void getUserInfo() {
         tx.requestAsync(Constants.LOGIN_INFO, null,
                 Constants.HTTP_GET, new IRequestListener() {
                     @Override
@@ -191,22 +191,42 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
      */
     private void logout() {
 
-            tx.logout(this);
-            //保存登陆状态
-            SharedPreferencesUtil.saveState(SettingActivity.this, "login", false);
-            //重置显示布局
-            login_state.showState();
+        tx.logout(this);
+        //保存登陆状态
+        SharedPreferencesUtil.saveState(SettingActivity.this, "login", false);
+        //重置显示布局
+        login_state.showState();
     }
 
 
     /**
      * 检查登陆状况
      */
+    private ChooseLoginDialog loginDialog;
+
     private void doCheckLogin() {
-        if (!tx.checkSessionValid(Local.tx_Appid)) {
-            //token过期，请调用登录接口拉起手Q授权登录"
-            tx.login(this, "all", loginListener, true);
-        }
+        loginDialog = new ChooseLoginDialog(SettingActivity.this, R.style.choose_dialog);
+        loginDialog.create();
+        loginDialog.show();
+        //手机Qq登陆
+        loginDialog.setQQOclickListener(new CustomOnclickListener() {
+            @Override
+            public void onClick() {
+                loginDialog.dismiss();
+
+                if (!tx.checkSessionValid(Local.tx_Appid)) {
+                    //token过期，token过期请调用登录接口拉起手Q授权登录 "
+                    tx.login(SettingActivity.this, "all", loginListener, true);
+                }
+            }
+        });
+        loginDialog.setPhoneOnClickListener(new CustomOnclickListener() {
+            @Override
+            public void onClick() {
+                loginDialog.dismiss();
+
+            }
+        });
     }
 
     /**

@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,6 +39,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         if (viewType == TYPE_ITEM) {
             return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_commodity, parent, false));//指定根部据
 
@@ -104,7 +107,6 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public void refresh(MainCNXH.DataBean fromJson) {
-//        cnxh = fromJson;
         cnxh.list.addAll(fromJson.getList());
 
         notifyDataSetChanged();
@@ -126,6 +128,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView org_Price;
         TextView price;
         Button quan_price;
+
 
         public ViewHolder(View itemView) {
             super(itemView);

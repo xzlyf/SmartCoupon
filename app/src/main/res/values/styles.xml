@@ -30,6 +30,13 @@
         <item name="android:windowBackground">@color/white</item><!--背景透明-->
 
     </style>
+    <!--登陆方式对话框-->
+    <style name="choose_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+        <item name="android:windowBackground">@color/transparent</item><!--背景透明-->
+        <item name="android:backgroundDimEnabled">true</item><!--背景变暗-->
+
+    </style>
     <!-- NOTitle -->
     <style name="AppNoTitle" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->

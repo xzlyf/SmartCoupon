@@ -1,5 +1,6 @@
 package publi.xz.com.smartcoupon.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
@@ -82,9 +83,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             scroller.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
                 @Override
                 public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-
                     if (scrollY != 0) {
-                        if (scrollY>=500) {
+                        if (scrollY >= 500) {
 
                             //不在顶部
                             if (backToTop.getVisibility() != View.VISIBLE) {
@@ -94,7 +94,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         }
                     } else {
                         //在顶部
-                        if (backToTop.getVisibility()!=View.INVISIBLE){
+                        if (backToTop.getVisibility() != View.INVISIBLE) {
                             backToTop.startAnimation(bHiddenAction);
                             backToTop.setVisibility(View.INVISIBLE);
                         }
@@ -103,22 +103,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
                         //在底部
 //                        presenter.getGoodsFromNet();
-
                     }
-                    if (oldScrollY<scrollY){
+                    if (oldScrollY < scrollY) {
                         //向下滑-隐藏底部导航栏
                         //先判断是否已经隐藏了
-                        if (bottom_nav.getVisibility()!=View.INVISIBLE){
+                        if (bottom_nav.getVisibility() != View.INVISIBLE) {
                             //当滚动条滚动位置大于500才开始隐藏动画，这样不用随便一拉就隐藏了
-                            if (scrollY>=500) {
+                            if (scrollY >= 500) {
                                 bottom_nav.startAnimation(mHiddenAction);
                                 bottom_nav.setVisibility(View.INVISIBLE);
                             }
                         }
-
-                    }else if (oldScrollY>scrollY){
+                    } else if (oldScrollY > scrollY) {
                         //向上划-显示导航栏
-                        if (bottom_nav.getVisibility()!=View.VISIBLE){
+                        if (bottom_nav.getVisibility() != View.VISIBLE) {
                             bottom_nav.startAnimation(mShowAction);
                             bottom_nav.setVisibility(View.VISIBLE);
 
@@ -128,12 +126,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             });
         }
 
+        //底部加载更多监听
         adapter.setOnclickListener(new ItemOnclickListener() {
             @Override
             public void OnClick(View view, int position) {
                 presenter.getGoodsFromNet();
             }
         });
+
     }
 
 
@@ -181,7 +181,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(new Intent(MainActivity.this, HotWordActivity.class));
                 break;
             case R.id.btn_3:
-                startActivity(new Intent(MainActivity.this,PPActivity.class));
+                startActivity(new Intent(MainActivity.this, PPActivity.class));
                 break;
             case R.id.baoyou9_9:
                 startActivity(new Intent(MainActivity.this, Baoyou9_9Activity.class));
