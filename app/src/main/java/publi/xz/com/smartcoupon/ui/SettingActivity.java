@@ -12,11 +12,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.orhanobut.logger.Logger;
+import com.tencent.connect.common.Constants;
+import com.tencent.open.utils.HttpUtils;
+import com.tencent.tauth.IRequestListener;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
+import org.apache.http.conn.ConnectTimeoutException;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.base.BaseActivity;
@@ -117,9 +127,71 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 doCheckLogin();
                 break;
             case R.id.id_manage:
-                logout();
+                getUserInfo();
                 break;
         }
+    }
+
+    /**
+     * 获取用户信息
+     */
+    public void getUserInfo()
+    {
+        tx.requestAsync(Constants.LOGIN_INFO, null,
+                Constants.HTTP_GET, new IRequestListener() {
+                    @Override
+                    public void onComplete(JSONObject jsonObject) {
+                        Logger.d("a");
+                    }
+
+                    @Override
+                    public void onIOException(IOException e) {
+                        Logger.d("b");
+
+                    }
+
+                    @Override
+                    public void onMalformedURLException(MalformedURLException e) {
+                        Logger.d("c");
+
+                    }
+
+                    @Override
+                    public void onJSONException(JSONException e) {
+                        Logger.d("d");
+
+                    }
+
+                    @Override
+                    public void onConnectTimeoutException(ConnectTimeoutException e) {
+                        Logger.d("e");
+
+                    }
+
+                    @Override
+                    public void onSocketTimeoutException(SocketTimeoutException e) {
+                        Logger.d("f");
+
+                    }
+
+                    @Override
+                    public void onNetworkUnavailableException(HttpUtils.NetworkUnavailableException e) {
+                        Logger.d("g");
+
+                    }
+
+                    @Override
+                    public void onHttpStatusException(HttpUtils.HttpStatusException e) {
+                        Logger.d("h");
+
+                    }
+
+                    @Override
+                    public void onUnknowException(Exception e) {
+                        Logger.d("i");
+
+                    }
+                }, null);
     }
 
     /**
@@ -139,7 +211,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
      * 检查登陆状况
      */
     private void doCheckLogin() {
-        if (!tx.isSessionValid()) {
+        if (!tx.checkSessionValid(Local.tx_Appid)) {
+            //token过期，请调用登录接口拉起手Q授权登录"
             tx.login(this, "all", loginListener, true);
         }
     }
