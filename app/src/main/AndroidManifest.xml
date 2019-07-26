@@ -68,6 +68,7 @@
             android:theme="@style/AppNoTitle"
             android:screenOrientation="portrait"/>
 
+        <!--=======================腾讯QQ接入初始化======================-->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:noHistory="true"
