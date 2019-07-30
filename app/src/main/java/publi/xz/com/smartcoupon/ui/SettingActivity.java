@@ -1,8 +1,11 @@
 package publi.xz.com.smartcoupon.ui;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -55,12 +58,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private TextView userName;
     private UserInfo mInfo;
 
+    private String TAG = "xzxzxxz";
 
     Handler mHandler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 0:
                     JSONObject response = (JSONObject) msg.obj;
                     try {
@@ -95,17 +99,27 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
 
     /**
-     * 初始化QQ接入
+     * 初始化QQ接入APi
      */
     private void init_login() {
-        tx = Tencent.createInstance(Local.tx_Appid, this);
-//        if (!tx.isSessionValid()) {
-//            tx.login(this, "all", loginListener, true);
-//
-//        }
+        tx = Tencent.createInstance(Local.tx_Appid, this.getApplicationContext());
+        mInfo = new UserInfo(this, tx.getQQToken());
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+//        Log.d(TAG, "onActivityResult:a " + requestCode);
+//        Log.d(TAG, "onActivityResult:b " + resultCode);
+        //解决腾讯QQ接入不回调
+        Tencent.onActivityResultData(requestCode, requestCode, data, loginListener);
+        //对应的返回值对应的动作
+        if (requestCode == Constants.REQUEST_LOGIN) {
+            Tencent.handleResultData(data, loginListener);
+        }
+
+    }
 
     @Override
     public void showData(Object object) {
@@ -239,6 +253,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private ChooseLoginDialog loginDialog;
 
     private void doCheckLogin() {
+
         loginDialog = new ChooseLoginDialog(SettingActivity.this, R.style.choose_dialog);
         loginDialog.create();
         loginDialog.show();
@@ -246,19 +261,26 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         loginDialog.setQQOclickListener(new CustomOnclickListener() {
             @Override
             public void onClick() {
-                loginDialog.dismiss();
 
+                loginDialog.dismiss();
                 if (!tx.checkSessionValid(Local.tx_Appid)) {
+
                     //token过期，token过期请调用登录接口拉起手Q授权登录 "
+                    tx.login(SettingActivity.this, "all", loginListener, true);
+
+                } else {
+
+                    tx.logout(SettingActivity.this);
                     tx.login(SettingActivity.this, "all", loginListener, true);
                 }
             }
         });
+        //手机号登陆
         loginDialog.setPhoneOnClickListener(new CustomOnclickListener() {
             @Override
             public void onClick() {
                 loginDialog.dismiss();
-
+                mToast("暂未开通");
             }
         });
     }
@@ -346,7 +368,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         }
 
         protected void doComplete(JSONObject values) {
-
         }
 
         @Override
@@ -356,59 +377,61 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
         @Override
         public void onCancel() {
-            mToast("onCancel: ");
+            mToast("登陆已取消 ");
         }
     }
 
+    /**
+     * 获取用户信息-QQ
+     */
     private void updateUserInfo() {
         if (tx != null && tx.isSessionValid()) {
-            IUiListener listener = new IUiListener() {
 
-                @Override
-                public void onError(UiError e) {
-
-                }
-
-                @Override
-                public void onComplete(final Object response) {
-                    //保存至本地
-                    SharedPreferencesUtil.saveLoginJson(SettingActivity.this,"user_info",response.toString());
-                    Message msg = new Message();
-                    msg.obj = response;
-                    msg.what = 0;
-                    mHandler.sendMessage(msg);
-                    new Thread() {
-
-                        @Override
-                        public void run() {
-                            JSONObject json = (JSONObject) response;
-                            if (json.has("figureurl")) {
-                                Bitmap bitmap = null;
-                                try {
-                                    bitmap = ImageUtil.getbitmap(json.getString("figureurl_qq_2"));
-                                } catch (JSONException e) {
-
-                                }
-                                Message msg = new Message();
-                                msg.obj = bitmap;
-                                msg.what = 1;
-                                mHandler.sendMessage(msg);
-                            }
-                        }
-
-                    }.start();
-                }
-
-                @Override
-                public void onCancel() {
-
-                }
-            };
-            mInfo = new UserInfo(this, tx.getQQToken());
             mInfo.getUserInfo(listener);
 
         }
     }
 
+    private IUiListener listener = new IUiListener() {
 
+        @Override
+        public void onError(UiError e) {
+
+        }
+
+        @Override
+        public void onComplete(final Object response) {
+            //保存至本地
+            SharedPreferencesUtil.saveLoginJson(SettingActivity.this, "user_info", response.toString());
+            Message msg = new Message();
+            msg.obj = response;
+            msg.what = 0;
+            mHandler.sendMessage(msg);
+            new Thread() {
+
+                @Override
+                public void run() {
+                    JSONObject json = (JSONObject) response;
+                    if (json.has("figureurl")) {
+                        Bitmap bitmap = null;
+                        try {
+                            bitmap = ImageUtil.getbitmap(json.getString("figureurl_qq_2"));
+                        } catch (JSONException e) {
+
+                        }
+                        Message msg = new Message();
+                        msg.obj = bitmap;
+                        msg.what = 1;
+                        mHandler.sendMessage(msg);
+                    }
+                }
+
+            }.start();
+        }
+
+        @Override
+        public void onCancel() {
+
+        }
+    };
 }
