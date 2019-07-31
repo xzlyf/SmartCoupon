@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 
+import com.xz.com.log.LogUtil;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;

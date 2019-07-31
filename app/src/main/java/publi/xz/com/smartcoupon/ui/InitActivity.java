@@ -63,12 +63,12 @@ public class InitActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                new Presenter_Init(InitActivity.this);
 
                 /*
                 CyclicBarrier
                  屏障点（集结点），必须所有人达到集合点才能继续后面的任务
                  */
-
                 int total = 6;//有多少个线程就写多少个
                 CyclicBarrier cb = new CyclicBarrier(total + 1);//加上一个主线程
 
