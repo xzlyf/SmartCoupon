@@ -10,15 +10,10 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 
-import com.xz.com.log.LogUtil;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.adapter.MainAdapter;
@@ -29,7 +24,6 @@ import publi.xz.com.smartcoupon.ui.custom.BottmNav;
 import publi.xz.com.smartcoupon.utils.GlideImageLoader;
 import publi.xz.com.smartcoupon.utils.ItemOnclickListener;
 import publi.xz.com.smartcoupon.utils.SpacesItemDecorationVertical;
-import publi.xz.com.smartcoupon.utils.TimeUtil;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
