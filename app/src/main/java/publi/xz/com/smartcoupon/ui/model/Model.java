@@ -3,6 +3,7 @@ package publi.xz.com.smartcoupon.ui.model;
 import com.xz.com.log.LogUtil;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -19,7 +20,12 @@ public class Model implements IModel {
 
 
                 try {
-                    OkHttpClient client = new OkHttpClient();
+//                    OkHttpClient client = new OkHttpClient();
+                    OkHttpClient client = new OkHttpClient.Builder()
+                            .connectTimeout(10, TimeUnit.SECONDS)
+                            .readTimeout(10, TimeUnit.SECONDS)
+                            .writeTimeout(10, TimeUnit.SECONDS)
+                            .build();
                     Request request = new Request.Builder()
                             .url(url)
                             .build();

@@ -4,11 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ProgressBar;
 
 import com.xz.com.log.LogConfig;
+import com.xz.com.log.LogUtil;
+
+import java.util.Random;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 
 import publi.xz.com.smartcoupon.R;
+import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.ui.presenter.Presenter_Init;
 
 /**
@@ -18,9 +25,13 @@ import publi.xz.com.smartcoupon.ui.presenter.Presenter_Init;
  * 减轻调用Api
  */
 public class InitActivity extends AppCompatActivity {
-    private int waitTime = 3000;//等待时间 目前等待时间3秒刚刚好
     private ProgressBar bar;
-    private Presenter_Init model;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +41,6 @@ public class InitActivity extends AppCompatActivity {
         findID();
         init_log();
         initData();//测试关闭
-        waitTime();
     }
 
     /**
@@ -47,44 +57,45 @@ public class InitActivity extends AppCompatActivity {
 
     }
 
-    private void waitTime() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(waitTime);
-                    startActivity(new Intent(InitActivity.this, MainActivity.class));
-                    finish();
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
 
     /**
      * 初始化数据
      */
     private void initData() {
-        //获取更新信息
-        model.checkUpdate();
-        //获取软件状态
-        model.checkState();
-        //获取服务器时间
-        model.getServerTime();
-        //获取今日热搜词
-        model.getDetailFromNet();
-        //获取用户网络信息
-        model.getUserIpFromNet();
-        //获取本地软件信息;
-        model.getLocalInfo();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
 
+                /*
+                CyclicBarrier
+                 屏障点（集结点），必须所有人达到集合点才能继续后面的任务
+                 */
+
+                int total = 6;//有多少个线程就写多少个
+                CyclicBarrier cb = new CyclicBarrier(total + 1);//加上一个主线程
+
+                new Thread(new Presenter_Init.CheckUpdate(cb)).start();
+                new Thread(new Presenter_Init.CheckState(cb)).start();
+                new Thread(new Presenter_Init.GetServerTime(cb)).start();
+                new Thread(new Presenter_Init.GetDetailFromNet(cb)).start();
+                new Thread(new Presenter_Init.GetUserIpFromNet(cb)).start();
+                new Thread(new Presenter_Init.GetLocalInfo(cb)).start();
+                try {
+                    cb.await();
+                } catch (BrokenBarrierException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                LogUtil.map("初始化情況", Local.state);
+                startActivity(new Intent(InitActivity.this, MainActivity.class));
+                finish();
+            }
+        }).start();
     }
 
     private void findID() {
         bar = findViewById(R.id.loading_init);
-        model = new Presenter_Init(this);
     }
 
     private void hideBar() {
@@ -93,4 +104,5 @@ public class InitActivity extends AppCompatActivity {
             bar.hide();
         }
     }
+
 }

@@ -56,7 +56,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         init_banner();
         init_recycler();
         nav_admin();
-        LogUtil.map("初始化情況",Local.state);
     }
 
     /**

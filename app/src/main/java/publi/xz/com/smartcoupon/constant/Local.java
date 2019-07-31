@@ -46,7 +46,7 @@ public class Local {
 
     //初始化返回的状态
     public static Map<String,Boolean> state = new LinkedHashMap<>();
-    public static int softState; //0 软件关闭  1正常使用
+    public static int softState = 1; //0 软件关闭  1正常使用
     public static String stateMsg;//返回信息
     public static String final_url;//最终url
 
