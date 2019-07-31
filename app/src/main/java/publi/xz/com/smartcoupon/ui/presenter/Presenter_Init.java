@@ -86,11 +86,14 @@ public class Presenter_Init {
                     Local.state.put("热搜词", true);
                 } else {
                     //失败处理
+                    Local.state.put("热搜词", false);
 
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
+                Local.state.put("热搜词", false);
+
             }
 
             try {
