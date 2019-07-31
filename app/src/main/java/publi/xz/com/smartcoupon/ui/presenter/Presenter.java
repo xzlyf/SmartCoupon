@@ -52,13 +52,13 @@ public class Presenter {
         last_cid = cid;
 
         String url = SplicString.SplicUrl(Local.BAOYOU9_, paraMap);
-//        Logger.w("9.9包邮"+url);
+//        LogUtil.w("9.9包邮"+url);
         model.getDataFromNet(url, new IModel.OnLoadCompleteListener() {
             @Override
             public void success(String data) {
                 JSONObject obj = null;
                 try {
-//                    Logger.w("9.9包邮数据"+data);
+//                    LogUtil.w("9.9包邮数据"+data);
                     obj = new JSONObject(data);
                     if (obj.get("msg").equals("成功")) {
                         default_num++;
@@ -101,14 +101,14 @@ public class Presenter {
 
         //拼接成最终url
         String url = SplicString.SplicUrl(Local.BAOYOU9_, paraMap);
-//        Logger.d("商品主列表： "+url);
+//        LogUtil.d("商品主列表： "+url);
         model.getDataFromNet(url, new IModel.OnLoadCompleteListener() {
             @Override
             public void success(String data) {
                 default_pageId++;//默认页加1
                 JSONObject obj = null;
                 try {
-//                    Logger.w("主页商品列表"+data);
+//                    LogUtil.w("主页商品列表"+data);
                     obj = new JSONObject(data);
                     Gson gson = new Gson();
                     view.backToUi(gson.fromJson(obj.toString(), MainCNXH.class));
@@ -138,7 +138,7 @@ public class Presenter {
             public void success(String data) {
                 JSONObject obj = null;
                 try {
-//                    Logger.w("单品详情数据" + data);
+//                    LogUtil.w("单品详情数据" + data);
                     obj = new JSONObject(data);
                     Gson gson = new Gson();
                     view.dismissLoading();
@@ -184,13 +184,13 @@ public class Presenter {
         paraMap.put("sign", SignMD5Util.getSignStr(paraMap, Local.appSecret));
 
         String url = SplicString.SplicUrl(Local.sousuo, paraMap);
-//        Logger.w(url);
+//        LogUtil.w(url);
         model.getDataFromNet(url, new IModel.OnLoadCompleteListener() {
             @Override
             public void success(String data) {
                 JSONObject obj = null;
                 try {
-//                    Logger.w("搜索数据"+data);
+//                    LogUtil.w("搜索数据"+data);
                     obj = new JSONObject(data);
                     if (obj.get("msg").equals("成功")) {
                         Gson gson = new Gson();
@@ -228,7 +228,7 @@ public class Presenter {
             public void success(String data) {
                 JSONObject obj = null;
                 try {
-//                    Logger.w("top100人气榜数据"+data);
+//                    LogUtil.w("top100人气榜数据"+data);
                     obj = new JSONObject(data);
                     Gson gson = new Gson();
                     view.backToUi(gson.fromJson(obj.toString(), Popular.class));
@@ -269,7 +269,7 @@ public class Presenter {
             public void success(String data) {
                 JSONObject obj = null;
                 try {
-//                    Logger.w("品牌库数据"+data);
+//                    LogUtil.w("品牌库数据"+data);
                     obj = new JSONObject(data);
                     if (obj.getInt("code") == 0) {
                         Gson gson = new Gson();

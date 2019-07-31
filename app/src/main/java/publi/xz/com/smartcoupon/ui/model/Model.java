@@ -1,5 +1,7 @@
 package publi.xz.com.smartcoupon.ui.model;
 
+import com.xz.com.log.LogUtil;
+
 import java.io.IOException;
 
 import okhttp3.FormBody;
@@ -27,6 +29,7 @@ public class Model implements IModel {
                     listener.success(responseData);
                 } catch (IOException e) {
                     e.printStackTrace();
+                    LogUtil.w("请求失败链接："+url);
                     listener.failed(e);
                 }
             }

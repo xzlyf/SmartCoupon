@@ -1,23 +1,15 @@
 package publi.xz.com.smartcoupon.ui;
 
-import android.app.slice.Slice;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.ProgressBar;
 
-import com.google.gson.Gson;
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.DiskLogAdapter;
-import com.orhanobut.logger.Logger;
+import com.xz.com.log.LogConfig;
 
 import publi.xz.com.smartcoupon.R;
-import publi.xz.com.smartcoupon.constant.Local;
-import publi.xz.com.smartcoupon.entity.HotWord;
-import publi.xz.com.smartcoupon.ui.model.IModel;
 import publi.xz.com.smartcoupon.ui.presenter.Presenter_Init;
-import publi.xz.com.smartcoupon.utils.SharedPreferencesUtil;
 
 /**
  * 启动类
@@ -26,17 +18,28 @@ import publi.xz.com.smartcoupon.utils.SharedPreferencesUtil;
  * 减轻调用Api
  */
 public class InitActivity extends AppCompatActivity {
-    private int waitTime = 3000;//等待时间
+    private int waitTime = 3000;//等待时间 目前等待时间3秒刚刚好
     private ProgressBar bar;
     private Presenter_Init model;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init);
         hideBar();
         findID();
+        init_log();
         initData();//测试关闭
         waitTime();
+    }
+
+    /**
+     * 初始化日志
+     */
+    private void init_log() {
+        LogConfig config = LogConfig.getInstance();
+        config.setShowLog(true);//初始化log日志
+        config.setFlag("xzlyf_SmartCoupon");
     }
 
     @Override
@@ -50,7 +53,7 @@ public class InitActivity extends AppCompatActivity {
             public void run() {
                 try {
                     Thread.sleep(waitTime);
-                    startActivity(new Intent(InitActivity.this,MainActivity.class));
+                    startActivity(new Intent(InitActivity.this, MainActivity.class));
                     finish();
 
                 } catch (InterruptedException e) {
@@ -86,7 +89,7 @@ public class InitActivity extends AppCompatActivity {
 
     private void hideBar() {
         ActionBar bar = getSupportActionBar();
-        if (bar!=null){
+        if (bar != null) {
             bar.hide();
         }
     }

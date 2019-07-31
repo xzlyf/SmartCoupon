@@ -1,27 +1,16 @@
 package publi.xz.com.smartcoupon.ui.presenter;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Random;
-
 import publi.xz.com.smartcoupon.constant.Local;
-import publi.xz.com.smartcoupon.entity.Detail;
-import publi.xz.com.smartcoupon.entity.HotWord;
-import publi.xz.com.smartcoupon.entity.Update;
 import publi.xz.com.smartcoupon.entity.UserNetInfo;
-import publi.xz.com.smartcoupon.ui.DetailsActivity;
 import publi.xz.com.smartcoupon.ui.InitActivity;
 import publi.xz.com.smartcoupon.ui.model.IModel;
 import publi.xz.com.smartcoupon.ui.model.Model;
@@ -46,7 +35,7 @@ public class Presenter_Init {
             public void success(String data) {
                 JSONObject obj = null;
                 try {
-//                    Logger.w("热搜词数据"+data);
+//                    LogUtil.w("热搜词数据"+data);
                     obj = new JSONObject(data);
                     if (obj.getString("er_msg").equals("请求成功")) {
                         //保存json到本地
@@ -81,7 +70,7 @@ public class Presenter_Init {
                 JSONObject obj = null;
 
                 try {
-//                    Logger.w("用户信息"+data);
+//                    LogUtil.w("用户信息"+data);
                     obj = new JSONObject(data);
                     if (obj.getString("code").equals("1")) {
                         JSONObject obj2 = obj.getJSONObject("data");
@@ -99,10 +88,14 @@ public class Presenter_Init {
 
 
                     } else if (obj.getString("code").equals("0")) {
+                        Local.state.put("用户信息", false);
+
                     }
 
                 } catch (JSONException e1) {
                     e1.printStackTrace();
+                    Local.state.put("用户信息", false);
+
                 }
             }
 
@@ -124,7 +117,7 @@ public class Presenter_Init {
                 JSONObject obj = null;
 
                 try {
-                    //    Logger.w("网络时间："+data);
+                    //    LogUtil.w("网络时间："+data);
                     obj = new JSONObject(data);
                     if (obj.getString("code").equals("1")) {
                         JSONObject obj2 = obj.getJSONObject("data");
@@ -160,7 +153,7 @@ public class Presenter_Init {
                 JSONObject obj = null;
 
                 try {
-//                    Logger.d("更新数据"+data);
+//                    LogUtil.d("更新数据"+data);
                     obj = new JSONObject(data);
                     if (obj.getInt("value")==1){
                         JSONObject obj2 = obj.getJSONObject("data");
@@ -199,7 +192,7 @@ public class Presenter_Init {
                 JSONObject obj = null;
 
                 try {
-//                    Logger.d("软件状态"+data);
+//                    LogUtil.json("软件状态",data);
                     obj = new JSONObject(data);
 
                     Local.softState = obj.getInt("state");
@@ -209,7 +202,6 @@ public class Presenter_Init {
                     Local.state.put("软件状态", true);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    //解析问题
                     Local.state.put("软件状态", false);
                 }
             }
@@ -232,8 +224,11 @@ public class Presenter_Init {
             Local.LocalInfo.versionCode = info.versionCode;
             Local.LocalInfo.versionName = info.versionName;
             Local.LocalInfo.systemVersion = Build.VERSION.SDK_INT;
+            Local.state.put("软件信息", true);
+
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
+            Local.state.put("软件信息", true);
         }
     }
 }

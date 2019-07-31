@@ -1,25 +1,24 @@
 package publi.xz.com.smartcoupon.ui;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.Logger;
+import com.xz.com.log.LogUtil;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.adapter.MainAdapter;
@@ -30,6 +29,7 @@ import publi.xz.com.smartcoupon.ui.custom.BottmNav;
 import publi.xz.com.smartcoupon.utils.GlideImageLoader;
 import publi.xz.com.smartcoupon.utils.ItemOnclickListener;
 import publi.xz.com.smartcoupon.utils.SpacesItemDecorationVertical;
+import publi.xz.com.smartcoupon.utils.TimeUtil;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -56,7 +56,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         init_banner();
         init_recycler();
         nav_admin();
-
+        LogUtil.map("初始化情況",Local.state);
     }
 
     /**

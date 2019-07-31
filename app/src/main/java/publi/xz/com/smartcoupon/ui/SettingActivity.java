@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.orhanobut.logger.Logger;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.common.Constants;
 import com.tencent.open.utils.HttpUtils;
@@ -22,6 +21,7 @@ import com.tencent.tauth.IRequestListener;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
+import com.xz.com.log.LogUtil;
 
 import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
@@ -181,54 +181,54 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 Constants.HTTP_GET, new IRequestListener() {
                     @Override
                     public void onComplete(JSONObject jsonObject) {
-                        Logger.d("a");
+                        LogUtil.d("a");
                     }
 
                     @Override
                     public void onIOException(IOException e) {
-                        Logger.d("b");
+                        LogUtil.d("b");
 
                     }
 
                     @Override
                     public void onMalformedURLException(MalformedURLException e) {
-                        Logger.d("c");
+                        LogUtil.d("c");
 
                     }
 
                     @Override
                     public void onJSONException(JSONException e) {
-                        Logger.d("d");
+                        LogUtil.d("d");
 
                     }
 
                     @Override
                     public void onConnectTimeoutException(ConnectTimeoutException e) {
-                        Logger.d("e");
+                        LogUtil.d("e");
 
                     }
 
                     @Override
                     public void onSocketTimeoutException(SocketTimeoutException e) {
-                        Logger.d("f");
+                        LogUtil.d("f");
 
                     }
 
                     @Override
                     public void onNetworkUnavailableException(HttpUtils.NetworkUnavailableException e) {
-                        Logger.d("g");
+                        LogUtil.d("g");
 
                     }
 
                     @Override
                     public void onHttpStatusException(HttpUtils.HttpStatusException e) {
-                        Logger.d("h");
+                        LogUtil.d("h");
 
                     }
 
                     @Override
                     public void onUnknowException(Exception e) {
-                        Logger.d("i");
+                        LogUtil.d("i");
 
                     }
                 }, null);
