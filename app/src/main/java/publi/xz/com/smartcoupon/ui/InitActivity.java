@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.DiskLogAdapter;
 import com.orhanobut.logger.Logger;
 
 import publi.xz.com.smartcoupon.R;
@@ -25,17 +26,16 @@ import publi.xz.com.smartcoupon.utils.SharedPreferencesUtil;
  * 减轻调用Api
  */
 public class InitActivity extends AppCompatActivity {
-    private int waitTime = 100;//等待时间
+    private int waitTime = 3000;//等待时间
     private ProgressBar bar;
     private Presenter_Init model;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init);
-        Logger.addLogAdapter(new AndroidLogAdapter());
         hideBar();
         findID();
-//        initData();//测试关闭
+        initData();//测试关闭
         waitTime();
     }
 
@@ -64,14 +64,16 @@ public class InitActivity extends AppCompatActivity {
      * 初始化数据
      */
     private void initData() {
+        //获取更新信息
+        model.checkUpdate();
+        //获取软件状态
+        model.checkState();
         //获取服务器时间
         model.getServerTime();
         //获取今日热搜词
         model.getDetailFromNet();
         //获取用户网络信息
         model.getUserIpFromNet();
-        //获取更新信息
-        model.checkUpdate();
         //获取本地软件信息;
         model.getLocalInfo();
 

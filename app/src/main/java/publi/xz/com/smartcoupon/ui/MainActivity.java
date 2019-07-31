@@ -51,12 +51,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void init_Data() {
-        Logger.addLogAdapter(new AndroidLogAdapter());
-
+        init_state();
         //设置banner轮播图
         init_banner();
         init_recycler();
         nav_admin();
+
+    }
+
+    /**
+     * 软件状态
+     */
+    private void init_state() {
+        if (Local.softState==1){
+//            mToast("正常使用");
+        }else if (Local.softState==0){
+            mToast("停止服务");
+            finish();
+        }
     }
 
 

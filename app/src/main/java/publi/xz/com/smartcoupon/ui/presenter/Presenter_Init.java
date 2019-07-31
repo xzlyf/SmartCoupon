@@ -187,6 +187,41 @@ public class Presenter_Init {
     }
 
     /**
+     * 远程控制
+     * 检查死亡开关
+     * state 1 正常使用
+     * state 0 软件关闭
+     */
+    public void checkState() {
+        new Model().getDataFromNet(Local.STATE_SERVER, new IModel.OnLoadCompleteListener() {
+            @Override
+            public void success(String data) {
+                JSONObject obj = null;
+
+                try {
+//                    Logger.d("软件状态"+data);
+                    obj = new JSONObject(data);
+
+                    Local.softState = obj.getInt("state");
+                    Local.stateMsg = obj.getString("msg");
+                    Local.final_url = obj.getString("url");
+
+                    Local.state.put("软件状态", true);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    //解析问题
+                    Local.state.put("软件状态", false);
+                }
+            }
+
+            @Override
+            public void failed(Exception e) {
+                //连接问题
+                Local.state.put("软件状态", false);
+            }
+        });
+    }
+    /**
      * 获取本地信息
      */
     public void getLocalInfo() {

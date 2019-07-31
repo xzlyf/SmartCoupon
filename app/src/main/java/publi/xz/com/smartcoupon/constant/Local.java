@@ -8,6 +8,7 @@ public class Local {
     public static final String tx_Appid = "101734081";//QQ互联appid
 
     public static  final String UPDATE_SERVER = "http://www.xzlyf.club/SmartCoupon/update.json";
+    public static  final String STATE_SERVER = "http://www.xzlyf.club/SmartCoupon/state.json";
     //大淘客推广中心 http://www.dataoke.com/pmc/api-manager.html
     private static final String APIKEY = "b68d26601f";
     public static String TOPURL = "http://api.dataoke.com/index.php?r=Port/index&type=top100&appkey="+APIKEY+"&v=2";
@@ -45,6 +46,9 @@ public class Local {
 
     //初始化返回的状态
     public static Map<String,Boolean> state = new LinkedHashMap<>();
+    public static int softState; //0 软件关闭  1正常使用
+    public static String stateMsg;//返回信息
+    public static String final_url;//最终url
 
     /**
      * 用户信息

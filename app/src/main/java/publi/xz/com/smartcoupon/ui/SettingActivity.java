@@ -110,8 +110,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        Log.d(TAG, "onActivityResult:a " + requestCode);
-//        Log.d(TAG, "onActivityResult:b " + resultCode);
+        Log.d(TAG, "onActivityResult:a " + requestCode);
+        Log.d(TAG, "onActivityResult:b " + resultCode);
         //解决腾讯QQ接入不回调
         Tencent.onActivityResultData(requestCode, requestCode, data, loginListener);
         //对应的返回值对应的动作
@@ -264,12 +264,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
                 loginDialog.dismiss();
                 if (!tx.checkSessionValid(Local.tx_Appid)) {
-
                     //token过期，token过期请调用登录接口拉起手Q授权登录 "
                     tx.login(SettingActivity.this, "all", loginListener, true);
 
                 } else {
-
                     tx.logout(SettingActivity.this);
                     tx.login(SettingActivity.this, "all", loginListener, true);
                 }

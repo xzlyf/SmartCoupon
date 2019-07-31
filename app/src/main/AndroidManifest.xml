@@ -3,14 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="publi.xz.com.smartcoupon">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- 安卓8.0打开apk安装更新 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 安卓8.0打开apk安装更新 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-
 
     <application
         android:allowBackup="true"
@@ -20,15 +19,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <!--=======================腾讯QQ接入初始化======================-->
+
+        <!-- =======================腾讯QQ接入初始化====================== -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
-            android:noHistory="true"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="tencent101734081" />
             </intent-filter>
         </activity>
@@ -38,7 +40,7 @@
             android:screenOrientation="behind"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <!--======================基本活动============================-->
+        <!-- ======================基本活动============================ -->
         <activity android:name=".ui.PPActivity" />
         <activity android:name=".ui.HotWordActivity" />
 
@@ -54,9 +56,9 @@
 
         <activity
             android:name=".ui.InitActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/full_screen"
-            android:launchMode="singleTask">
+            android:theme="@style/full_screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -65,9 +67,9 @@
         </activity>
         <activity
             android:name=".ui.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/AppNoTitle"
-            android:launchMode="singleTask"/>
+            android:theme="@style/AppNoTitle" />
         <activity
             android:name=".ui.Top100Activity"
             android:screenOrientation="portrait" />
@@ -77,17 +79,16 @@
         <activity android:name=".ui.Baoyou9_9Activity" />
         <activity
             android:name=".ui.DetailsActivityV2"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.SettingActivity"
-            android:theme="@style/AppNoTitle"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".ui.SettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppNoTitle" />
         <activity
             android:name=".ui.SearchActivity"
-            android:theme="@style/AppNoTitle"
-            android:screenOrientation="portrait"/>
-
-
+            android:screenOrientation="portrait"
+            android:theme="@style/AppNoTitle" />
     </application>
 
 </manifest>
