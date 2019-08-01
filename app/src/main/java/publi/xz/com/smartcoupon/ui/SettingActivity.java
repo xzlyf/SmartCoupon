@@ -4,14 +4,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tencent.connect.UserInfo;
@@ -42,8 +39,8 @@ import publi.xz.com.smartcoupon.utils.CustomOnclickListener;
 import publi.xz.com.smartcoupon.utils.ImageUtil;
 import publi.xz.com.smartcoupon.utils.SharedPreferencesUtil;
 
-import static publi.xz.com.smartcoupon.utils.CacheInfo.cleanPhotoCache;
-import static publi.xz.com.smartcoupon.utils.CacheInfo.getPhotoCacheSize;
+import static publi.xz.com.smartcoupon.utils.CacheInfo.cleanCache;
+import static publi.xz.com.smartcoupon.utils.CacheInfo.getTotalCache;
 import static publi.xz.com.smartcoupon.utils.TransparentBarUtil.makeStatusBarTransparent;
 
 public class SettingActivity extends BaseActivity implements View.OnClickListener {
@@ -110,8 +107,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, "onActivityResult:a " + requestCode);
-        Log.d(TAG, "onActivityResult:b " + resultCode);
+//        Log.d(TAG, "onActivityResult:a " + requestCode);
+//        Log.d(TAG, "onActivityResult:b " + resultCode);
         //解决腾讯QQ接入不回调
         Tencent.onActivityResultData(requestCode, requestCode, data, loginListener);
         //对应的返回值对应的动作
@@ -126,7 +123,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void init() {
-        cleanCache.setText("清理缓存（" + getPhotoCacheSize(this) + "Mb）");
+        cleanCache.setText("清理缓存（" + getTotalCache(this) + "Mb）");
         //获取更新信息(已换成到本地
         String data = SharedPreferencesUtil.getJson(this, "UPDATE_DATA", "null");
         if (data.equals("null")) {
@@ -287,9 +284,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
      * 清理缓存
      */
     private void clean() {
-        cleanPhotoCache(this);
-        Toast.makeText(this, "清理完成", Toast.LENGTH_SHORT).show();
-        cleanCache.setText("清理缓存（" + getPhotoCacheSize(this) + "Mb）");
+        cleanCache(this);
+        mToast("清理完成");
+        cleanCache.setText("清理缓存（" + getTotalCache(this) + "Mb）");
     }
 
     /**

@@ -18,6 +18,8 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.xz.com.log.LogUtil;
+
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.ui.presenter.Presenter;
 
@@ -65,6 +67,8 @@ public abstract class BaseActivity extends AppCompatActivity  {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //退出时记得要手动保存一下日志，如果开启的话
+//        LogUtil.toSave();
     }
 
 

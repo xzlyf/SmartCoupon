@@ -38,6 +38,7 @@ public class InitActivity extends AppCompatActivity {
         hideBar();
         findID();
         init_log();
+
         initData();//测试关闭
     }
 
@@ -46,8 +47,9 @@ public class InitActivity extends AppCompatActivity {
      */
     private void init_log() {
         LogConfig config = LogConfig.getInstance();
-        config.setShowLog(true);//初始化log日志
+        config.setShowLog(true);//是否显示日志
         config.setFlag("xzlyf_SmartCoupon");
+//        config.toLocal(this,true);//是否输出日志
     }
 
     @Override

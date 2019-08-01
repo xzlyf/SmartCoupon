@@ -3,13 +3,18 @@ package com.xz.com.log;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.xz.com.log.utils.Date;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * 日志工具调用类
@@ -21,9 +26,69 @@ import java.util.Set;
 public class LogUtil {
 
     private static final String LINE_SEPARATOR = System.getProperty("line.separator");
-    private static boolean showlog = LogConfig.getShowLog();
+    protected static boolean showlog =false;//默认关闭
     private static String tag = LogConfig.getFlag();
+    private static StringBuilder builder;
+    protected static boolean sv = false;//日志保存至本地开关
+    private static BufferedWriter bufferedWriter;
+    private static FileWriter fileWriter;
+    private static String pa;
 
+    /**
+     * 保存日志到本地
+     * 保存原理：当缓存日志接近缓存大小时，自动向本地输出。
+     * 随后清空缓存大小，然后重复刚才的步骤
+     *
+     * @param path 日志地址
+     */
+    protected static void toLocal(String path) {
+        builder = new StringBuilder();
+        pa = path + File.separator + Date.getSimDate() + ".txt";
+    }
+
+    /**
+     * 自动保存
+     * 当缓存大于n时自动写入磁盘
+     *
+     * @param log
+     */
+    private static void autoSave(String log) {
+        if (!sv) return;
+        builder.append(Date.getDate() + ":");
+        builder.append(log);
+        builder.append("\n");
+        if (builder.length() >= 32768) {
+            toSave();
+        }
+
+    }
+
+    /**
+     * 可手动保存
+     * 退出程序前手动保存
+     */
+    public static void toSave() {
+        if (!sv) return;
+        try {
+            fileWriter = new FileWriter(pa, true);
+            bufferedWriter = new BufferedWriter(fileWriter);//true开启追加数据
+            bufferedWriter.write(builder.toString());
+            bufferedWriter.flush();
+            builder.delete(0, builder.length());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fileWriter.close();
+                bufferedWriter.close();
+                fileWriter = null;
+                bufferedWriter = null;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     /**
      * json格式输出=================================================================
@@ -72,7 +137,7 @@ public class LogUtil {
      *
      * @param list
      */
-    public static void list(String head,@NonNull List<?> list) {
+    public static void list(String head, @NonNull List<?> list) {
         printLinetop(Log.DEBUG);
         Log.println(Log.DEBUG, tag, "║ " + getFunctionName());
         printLinemiddle(Log.DEBUG);
@@ -89,14 +154,14 @@ public class LogUtil {
      *
      * @param map
      */
-    public static void map(String head,@NonNull Map<?, ?> map) {
+    public static void map(String head, @NonNull Map<?, ?> map) {
         printLinetop(Log.DEBUG);
         Log.println(Log.DEBUG, tag, "║ " + getFunctionName());
         printLinemiddle(Log.DEBUG);
         Log.d(tag, "║ " + head);
         printLinemiddle(Log.DEBUG);
         for (Map.Entry<?, ?> entry : map.entrySet()) {
-            Log.println(Log.DEBUG, tag,"║ " +entry.getKey()+":"+entry.getValue());
+            Log.println(Log.DEBUG, tag, "║ " + entry.getKey() + ":" + entry.getValue());
         }
         printLinebottom(Log.DEBUG);
     }
@@ -129,14 +194,17 @@ public class LogUtil {
 
 
     private static void print(int verbose, Object[] obj) {
+
         if (!showlog) return;
         printLinetop(verbose);
         Log.println(verbose, tag, "║ " + getFunctionName());
         printLinemiddle(verbose);
         for (Object line : obj) {
             Log.println(verbose, tag, "║ " + line);
+            autoSave(line.toString());
         }
         printLinebottom(verbose);
+
 
     }
 
