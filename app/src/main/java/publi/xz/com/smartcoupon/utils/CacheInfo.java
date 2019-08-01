@@ -40,7 +40,6 @@ public class CacheInfo {
                 filesize = filesize + f.length();
             }
         }
-        LogUtil.e("图片" + filesize);
 
         //返回兆字节
         return (int) (filesize / 1024 / 1024);
@@ -65,7 +64,6 @@ public class CacheInfo {
             }
         }
         //返回兆字节\
-        LogUtil.e("日志" + filesize);
         return (int) (filesize / 1024 / 1024);
     }
 
