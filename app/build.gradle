@@ -37,7 +37,7 @@ dependencies {
     //开源工具包
     implementation files('lib/open_sdk_r6019_lite.jar')
 
-    implementation project(':log')
+    implementation project(':LogUtil')
 
 
 }
