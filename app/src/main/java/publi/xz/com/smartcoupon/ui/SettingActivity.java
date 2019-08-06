@@ -89,7 +89,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         //设置透明状态栏
         makeStatusBarTransparent(this);
         init();
-        init_login();
+//        init_login();
 
 
     }
@@ -161,7 +161,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 check();
                 break;
             case R.id.login_btn:
-                doCheckLogin();
+//                doCheckLogin();
                 break;
             case R.id.id_manage:
 //                getUserInfo();
