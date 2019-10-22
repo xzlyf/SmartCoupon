@@ -4,17 +4,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ProgressBar;
 
+import com.alibaba.baichuan.trade.biz.login.AlibcLogin;
+import com.alibaba.baichuan.trade.biz.login.AlibcLoginCallback;
 import com.xz.com.log.LogConfig;
 import com.xz.com.log.LogUtil;
 
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
+import publi.xz.com.smartcoupon.BuildConfig;
 import publi.xz.com.smartcoupon.R;
 import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.ui.presenter.Presenter_Init;
+import publi.xz.com.smartcoupon.utils.SharedPreferencesUtil;
 
 /**
  * 启动类
@@ -24,6 +29,7 @@ import publi.xz.com.smartcoupon.ui.presenter.Presenter_Init;
  */
 public class InitActivity extends AppCompatActivity {
     private ProgressBar bar;
+    private AlibcLogin login;
 
     @Override
     protected void onDestroy() {
@@ -65,6 +71,37 @@ public class InitActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                //淘宝账号登录
+                login = AlibcLogin.getInstance();
+                //检查是否已登录-获取最新的用户资料
+                if (SharedPreferencesUtil.getState(InitActivity.this, "autoLogin", false)) {
+                    login.showLogin(new AlibcLoginCallback() {
+                        @Override
+                        public void onSuccess(int i, String s, String s1) {
+                            //自动登录成功
+                            Local.self.session = login.getSession();
+                            LogUtil.d("淘宝账号自动登录成功");
+                        }
+
+                        @Override
+                        public void onFailure(int i, String s) {
+                            //自动登录失败
+                            SharedPreferencesUtil.saveState(InitActivity.this, "autoLogin", false);
+                            LogUtil.w("淘宝账号自动登录失败:"+i+"  "+s);
+
+                        }
+                    });
+
+                }
+
+                //发布版调试版判断
+                if (BuildConfig.DEBUG){
+                    login.turnOnDebug();
+                    LogUtil.d("Debug模式");
+                }else{
+                    login.turnOffDebug();
+                }
+
                 new Presenter_Init(InitActivity.this);
 
                 /*
@@ -80,6 +117,7 @@ public class InitActivity extends AppCompatActivity {
                 new Thread(new Presenter_Init.GetDetailFromNet(cb)).start();
                 new Thread(new Presenter_Init.GetUserIpFromNet(cb)).start();
                 new Thread(new Presenter_Init.GetLocalInfo(cb)).start();
+
                 try {
                     cb.await();
                 } catch (BrokenBarrierException e) {

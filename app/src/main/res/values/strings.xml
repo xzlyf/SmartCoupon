@@ -1,4 +1,3 @@
 <resources>
-    <string name="app_name">SmartCoupon</string>
-    <string name="app_name_zh">捡漏王</string>
+    <string name="app_name">捡漏王</string>
 </resources>

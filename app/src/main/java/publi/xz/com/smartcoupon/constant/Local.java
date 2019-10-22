@@ -1,5 +1,7 @@
 package publi.xz.com.smartcoupon.constant;
 
+import com.ali.auth.third.core.model.Session;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -59,6 +61,7 @@ public class Local {
         public static String city;//城市
         public static String isp;//网络服务商名称
         public static long server_time;//服务器时间
+        public static Session session;//淘宝个人信息；
     }
 
     /**

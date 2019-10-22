@@ -4,6 +4,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
+import com.alibaba.baichuan.trade.biz.login.AlibcLoginCallback;
 import com.google.gson.Gson;
 import com.xz.com.log.LogUtil;
 
@@ -21,6 +22,7 @@ import okhttp3.Response;
 import publi.xz.com.smartcoupon.constant.Local;
 import publi.xz.com.smartcoupon.entity.UserNetInfo;
 import publi.xz.com.smartcoupon.ui.InitActivity;
+import publi.xz.com.smartcoupon.ui.SettingActivity;
 import publi.xz.com.smartcoupon.ui.model.IModel;
 import publi.xz.com.smartcoupon.ui.model.Model;
 import publi.xz.com.smartcoupon.utils.SharedPreferencesUtil;

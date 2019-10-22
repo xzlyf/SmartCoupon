@@ -200,7 +200,7 @@ public abstract class BaseActivity extends AppCompatActivity  {
      * @param text 消息
      * @param type 类型
      */
-    public void showDialog(final String text, final String type) {
+    public void showDialog( String text,  String type) {
         Message msg = handler.obtainMessage();
         msg.what = show_d;
         msg.obj = new String[]{text, type};
